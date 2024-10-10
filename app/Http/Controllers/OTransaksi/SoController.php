@@ -281,6 +281,8 @@ class SoController extends Controller
                 'TOTAL'            => (float) str_replace(',', '', $request['TTOTAL']),
 				'USRNM'            => Auth::user()->username,
                 'TG_SMP'           => Carbon::now(),
+                'KODEP'            => ($request['KODEP'] == null) ? "" : $request['KODEP'],
+                'NAMAP'            => ($request['NAMAP'] == null) ? "" : $request['NAMAP'],
 				'created_by'       => Auth::user()->username,
             ]
         );
@@ -573,6 +575,9 @@ class SoController extends Controller
                 'NOTES'            => ($request['NOTES'] == null) ? "" : $request['NOTES'],
                 'TOTAL_QTY'        => (float) str_replace(',', '', $request['TTOTAL_QTY']),
                 'TOTAL'            => (float) str_replace(',', '', $request['TTOTAL']),
+				'KODEP'            => ($request['KODEP'] == null) ? "" : $request['KODEP'],
+                'NAMAP'            => ($request['NAMAP'] == null) ? "" : $request['NAMAP'],
+                
 				'USRNM'            => Auth::user()->username,
                 'TG_SMP'           => Carbon::now(),
 				'updated_by'       => Auth::user()->username,
@@ -748,6 +753,8 @@ class SoController extends Controller
                 'KET'    => $query[$key]->KET
             ));
         }
+
+        DB::SELECT("UPDATE SO SET POSTED=1 WHERE NO_BUKTI='$no_so'");
 		
         $PHPJasperXML->setData($data);
         ob_end_clean();

@@ -87,9 +87,29 @@
 									<label style="color:red">*</label>									
                                     <label for="NOTES" class="form-label">Notes</label>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <input type="text" class="form-control NOTES" id="NOTES" name="NOTES" value="{{$header->NOTES}}" placeholder="Masukkan Notes" >
                                 </div>
+
+								<div class="col-md-1">								
+									<label for="KODEP" class="form-label">Sales</label>
+								</div>
+
+								<div class="col-md-1 input-group" >
+								<input type="text" class="form-control KODEP" id="KODEP" name="KODEP" placeholder=""value="{{$header->KODEP}}" style="text-align: left" readonly >
+								</div>
+
+								<div class="col-md-2">
+									<input type="text" class="form-control NAMAP" id="NAMAP" name="NAMAP" placeholder="" value="{{$header->NAMAP}}" readonly>
+								</div>
+
+								<div class="col-md-1">								
+									<label for="KOM" class="form-label">Komisi</label>
+								</div>
+								
+								<div class="col-md-2">
+									<input type="text" class="form-control KOM" onclick="select()"  id="KOM" name="KOM" placeholder="" value="{{ number_format($header->KOM, 2, '.', ',') }}" style="text-align: right; width:140px" readonly>
+								</div> 
         
                             </div>
 
@@ -104,7 +124,7 @@
                                             <label for="BACNO" class="form-label">Faktur#</label></th>
                                         <th width="200px" style="text-align:right">Total</th>
                                         <th width="200px" style="text-align:right">Bayar</th>
-                                        <!-- <th width="200px" style="text-align:right">Sisa</th> -->
+                                        <th width="200px" style="text-align:right">Sisa</th> 
                                         <th></th>										
                                     </tr>
                                 </thead>
@@ -128,7 +148,10 @@
 										<td>
 										    <input name="BAYAR[]" onclick="select()" onblur="hitung()" value="{{$detail->BAYAR}}" id="BAYAR{{$no}}" type="text" style="text-align: right"  class="form-control BAYAR">
 										</td>       
-											
+										<td>
+										    <input name="SISA[]" onclick="select()" onblur="hitung()" value="{{$detail->SISA}}" id="SISA{{$no}}" type="text" style="text-align: right"  class="form-control SISA">
+										</td>   
+										
 										<td>
 											<button type='button' id='DELETEX{{$no}}'  class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>
 										</td>
@@ -142,7 +165,8 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td><input class="form-control TBAYAR  text-block font-weight-bold" style="text-align: right"  id="TBAYAR" name="TBAYAR" value="{{$header->BAYAR}}" readonly></td>
+                                    <td></td>
+                                    <!-- <td><input class="form-control TBAYAR  text-block font-weight-bold" style="text-align: right"  id="TBAYAR" name="TBAYAR" value="{{$header->BAYAR}}" readonly></td> -->
                                     <td></td>
                                     <td></td>
                                 </tfoot>
@@ -159,7 +183,30 @@
 						<div class="col-md-2 row">
 							<a type="button" id='PLUSX' onclick="tambah()" class="fas fa-plus fa-sm md-3" style="font-size: 20px" ></a>
 
-						</div>			
+						</div>
+						
+						<hr style="margin-top: 30px; margin-buttom: 30px">		
+                                 
+						<div class="tab-content mt-6">
+							<div class="form-group row">
+                                <div class="col-md-8" align="right">
+                                    <label for="TBAYAR" class="form-label">Total Bayar</label>
+                                </div>
+                                <div class="col-md-2">
+                                     <td><input class="form-control TBAYAR  text-bold font-weight-bold" style="text-align: right"  id="TBAYAR" name="TBAYAR" value="{{$header->BAYAR}}" readonly></td>
+                                </div>
+							</div>
+
+							<div class="form-group row">
+                                <div class="col-md-8" align="right">
+                                    <label for="TKOM" class="form-label">Total Komisi</label>
+                                </div>
+                                <div class="col-md-2">
+                                     <td><input class="form-control TKOM  text-bold font-weight-bold" style="text-align: right"  id="TKOM" name="TKOM" value="{{$header->TKOM}}" readonly></td>
+                                </div>
+							</div>
+							
+						</div>
                                  
 						<div class="mt-3 col-md-12 form-group row">
 							<div class="col-md-4">
@@ -207,6 +254,7 @@
 				<thead>
 					<tr>
 						<th>Jual#</th>
+						<th>Tgl</th>
 						<th>Kode</th>
 						<th>-</th>
 						<th>Total</th>
@@ -318,12 +366,15 @@
 		
 
 		
-		$("#TBAYAR").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});		
+		$("#TBAYAR").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});	
+		$("#TKOM").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});		
+		$("#KOM").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});				
 
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
 			$("#TOTAL" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 			$("#BAYAR" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+			$("#SISA" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 		}	
 
 
@@ -342,6 +393,7 @@
         $('body').on('click', '.btn-delete', function() {
 			var val = $(this).parents("tr").remove();
 			baris--;
+			hitung();
 			nomor();
 			
 		});
@@ -353,7 +405,8 @@
 		
  	
 	/////////////////////////////////////////////////////////	
-				var dTableBCust;
+
+		var dTableBCust;
 		loadDataBCust = function(){
 		
 			$.ajax(
@@ -370,7 +423,7 @@
 					for(i=0; i<resp.length; i++){
 						
 						dTableBCust.row.add([
-							'<a href="javascript:void(0);" onclick="chooseCustomer(\''+resp[i].KODEC+'\',  \''+resp[i].NAMAC+'\', \''+resp[i].ALAMAT+'\',  \''+resp[i].KOTA+'\')">'+resp[i].KODEC+'</a>',
+							'<a href="javascript:void(0);" onclick="chooseCustomer(\''+resp[i].KODEC+'\',  \''+resp[i].NAMAC+'\', \''+resp[i].ALAMAT+'\',  \''+resp[i].KOTA+'\',  \''+resp[i].KODEP+'\',  \''+resp[i].NAMAP+'\',  \''+resp[i].KOM+'\')">'+resp[i].KODEC+'</a>',
 							resp[i].NAMAC,
 							resp[i].ALAMAT,
 							resp[i].KOTA,
@@ -390,11 +443,14 @@
 			$("#browseCustModal").modal("show");
 		}
 		
-		chooseCustomer = function(KODEC,NAMAC, ALAMAT, KOTA){
+		chooseCustomer = function(KODEC,NAMAC, ALAMAT, KOTA, KODEP, NAMAP, KOM){
 			$("#KODEC").val(KODEC);
 			$("#NAMAC").val(NAMAC);
 			$("#ALAMAT").val(ALAMAT);
 			$("#KOTA").val(KOTA);			
+			$("#KODEP").val(KODEP);			
+			$("#NAMAP").val(NAMAP);			
+			$("#KOM").val(KOM);			
 			$("#browseCustModal").modal("hide");
 		}
 		
@@ -405,6 +461,7 @@
 				 browseCust();
 			}
 		}); 
+
 
 		/////////////////////////////////////////////////////////////////////////////
 	
@@ -443,6 +500,7 @@
 						
 						dTableBJual.row.add([
 							'<a href="javascript:void(0);" onclick="chooseJual(\''+resp[i].NO_BUKTI+'\',  \''+resp[i].KODEC+'\',   \''+resp[i].NAMAC+'\',  \''+resp[i].TOTAL+'\' ,  \''+resp[i].BAYAR+'\', \''+resp[i].SISA+'\'   )">'+resp[i].NO_BUKTI+'<input id="pilihFaktur'+i+'" hidden value="'+resp[i].NO_BUKTI+'"></a>',
+							resp[i].TGL,
 							resp[i].KODEC,
 							resp[i].NAMAC,
 							'<label for="pilihTotal" id="pilihTotal'+i+'" value="'+resp[i].TOTAL+'">'+Intl.NumberFormat('en-US').format(resp[i].TOTAL)+'</label>',
@@ -478,6 +536,7 @@
 			$("#BAYAR"+rowidJual).val(SISA);	
 			$("#TOTAL"+rowidJual).autoNumeric('update');
 			$("#BAYAR"+rowidJual).autoNumeric('update');
+
 			
 			$("#browseJualModal").modal("hide");
 			hitung();
@@ -640,6 +699,7 @@
 
     function hitung() {
 		var TBAYAR = 0;
+		var TKOM = 0;
 
 		$(".BAYAR").each(function() {
 			
@@ -658,11 +718,20 @@
 		
 		});
 		
+		var KOM = parseFloat($('#KOM').val().replace(/,/g, ''));
 		
+		TKOM =  TBAYAR * KOM / 100;
+
 		if(isNaN(TBAYAR)) TBAYAR = 0;
 
 		$('#TBAYAR').val(numberWithCommas(TBAYAR));		
 		$("#TBAYAR").autoNumeric('update');
+
+		if(isNaN(TKOM)) TKOM = 0;
+
+		$('#TKOM').val(numberWithCommas(TKOM));		
+		$("#TKOM").autoNumeric('update');
+		
 		
 	}
 
@@ -731,6 +800,7 @@
 			$("#NO_FAKTUR" + i.toString()).attr("readonly", true);
 			$("#TOTAL" + i.toString()).attr("readonly", true);
 			$("#BAYAR" + i.toString()).attr("readonly", false);
+			$("#SISA" + i.toString()).attr("readonly", true);
 			$("#DELETEX" + i.toString()).attr("hidden", false);
 
 			$tipx = $('#tipx').val();
@@ -783,6 +853,7 @@
 			$("#NO_FAKTUR" + i.toString()).attr("readonly", true);
 			$("#TOTAL" + i.toString()).attr("readonly", true);
 			$("#BAYAR" + i.toString()).attr("readonly", true);
+			$("#SISA" + i.toString()).attr("readonly", true);
 			$("#DELETEX" + i.toString()).attr("hidden", true);
 		}
 
@@ -851,7 +922,11 @@
 				<td>
 		            <input name='BAYAR[]' onclick='select()' onblur='hitung()' value='0' id='BAYAR${idrow}' type='text' style='text-align: right' class='form-control BAYAR text-primary' required >
                 </td>
-				
+
+				<td>
+		            <input name='SISA[]' onclick='select()' onblur='hitung()' value='0' id='SISA${idrow}' type='text' style='text-align: right' class='form-control SISA text-primary' required readonly >
+                </td>
+                
                 <td>
 					<button type='button' id='DELETEX${idrow}'  class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>
                 </td>				

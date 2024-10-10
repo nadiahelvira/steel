@@ -17,7 +17,7 @@
         <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-            <h1 class="m-0">Data Customer </h1>
+            <h1 class="m-0">Data Pegawai</h1>
             </div>
             <!-- /.col -->
         </div><!-- /.row -->
@@ -62,30 +62,46 @@
 								<div class="col-md-2">
                                     <input type="text" class="form-control KODEP" id="KODEP" name="KODEP"
                                     placeholder="Masukkan Kode Customer" value="{{$header->KODEP}}" readonly>
-                                </div>                                
-                            </div>
-
-							<div class="form-group row">
+                                </div>   
+								
                                 <div class="col-md-1">
                                     <label for="NAMAP" class="form-label">Nama</label>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-2">
                                     <input type="text" class="form-control NAMAP" id="NAMAP" name="NAMAP"
                                     placeholder="Masukkan Nama Customer" value="{{$header->NAMAP}}">
-                                </div>                                
+                                </div>        
+								
+								<div class="col-md-1">
+									<label for="STA" class="form-label">Status</label>
+								</div>
+								<div class="col-md-1">
+									<select id="STA" class="form-control"  name="STA">
+										<option value="SALES" {{ ($header->STA == 'SALES') ? 'selected' : '' }}>Sales</option>
+										<option value="PEGAWAI" {{ ($header->STA == 'PEGAWAI') ? 'selected' : '' }}>Pegawai</option>
+										<option value="SOPIR" {{ ($header->STA == 'SOPIR') ? 'selected' : '' }}>Sopir</option>
+									</select>
+								</div>
                             </div>
         
                             <div class="form-group row">
+
+                                <div class="col-md-1">
+                                    <label for="NO_KTP" class="form-label">No KTP</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control NO_KTP" id="NO_KTP"name="NO_KTP"
+                                    placeholder="Masukkan KTP" value="{{$header->NO_KTP}}">
+                                </div>
+
                                 <div class="col-md-1">
                                     <label for="ALAMAT" class="form-label">Alamat</label>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-2">
                                     <input type="text" class="form-control ALAMAT" id="ALAMAT" name="ALAMAT"
                                     placeholder="Masukkan Alamat" value="{{$header->ALAMAT}}">
                                 </div>
-							</div>
 
-							<div class="form-group row">
                                 <div class="col-md-1">
                                     <label for="KOTA" class="form-label">Kota</label>
                                 </div>
@@ -93,36 +109,23 @@
                                     <input type="text" class="form-control KOTA" id="KOTA" name="KOTA"
                                     placeholder="Masukkan Kota" value="{{$header->KOTA}}">
                                 </div>
-                            </div>
-        
-							<div class="form-group row">
-                                <div class="col-md-1">
-                                    <label for="TELPON1" class="form-label">Telpon</label>
-                                </div>
-                                <div class="col-md-2">
-                                    <input type="text" class="form-control TELPON1" id="TELPON1"name="TELPON1"
-                                    placeholder="Masukkan Telpon" value="{{$header->TELPON1}}">
-                                </div>
-                            </div>
-
-							<div class="form-group row">
-                                <div class="col-md-1">
-                                    <label for="NO_KTP" class="form-label">No KTP</label>
-                                </div>
-                                <div class="col-md-2">
-                                    <input type="text" class="form-control NO_KTP" id="NO_KTP"name="NO_KTP"
-                                    placeholder="Masukkan Fax" value="{{$header->NO_KTP}}">
-                                </div>
-                            </div>
+							</div>
  
 							<div class="form-group row">
-
-								<div class="col-md-1">
+                                <div class="col-md-1">
                                     <label for="TELPON" class="form-label">Telpon</label>
                                 </div>
                                 <div class="col-md-2">
                                     <input type="text" class="form-control TELPON" id="TELPON"name="TELPON"
-                                    placeholder="Masukkan Kontak" value="{{$header->TELPON}}">
+                                    placeholder="Masukkan Telpon" value="{{$header->TELPON}}">
+                                </div>
+
+								<div class="col-md-1">
+                                    <label for="KONTAK" class="form-label">Kontak</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control KONTAK" id="KONTAK"name="KONTAK"
+                                    placeholder="Masukkan Kontak" value="{{$header->KONTAK}}">
                                 </div>
 
                                 <div class="col-md-1">
@@ -136,101 +139,28 @@
  
 							<div class="form-group row">
                                 <div class="col-md-1">
-                                    <label for="UMAKAN" class="form-label">Uang Makan</label>
+                                    <label for="UMAKAN" class="form-label">Uang Makan / hari</label>
                                 </div>
 								<div class="col-md-2">
-									<input type="text" class="form-control UMAKAN" onclick="select()"  id="UMAKAN" name="UMAKAN" placeholder="UMAKAN" value="{{ number_format($header->UMAKAN, 2, '.', ',') }}" style="text-align: right; width:140px" readonly>
+									<input type="text" class="form-control UMAKAN" onclick="select()"  id="UMAKAN" name="UMAKAN" placeholder="" value="{{ number_format($header->UMAKAN, 2, '.', ',') }}" style="text-align: right; width:140px" readonly>
 								</div> 
-                            </div> 
 
-							<div class="form-group row">
                                 <div class="col-md-1">
-                                    <label for="PERSEN" class="form-label">Persentase</label>
+                                    <label for="KOM" class="form-label">Komisi (%)</label>
                                 </div>
 								<div class="col-md-2">
-									<input type="text" class="form-control PERSEN" onclick="select()"  id="PERSEN" name="PERSEN" placeholder="PERSEN" value="{{ number_format($header->PERSEN, 2, '.', ',') }}" style="text-align: right; width:140px" readonly>
+									<input type="text" class="form-control KOM" onclick="select()"  id="KOM" name="KOM" placeholder="" value="{{ number_format($header->KOM, 2, '.', ',') }}" style="text-align: right; width:140px" readonly>
 								</div> 
 
 								<div class="col-md-1">
-									<label for="GAJI" class="form-label">Gaji</label>
+									<label for="GAJI" class="form-label">Gaji / hari</label>
 								</div>
 								<div class="col-md-2">
-									<input type="text" class="form-control GAJI" onclick="select()"  id="GAJI" name="GAJI" placeholder="GAJI" value="{{ number_format($header->GAJI, 2, '.', ',') }}" style="text-align: right; width:140px" readonly>
+									<input type="text" class="form-control GAJI" onclick="select()"  id="GAJI" name="GAJI" placeholder="" value="{{ number_format($header->GAJI, 2, '.', ',') }}" style="text-align: right; width:140px" readonly>
 								</div>
                             </div> 
-
 							
-							<!-- <div id="bankInfo" class="tab-pane">
-				
-								<div class="form-group row">
-									<div class="col-md-1">
-										<label for="BANK" class="form-label">Bank</label>
-									</div>
-									<div class="col-md-2">
-										<select name="BANK" id="BANK" class="form-control BANK" style="width: 300px">
-											<option value="">--Pilih Bank--</option>
-											@foreach($pilihbank as $pilihbankD)
-												<option value="{{$pilihbankD->KODE}}" {{ $header->BANK == $pilihbankD->KODE ? 'selected' : '' }}>{{ $pilihbankD->NAMA }}</option>
-											@endforeach
-										</select>
-									</div>                                  
-								</div>
-
-								<div class="form-group row">							       
-									<div class="col-md-1">
-										<label for="BANK_CAB" class="form-label">Cabang</label>
-									</div>
-									<div class="col-md-4">
-										<input type="text" class="form-control BANK_CAB" id="BANK_CAB" name="BANK_CAB" placeholder="Masukkan Cabang" value="{{$header->BANK_CAB}}">
-									</div>
-								</div>
-
-								<div class="form-group row">							       
-									<div class="col-md-1">
-										<label for="BANK_KOTA" class="form-label">Kota</label>
-									</div>
-									<div class="col-md-2">
-										<input type="text" class="form-control BANK_KOTA" id="BANK_KOTA" name="BANK_KOTA" placeholder="Masukkan Kota" value="{{$header->BANK_KOTA}}">
-									</div>
-								</div>
-								
-								<div class="form-group row">
-									<div class="col-md-1">
-										<label for="BANK_NAMA" class="form-label">A/N</label>
-									</div>
-									<div class="col-md-4">
-										<input type="text" class="form-control BANK_NAMA" id="BANK_NAMA" name="BANK_NAMA" placeholder="Masukkan Nama" value="{{$header->BANK_NAMA}}">
-									</div>                                
-								</div>
-								
-								<div class="form-group row">
-									<div class="col-md-1">
-										<label for="BANK_REK" class="form-label">Rek</label>
-									</div>
-									<div class="col-md-4">
-										<input type="text" class="form-control BANK_REK" id="BANK_REK" name="BANK_REK" placeholder="Masukkan Nomor Rekening" value="{{$header->BANK_REK}}">
-									</div>                                
-								</div>
-								
-								<div class="form-group row">
-									<div class="col-md-1">
-										<label for="LIM" class="form-label">Kredit Limit</label>
-									</div>
-									<div class="col-md-2">
-										<input type="text" class="form-control LIM" onclick="select()"  id="LIM" name="LIM" placeholder="LIM" value="{{ number_format($header->LIM, 2, '.', ',') }}" style="text-align: right; width:140px" readonly>
-									</div>                                
-								</div>
-								
-								<div class="form-group row">
-									<div class="col-md-1">
-										<label for="HARI" class="form-label">Jatuh Tempo (Hari)</label>
-									</div>
-									<div class="col-md-2">
-										<input type="text" class="form-control HARI" onclick="select()" id="HARI" name="HARI" placeholder="Masukkan Jumlah Hari" style="text-align: right; width:140px" value="{{$header->HARI}}">
-									</div>                                
-								</div>
-								
-							</div> -->
+							
 						</div>
                                 
                         </div>
@@ -319,8 +249,9 @@
     		 ganti();
 		} 
 
-		$("#LIM").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
-		// $("#HARI").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999'});
+		$("#UMAKAN").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
+		$("#KOM").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
+		$("#GAJI").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
 		
     });
 
@@ -381,14 +312,14 @@
 		$("#NAMAP").attr("readonly", false);	
 		$("#ALAMAT").attr("readonly", false);			
 		$("#KOTA").attr("readonly", false);		
-		$("#TELPON1").attr("readonly", false);			
+		$("#TELPON").attr("readonly", false);			
 		$("#NO_KTP").attr("readonly", false);	
 		$("#HP").attr("readonly", false);			
 		$("#AKT").attr("readonly", false);		
 		$('#TELPON').attr("readonly", false);
 
 		 $('#UMAKAN').attr("readonly", false);	
-		 $('#PERSEN').attr("readonly", false);	
+		 $('#KOM').attr("readonly", false);	
 		 $('#GAJI').attr("readonly", false);
 
 
@@ -425,14 +356,14 @@
 		$("#NAMAP").attr("readonly", true);	
 		$("#ALAMAT").attr("readonly", true);			
 		$("#KOTA").attr("readonly", true);		
-		$("#TELPON1").attr("readonly", true);			
+		$("#TELPON").attr("readonly", true);			
 		$("#NO_KTP").attr("readonly", true);	
 		$("#HP").attr("readonly", true);			
 		$("#AKT").attr("readonly", true);		
 		$('#TELPON').attr("readonly", true);
 
 		$('#UMAKAN').attr("readonly", true);	
-		$('#PERSEN').attr("readonly", true);	
+		$('#KOM').attr("readonly", true);	
 		$('#GAJI').attr("readonly", true);
 
 
@@ -454,7 +385,7 @@
 		 $('#ALAMAT').val("");	
 		 $('#KOTA').val("");		
 
-		 $('#TELPON1').val("");	
+		 $('#TELPON').val("");	
 		 $('#NO_KTP').val("");	
 		 $('#HP').val("");	
 		 $('#AKT').val("0");		
@@ -471,7 +402,7 @@
 		 $('#BANK_NAMA').val("");		
 		 $('#BANK_REK').val("");
 		 $('#UMAKAN').val("0");
-		 $('#PERSEN').val("0");	
+		 $('#KOM').val("3");	
 		 $('#GAJI').val("0");	
 
 		 
@@ -497,12 +428,12 @@
 	
 
      var hasilCek;
-	function cekCust(kodec) {
+	function cekPegawai(kodep) {
 		$.ajax({
 			type: "GET",
 			url: "{{url('pegawai/cekpegawai')}}",
             async: false,
-			data: ({ KODEP: kodec, }),
+			data: ({ KODEP: kodep, }),
 			success: function(data) {
                 if (data.length > 0) {
                     $.each(data, function(i, item) {
@@ -511,16 +442,23 @@
                 }
 			},
 			error: function() {
-				alert('Error cekCust occured');
+				alert('Error cekPegawai occured');
 			}
 		});
 		return hasilCek;
 	}
     
 	function simpan() {
-        //cekCust($('#KODEP').val());
-        //(hasilCek==0) ? document.getElementById("entri").submit() : alert('Customer '+$('#KODEP').val()+' sudah ada!');
-        document.getElementById("entri").submit() 
+        hasilCek=0;
+		$tipx = $('#tipx').val();
+				
+        if ( $tipx == 'new' )
+		{
+			cekPegawai($('#KODEP').val());		
+		}
+		
+
+        (hasilCek==0) ? document.getElementById("entri").submit() : alert('Pegawai '+$('#KODEP').val()+' sudah ada!');
 	}
 </script>
 @endsection

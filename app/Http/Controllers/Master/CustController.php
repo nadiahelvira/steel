@@ -37,9 +37,12 @@ class CustController extends Controller
         // }
         // $cust = DB::table('cust')->select('KODEC', 'NAMAC', 'ALAMAT', 'KOTA')->where('GOL', $gol)->orderBy('KODEC', 'ASC')->get();
         // $cust = DB::table('cust')->select('KODEC', 'NAMAC', 'ALAMAT', 'KOTA')->orderBy('KODEC', 'ASC')->get();
-        $cust = DB::SELECT("SELECT NO_ID, KODEC, NAMAC, ALAMAT, KOTA,  AKTIF, CASE WHEN PKP = '1' THEN '(PKP)' ELSE '(NON PKP)' END AS PKP2, PKP
-                            FROM cust
-                            ORDER BY KODEC");
+        $cust = DB::SELECT("SELECT a.NO_ID, a.KODEC, a.NAMAC, a.ALAMAT, a.KOTA,  a.AKTIF, 
+                                    CASE WHEN a.PKP = '1' THEN '(PKP)' ELSE '(NON PKP)' END AS PKP2, 
+                                    a.PKP, a.KODEP, a.NAMAP, b.KOM
+                            FROM cust a, pegawai b
+                            WHERE a.KODEP = b.KODEP
+                            ORDER BY a.KODEC");
 
         return response()->json($cust);
     }
@@ -157,6 +160,8 @@ class CustController extends Controller
                 'BANK_REK'      => ($request['BANK_REK'] == null) ? "" : $request['BANK_REK'],
                 'LIM'            => ($request['LIM'] == null) ? "" : $request['LIM'],
                 'HARI'            => ($request['HARI'] == null) ? "" : $request['HARI'],
+                'KODEP'            => ($request['KODEP'] == null) ? "" : $request['KODEP'],
+                'NAMAP'            => ($request['NAMAP'] == null) ? "" : $request['NAMAP'],
                 'USRNM'          => Auth::user()->username,
                 'TG_SMP'         => Carbon::now()
             ]
@@ -391,6 +396,8 @@ class CustController extends Controller
                 'BANK_REK'      => ($request['BANK_REK'] == null) ? "" : $request['BANK_REK'],
                 'LIM'            => (float) str_replace(',', '', $request['LIM']),
                 'HARI'            => (float) str_replace(',', '', $request['HARI']),
+                'KODEP'      => ($request['KODEP'] == null) ? "" : $request['KODEP'],
+                'NAMAP'      => ($request['NAMAP'] == null) ? "" : $request['NAMAP'],
                 'USRNM'          => Auth::user()->username,
                 'TG_SMP'         => Carbon::now()
             ]

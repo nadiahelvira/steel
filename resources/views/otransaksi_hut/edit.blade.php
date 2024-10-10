@@ -131,7 +131,7 @@
                                             <label for="BACNO" class="form-label">Faktur#</label></th>
                                         <th width="200px" style="text-align:right">Total</th>
                                         <th width="200px" style="text-align:right">Bayar</th>
-                                        <!-- <th width="200px" style="text-align:right">Sisa</th> -->
+                                        <th width="200px" style="text-align:right">Sisa</th> 
                                         <th></th>										
                                     </tr>
                                 </thead>
@@ -154,8 +154,10 @@
 										</td>    
 										<td>
 										    <input name="BAYAR[]" onclick="select()" onblur="hitung()" value="{{$detail->BAYAR}}" id="BAYAR{{$no}}" type="text" style="text-align: right"  class="form-control BAYAR">
-										</td>
-										
+										</td>										
+										<td>
+										    <input name="SISA[]" onclick="select()" onblur="hitung()" value="{{$detail->SISA}}" id="TOTAL{{$no}}" type="text" style="text-align: right"  class="form-control SISA" readonly >
+										</td>  
 										<td>
                                             <button type="button" id="DELETEX{{$no}}" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
                                                 <i class="fa fa-fw fa-trash"></i>
@@ -233,6 +235,7 @@
 				<thead>
 					<tr>
 						<th>Beli#</th>
+						<th>Tgl</th>
 						<th>Kode</th>
 						<th>-</th>
 						<th>Total</th>
@@ -371,12 +374,13 @@
 		
 
 		
-		$("#TBAYAR").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});		
+		$("#TBAYAR").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-9999999999.99'});		
 
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
-			$("#TOTAL" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-			$("#BAYAR" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+			$("#TOTAL" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-9999999999.99'});
+			$("#BAYAR" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-9999999999.99'});
+			$("#SISA" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-9999999999.99'});
 		}	
 
 		$(".NO_FAKTUR").each(function() {
@@ -394,6 +398,7 @@
         $('body').on('click', '.btn-delete', function() {
 			var val = $(this).parents("tr").remove();
 			baris--;
+			hitung();
 			nomor();
 			
 		});
@@ -497,6 +502,7 @@
 						
 						dTableBBeli.row.add([
 							'<a href="javascript:void(0);" onclick="chooseBeli(\''+resp[i].NO_BUKTI+'\', \''+resp[i].TOTAL+'\' , \''+resp[i].SISA+'\'   )">'+resp[i].NO_BUKTI+'<input id="pilihFaktur'+i+'" hidden value="'+resp[i].NO_BUKTI+'"></a>',
+							resp[i].TGL,
 							resp[i].KODES,
 							resp[i].NAMAS,
 							'<label for="pilihTotal" id="pilihTotal'+i+'" value="'+resp[i].TOTAL+'">'+Intl.NumberFormat('en-US').format(resp[i].TOTAL)+'</label>',
@@ -951,7 +957,8 @@
 		 $('#KODES').val("");	
 		 $('#NAMAS').val("");		
 		 $('#NOTES').val("");	
-
+		 $('#TBAYAR').val("0.00");	
+		 
 		 
 		var html = '';
 		$('#detailx').html(html);	
@@ -1002,7 +1009,11 @@
 				<td>
 		            <input name='BAYAR[]'  onblur='hitung()' value='0' id='BAYAR${idrow}' type='text' style='text-align: right' class='form-control BAYAR text-primary' required >
                 </td>
-				
+
+				<td>
+		            <input name='SISA[]'  onblur='hitung()' value='0' id='SISA${idrow}' type='text' style='text-align: right' class='form-control SISA text-primary' required readonly >
+                </td>
+                
                 <td>
 					<button type='button' id='DELETEX${idrow}'  class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>
                 </td>				
@@ -1016,17 +1027,17 @@
 		for (i = 0; i <= jumlahdata; i++) {
 			$("#TOTAL" + i.toString()).autoNumeric('init', {
 				aSign: '<?php echo ''; ?>',
-				vMin: '-999999999.99'
+				vMin: '-99999999999.99'
 			});
 
 			$("#BAYAR" + i.toString()).autoNumeric('init', {
 				aSign: '<?php echo ''; ?>',
-				vMin: '-999999999.99'
+				vMin: '-99999999999.99'
 			});
 			
 			$("#SISA" + i.toString()).autoNumeric('init', {
 				aSign: '<?php echo ''; ?>',
-				vMin: '-999999999.99'
+				vMin: '-99999999999.99'
 			});			 
 
 

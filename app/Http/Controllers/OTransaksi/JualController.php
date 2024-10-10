@@ -69,12 +69,44 @@ class JualController extends Controller
 
 		$CBG = Auth::user()->CBG;
 
-        $jual = DB::SELECT("SELECT distinct jual.NO_BUKTI, jual.NO_SO, jual.KODEC, jual.NAMAC, 
-		                  jual.ALAMAT, jual.KOTA from jual, juald 
+        $jual = DB::SELECT("SELECT jual.NO_BUKTI, jual.NO_SO, jual.KODEC, jual.NAMAC, 
+		                  jual.ALAMAT, jual.KOTA, JUALD.KD_BRG, JUALD.NA_BRG, JUALD.QTY, JUALD.HARGA, JUALD.TOTAL from jual, juald 
                           WHERE jual.NO_BUKTI = jualD.NO_BUKTI AND jual.GOL ='$golz'
-                          AND jual.CBG = '$CBG' ");
+                          AND jual.CBG = '$CBG' AND NO_RETUR =''  ");
         return response()->json($jual);
     }
+
+
+    public function browseSurat(Request $request)
+    {
+        $golz = $request->GOL;
+
+		$CBG = Auth::user()->CBG;
+
+        $jual = DB::SELECT("SELECT surats.NO_BUKTI, surats.NO_SPM, surats.NO_SO, surats.KODEC, surats.NAMAC, 
+		                  surats.ALAMAT, surats.KOTA , surats.KODEP, surats.NAMAP,  suratsd.KD_BRG, suratsd.NA_BRG, suratsd.QTY, suratsd.HARGA, suratsd.TOTAL from surats, suratsd 
+                          WHERE surats.NO_BUKTI = suratsd.NO_BUKTI AND surats.GOL ='$golz'
+                          AND surats.CBG = '$CBG' AND surats.NO_JUAL =''  ");
+        return response()->json($jual);
+    }
+
+	public function browse_detail(Request $request)
+    {
+
+        // $filterbukti = '';
+        // if($request->NO_SO)
+        // {
+
+        //     $filterbukti = " WHERE NO_BUKTI='".$request->NO_SO."' ";
+        // }
+        $spmd= DB::SELECT("SELECT REC, KD_BRG, NA_BRG, SATUAN , QTY, HARGA, TOTAL, KET
+                            from suratsd
+                            where NO_BUKTI='".$request->nobukti."' ORDER BY NO_BUKTI ");
+	
+
+		return response()->json($spmd);
+	}
+
 
     public function browseuang(Request $request)
     {
@@ -138,7 +170,7 @@ class JualController extends Controller
                                 <i class="fas fa-edit"></i>
                                     Edit
                                 </a>
-                                <a class="dropdown-item btn btn-danger" href="jsjualc/' . $row->NO_ID . '">
+                                <a class="dropdown-item btn btn-danger" href="jual/cetak/' . $row->NO_ID . '">
                                     <i class="fa fa-print" aria-hidden="true"></i>
                                     Print
                                 </a> 									
@@ -267,8 +299,12 @@ class JualController extends Controller
                 'GOL'              => $GOLZ,			
                 'NO_SO'            => ($request['NO_SO'] == null) ? "" : $request['NO_SO'],
                 'NO_JUAL'            => ($request['NO_JUAL'] == null) ? "" : $request['NO_JUAL'],
-                'NO_SURAT'            => ($request['NO_SURAT'] == null) ? "" : $request['NO_SURAT'],
- 
+                'NO_SURATS'            => ($request['NO_SURATS'] == null) ? "" : $request['NO_SURATS'],
+                'NO_SPM'            => ($request['NO_SPM'] == null) ? "" : $request['NO_SPM'],
+
+                'KODEP'            => ($request['KODEP'] == null) ? "" : $request['KODEP'],
+                'NAMAP'            => ($request['NAMAP'] == null) ? "" : $request['NAMAP'],
+                
                 'KODEC'            => ($request['KODEC'] == null) ? "" : $request['KODEC'],
                 'NAMAC'            => ($request['NAMAC'] == null) ? "" : $request['NAMAC'],
                 'ALAMAT'           => ($request['ALAMAT'] == null) ? "" : $request['ALAMAT'],
@@ -299,7 +335,7 @@ class JualController extends Controller
         $KET     = $request->input('KET');
         $QTY        = $request->input('QTY');
         $HARGA        = $request->input('HARGA');
-        $PPNX        = $request->input('PPNX');
+        $PPNX        = $request->input('PPN');
         $DPP        = $request->input('DPP');
 	    $TOTAL        = $request->input('TOTAL');		 
 
@@ -574,9 +610,13 @@ class JualController extends Controller
             [
                 'TGL'              => date('Y-m-d', strtotime($request['TGL'])),
                 'NO_SO'            => ($request['NO_SO'] == null) ? "" : $request['NO_SO'],
-                'NO_SURAT'            => ($request['NO_SURAT'] == null) ? "" : $request['NO_SURAT'],
+                'NO_SURATS'            => ($request['NO_SURATS'] == null) ? "" : $request['NO_SURATS'],
+                'NO_SPM'            => ($request['NO_SPM'] == null) ? "" : $request['NO_SPM'],
                 'NO_JUAL'            => ($request['NO_JUAL'] == null) ? "" : $request['NO_JUAL'],
- 
+
+                'KODEP'            => ($request['KODEP'] == null) ? "" : $request['KODEP'],
+                'NAMAP'            => ($request['NAMAP'] == null) ? "" : $request['NAMAP'],
+                
                 'KODEC'            => ($request['KODEC'] == null) ? "" : $request['KODEC'],
                 'NAMAC'            => ($request['NAMAC'] == null) ? "" : $request['NAMAC'],
                 'ALAMAT'           => ($request['ALAMAT'] == null) ? "" : $request['ALAMAT'],
@@ -737,7 +777,7 @@ class JualController extends Controller
 
     }
     
-    public function jsjualc(Jual $jual)
+    public function cetak(Jual $jual)
     {
         $no_jual = $jual->NO_BUKTI;
 		
@@ -747,7 +787,7 @@ class JualController extends Controller
 
         $query = DB::SELECT("
             SELECT jual.NO_BUKTI, jual.TGL, juald.KD_BRG, juald.NA_BRG,  jual.TGL, jual.USRNM, jual.PPN, jual.NETT,
-			juald.SATUAN, juald.QTY,  
+			juald.SATUAN, juald.QTY  
 			from jual, juald 
 			WHERE jual.NO_BUKTI=juald.NO_BUKTI and jual.NO_BUKTI='$no_jual'
 			ORDER BY jual.NO_BUKTI;
@@ -776,6 +816,8 @@ class JualController extends Controller
             ));
             $rec++;
         }
+
+        DB::SELECT("UPDATE JUAL SET POSTED=1 WHERE NO_BUKTI='$no_jual'");
 	
         $PHPJasperXML->setData($data);
         ob_end_clean();

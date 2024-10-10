@@ -16,7 +16,7 @@ class Pegawai extends Model
 
     protected $fillable = 
     [
-        "KODEP", "NAMAP", "ALAMAT", "KOTA"
+        "KODEP", "NAMAP", "ALAMAT", "KOTA", "TELPON", "KONTAK", "HP", "GOL", "KOM", "STA", "UMAKAN"
     ];
 
 }

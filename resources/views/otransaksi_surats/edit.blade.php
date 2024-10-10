@@ -105,7 +105,32 @@
 
 							<div class="form-group row">
 								<div class="col-md-1" align="left">
-									<label style="color:red;font-size:20px">* </label>	
+									<label style="color:red">*</label>									
+                                    <label for="NO_SPM" class="form-label">SPM#</label>
+                                </div>
+                               	<div class="col-md-2 input-group" >
+                                  <input type="text" class="form-control NO_SPM" id="NO_SPM" name="NO_SPM" placeholder="Pilih Spm"value="{{$header->NO_SPM}}" style="text-align: left" readonly >
+        						  <button type="button" class="btn btn-primary" onclick="browseSpm()"><i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+
+
+							<div class="form-group row">
+								<div class="col-md-1" align="left">
+									<!-- <label style="color:red">*</label>									 -->
+                                    <label for="NO_SO" class="form-label">SO#</label>
+                                </div>
+                               	<div class="col-md-2 input-group" >
+                                  <input type="text" class="form-control NO_SO" id="NO_SO" name="NO_SO" placeholder="Pilih SO"value="{{$header->NO_SO}}" style="text-align: left" readonly >
+        	
+                                </div>
+                            </div>
+
+
+
+							<div class="form-group row">
+								<div class="col-md-1" align="left">
+									<!-- <label style="color:red;font-size:20px">* </label>	 -->
                                     <label for="KODEC" class="form-label">Cust</label>
                                 </div>
                                 <div class="col-md-2">
@@ -133,17 +158,21 @@
 								</div>
                             </div>
 
-							<div class="form-group row">
+
+                            <div class="form-group row">
 								<div class="col-md-1" align="left">
-									<label style="color:red">*</label>									
-                                    <label for="NO_SO" class="form-label">SO#</label>
+									<!-- <label style="color:red;font-size:20px">* </label>	 -->
+                                    <label for="KODEP" class="form-label">Sales#</label>
                                 </div>
-                               	<div class="col-md-2 input-group" >
-                                  <input type="text" class="form-control NO_SO" id="NO_SO" name="NO_SO" placeholder="Pilih SO"value="{{$header->NO_SO}}" style="text-align: left" readonly >
-        						  <button type="button" class="btn btn-primary" onclick="browseSo()"><i class="fa fa-search"></i></button>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control KODEP" id="KODEP" name="KODEP" placeholder="Kode Salesr" value="{{$header->KODEP}}" readonly>
+                                </div>
+
+								<div class="col-md-4">
+                                    <input type="text" class="form-control NAMAP" id="NAMAP" name="NAMAP" placeholder="-" value="{{$header->NAMAP}}" readonly>
                                 </div>
                             </div>
-
+                            
 							<div class="form-group row">
                                 <div class="col-md-1" align="left">
 									<label style="color:red;font-size:20px">* </label>	
@@ -171,7 +200,7 @@
 
 							<div class="form-group row">
                                 <div class="col-md-1" align="left">
-									<label style="color:red">*</label>									
+									<!-- <label style="color:red">*</label>									 -->
                                     <label for="NOTES" class="form-label">Notes</label>
                                 </div>
                                 <div class="col-md-4">
@@ -322,61 +351,29 @@
     </div>
 
 
-	<div class="modal fade" id="browseCustModal" tabindex="-1" role="dialog" aria-labelledby="browseCustModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-lg" role="document">
-		<div class="modal-content">
-		  <div class="modal-header">
-			<h5 class="modal-title" id="browseCustModalLabel">Cari Customer</h5>
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			  <span aria-hidden="true">&times;</span>
-			</button>
-		  </div>
-		  <div class="modal-body">
-			<table class="table table-stripped table-bordered" id="table-customer">
-				<thead>
-					<tr>
-						<th>Kode</th>
-						<th>Nama</th>
-						<th>Alamat</th>
-						<th>Kota</th>
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
-		  </div>
-		  <div class="modal-footer">
-			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		  </div>
-		</div>
-	  </div>
-	</div>
 	
-	<div class="modal fade" id="browseSoModal" tabindex="-1" role="dialog" aria-labelledby="browseSoModalLabel" aria-hidden="true">
+	<div class="modal fade" id="browseSpmModal" tabindex="-1" role="dialog" aria-labelledby="browseSpmModalLabel" aria-hidden="true">
 	  <div class="modal-dialog modal-xl" role="document">
 		<div class="modal-content">
 		  <div class="modal-header">
-			<h5 class="modal-title" id="browseCustModalLabel">Cari Sales Order</h5>
+			<h5 class="modal-title" id="browseSpmModalLabel">Cari SPM#</h5>
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			  <span aria-hidden="true">&times;</span>
 			</button>
 		  </div>
 		  <div class="modal-body">
-			<table class="table table-stripped table-bordered" id="table-so">
+			<table class="table table-stripped table-bordered" id="table-spm">
 				<thead>
 					<tr>
 						<th>No Bukti</th>
 						<th>Tanggal</th>
-						<!-- <th>No Terima</th> -->
+						<th>SO#</th>
 						<th>Customer</th>
 						<th>Kode</th>
 						<th>Barang</th>
 						<th>Satuan</th>
-						<!-- <th>Seri#</th> -->
-						<!-- <th>Ket</th> -->
 						<th>Qty</th>
-						<th>Kirim</th>
-						<th>Sisa</th>
+
 					</tr>
 				</thead>
 				<tbody>
@@ -518,6 +515,7 @@
         $('body').on('click', '.btn-delete', function() {
 			var val = $(this).parents("tr").remove();
 			baris--;
+			hitung();
 			nomor();
 			
 		});
@@ -530,175 +528,33 @@
  	
 		
 ///////////////////////////////////////////////////////////////////////
-		var dTableCustomer;
-		loadDataCustomer = function(){
-			$.ajax(
-			{
-				type: 'GET',    
-				url: "{{url('surats/browseCust')}}",
-				// data: {
-				// 	'GOL': "{{$golz}}",
-				// },
-				success: function( resp )
-				{
-					if(dTableCustomer){
-						dTableCustomer.clear();
-					}
-					for(i=0; i<resp.length; i++){
-						
-						dTableCustomer.row.add([
-							'<a href="javascript:void(0);" onclick="chooseCustomer(\''+resp[i].KODEC+'\',\''+resp[i].NAMAC+'\',\''+resp[i].ALAMAT+'\',\''+resp[i].KOTA+'\')">'+resp[i].KODEC+'</a>',
-							resp[i].NAMAC,
-							resp[i].ALAMAT,
-							resp[i].KOTA,
-						]);
-					}
-					dTableCustomer.draw();
-				}
-			});
-		}
-		
-		dTableCustomer = $("#table-customer").DataTable({
-			
-		});
-		
-		browseCust = function(){
-			loadDataCustomer();
-			$("#browseCustModal").modal("show");
-		}
-		
-		chooseCustomer = function(kodec,namac,alamat,kota){
-			$("#KODEC").val(kodec);
-			$("#NAMAC").val(namac);
-			$("#ALAMAT").val(alamat);
-			$("#KOTA").val(kota);
-			$("#browseCustModal").modal("hide");
-		}
-		
-		$("#KODEC").keypress(function(e){
-			if(e.keyCode == 46){
-				e.preventDefault();
-				browseCust();
-			}
-		}); 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// 	var dTableSo;
-	// 	var rowidSo;
-	// 	loadDataSo = function(){
-	// 		var dataDetailSO = $("input[name='NO_SO[]']").map(function() {
-	// 			var isi = "''";
-	// 			if ($(this).val()) {
-	// 				isi = "'" + $(this).val() + "'";
-	// 			}
-	// 			return isi;
-	// 		}).get();
-	// 		var dataDetailBrg = $("input[name='KD_BRG[]']").map(function() {
-	// 			var isi = "''";
-	// 			if ($(this).val()) {
-	// 				isi = "'" + $(this).val() + "'";
-	// 			}
-	// 			return isi;
-	// 		}).get();
-
-	// 		$.ajax(
-	// 		{
-	// 			type: 'GET',    
-	// 			url: "{{url('surats/browseSo')}}",
-	// 			data: {
-	// 				kodec: $("#KODEC").val(),
-	// 				'GOL': "{{$golz}}",
-	// 			},
-	// 			success: function( resp )
-	// 			{
-	// 				if(dTableSo){
-	// 					dTableSo.clear();
-	// 				}
-	// 				for(i=0; i<resp.length; i++){
-						
-	// 					dTableSo.row.add([
-	// 						'<a href="javascript:void(0);" onclick="chooseSo(\''+resp[i].NO_BUKTI+'\',  \''+resp[i].KD_BRG+'\',  \''+resp[i].NA_BRG+'\',  \''+resp[i].SATUAN+'\',  \''+resp[i].SISA+'\', \''+resp[i].NO_ID+'\',  \''+resp[i].HARGA+'\')">'+resp[i].NO_BUKTI+'</a>',
-	// 						resp[i].TGL,
-	// 						resp[i].NAMAC,
-	// 						resp[i].KD_BRG,
-	// 						resp[i].NA_BRG,
-	// 						resp[i].SATUAN,
-	// 						resp[i].QTY,
-	// 						resp[i].KIRIM,
-	// 						resp[i].SISA,
-	// 					]);
-	// 				}
-	// 				dTableSo.draw();
-	// 			}
-	// 		});
-	// 	}
-		
-	// 	dTableSo = $("#table-so").DataTable({
-    //         columnDefs: 
-    //         [
-    //             {
-    //                 className: "dt-right", 
-    //                 targets: [6,7,8],
-    //             },		
-    //             {
-    //               targets: 1,
-    //               render: $.fn.dataTable.render.moment( 'DD-MM-YYYY' ),
-    //             }
-    //         ],
-	// 	});
-		
-	// 	browseSo = function(rid){
-	// 		rowidSo = rid;
-	// 		loadDataSo();
-	// 		$("#browseSoModal").modal("show");
-	// 	}
-		
-	// 	chooseSo = function(NO_BUKTI,KD_BRG,NA_BRG,SATUAN,QTY,NO_ID,HARGA){
-	// 		$("#NO_SO"+rowidSo).val(NO_BUKTI);
-	// 		$("#KD_BRG"+rowidSo).val(KD_BRG);
-	// 		$("#NA_BRG"+rowidSo).val(NA_BRG);
-	// 		$("#SATUAN"+rowidSo).val(SATUAN);
-	// 		$("#QTY"+rowidSo).val(QTY!=0 ? QTY : 0);
-	// 		$("#ID_SOD"+rowidSo).val(NO_ID);
-	// 		$("#HARGA"+rowidSo).val(HARGA);
-	// 		$("#browseSoModal").modal("hide");
-			
-	// 		hitung();
-	// 	}
-		
-	// 	$("#NO_SO0").keypress(function(e){
-	// 		if(e.keyCode == 46){
-	// 			e.preventDefault();
-	// 			browseSo(0);
-	// 		}
-	// 	}); 
 
 
-//////////////////////////////////////////////////////////////////
 
-	var dTableSo;
-	var rowidSo;
-	loadDataSo = function(){
+	var dTableSpm;
+	var rowidSpm;
+	loadDataSpm = function(){
 		
 		$.ajax(
 		{
 			type: 'GET',    
-			url: "{{url('surats/browseSo')}}",
+			url: "{{url('surats/browseSpm')}}",
 			data: {
 				// kdbrg: kode,
 				'GOL': "{{$golz}}",
-				kodec: $("#KODEC").val(),
 			},
 			success: function( response )
 			{
 				resp = response;
-				if(dTableSo){
-					dTableSo.clear();
+				if(dTableSpm){
+					dTableSpm.clear();
 				}
 				for(i=0; i<resp.length; i++){
 					
-					dTableSo.row.add([
-						'<a href="javascript:void(0);" onclick="chooseSo(\''+resp[i].NO_BUKTI+'\',  \''+resp[i].KD_BRG+'\',  \''+resp[i].NA_BRG+'\',  \''+resp[i].SATUAN+'\',  \''+resp[i].SISA+'\', \''+resp[i].NO_ID+'\',  \''+resp[i].HARGA+'\')">'+resp[i].NO_BUKTI+'</a>',
+					dTableSpm.row.add([
+						'<a href="javascript:void(0);" onclick="chooseSpm(\''+resp[i].NO_BUKTI+'\',  \''+resp[i].NO_SO+'\', \''+resp[i].KODEC+'\', \''+resp[i].NAMAC+'\', \''+resp[i].ALAMAT+'\', \''+resp[i].KOTA+'\', \''+resp[i].KODEP+'\',  \''+resp[i].NAMAP+'\', \''+resp[i].KD_BRG+'\',  \''+resp[i].KD_BRG+'\', \''+resp[i].KD_BRG+'\',  \''+resp[i].NA_BRG+'\',  \''+resp[i].SATUAN+'\',  \''+resp[i].SISA+'\', \''+resp[i].NO_ID+'\',  \''+resp[i].HARGA+'\')">'+resp[i].NO_BUKTI+'</a>',
 						resp[i].TGL,
+						resp[i].NO_SO,
 						resp[i].NAMAC,
 						resp[i].KD_BRG,
 						resp[i].NA_BRG,
@@ -708,50 +564,38 @@
 						resp[i].SISA,
 					]);
 				}
-				dTableSo.draw();
+				dTableSpm.draw();
 			}
 		});
 	}
 	
-	dTableSo = $("#table-so").DataTable({
-
-		columnDefs: 
-		[
-			{
-				className: "dt-right", 
-				targets: [6,7,8],
-			},		
-			{
-				targets: 1,
-				render: $.fn.dataTable.render.moment( 'DD-MM-YYYY' ),
-			}
-		],
+	dTableSpm = $("#table-spm").DataTable({
 
 	});
 	
-		browseSo = function(rid){
-			rowidSo = rid;
-			loadDataSo();
-			$("#browseSoModal").modal("show");
+		browseSpm = function(){
+			loadDataSpm();
+			$("#browseSpmModal").modal("show");
 		}
 	
-	chooseSo = function(NO_BUKTI,KD_BRG,NA_BRG,SATUAN,QTY,NO_ID,HARGA){
-		$("#NO_SO").val(NO_BUKTI);
-		$("#KD_BRG"+rowidSo).val(KD_BRG);
-		$("#NA_BRG"+rowidSo).val(NA_BRG);
-		$("#SATUAN"+rowidSo).val(SATUAN);
-		$("#QTY"+rowidSo).val(QTY!=0 ? QTY : 0);
-		$("#ID_SOD"+rowidSo).val(NO_ID);
-		$("#HARGA"+rowidSo).val(HARGA);	
-		$("#browseSoModal").modal("hide");
+	chooseSpm = function(NO_BUKTI,NO_SO,KODEC,NAMAC,ALAMAT, KOTA,KODEP, NAMAP ){
+		$("#NO_SPM").val(NO_BUKTI);
+		$("#NO_SO").val(NO_SO);
+		$("#KODEC").val(KODEC);
+		$("#NAMAC").val(NAMAC);
+		$("#ALAMAT").val(ALAMAT);
+		$("#KOTA").val(KOTA);
+		$("#KODEP").val(KODEP);
+		$("#NAMAP").val(NAMAP);
+		$("#browseSpmModal").modal("hide");
 
-		getSod(NO_BUKTI);
+		getSpmd(NO_BUKTI);
 	}
 	
-	$("#NO_SO").keypress(function(e){
+	$("#NO_SPM").keypress(function(e){
 		if(e.keyCode == 46){
 			e.preventDefault();
-			browseSo();
+			browseSpm();
 		}
 	}); 
 
@@ -778,7 +622,7 @@ var dTableBSurats;
 					for(i=0; i<resp.length; i++){
 						
 						dTableBSurats.row.add([
-							'<a href="javascript:void(0);" onclick="chooseSurats(\''+resp[i].NO_BUKTI+'\' , \''+resp[i].NO_SO+'\', \''+resp[i].KODEC+'\',  \''+resp[i].NAMAC+'\', \''+resp[i].ALAMAT+'\',  \''+resp[i].KOTA+'\')">'+resp[i].NO_BUKTI+'</a>',
+							'<a href="javascript:void(0);" onclick="chooseSurats(\''+resp[i].NO_BUKTI+'\' , \''+resp[i].NO_SO+'\', \''+resp[i].KODEC+'\',  \''+resp[i].NAMAC+'\', \''+resp[i].ALAMAT+'\',  \''+resp[i].KOTA+'\' , \''+resp[i].KODEP+'\',  \''+resp[i].NAMAP+'\'  )">'+resp[i].NO_BUKTI+'</a>',
 							resp[i].NO_SO,
 							resp[i].KODEC,
 							resp[i].NAMAC,
@@ -800,13 +644,16 @@ var dTableBSurats;
 			$("#browseSuratsModal").modal("show");
 		}
 		
-		chooseSurats = function(NO_BUKTI, NO_SO, KODEC,NAMAC, ALAMAT, KOTA){
+		chooseSurats = function(NO_BUKTI, NO_SO, KODEC,NAMAC, ALAMAT, KOTA, KODEP, NAMAP ){
 			$("#NO_SURAT").val(NO_BUKTI);
 			$("#NO_SO").val(NO_SO);
 			$("#KODEC").val(KODEC);
 			$("#NAMAC").val(NAMAC);
 			$("#ALAMAT").val(ALAMAT);
-			$("#KOTA").val(KOTA);			
+			$("#KOTA").val(KOTA);	
+			$("#KODEP").val(KODEP);
+			$("#NAMAP").val(NAMAP);
+			
 			$("#browseSuratsModal").modal("hide");
 		}
 		
@@ -820,7 +667,7 @@ var dTableBSurats;
 ////////////////////////////////////////////////////////////////////
 
 
-	function getSod(bukti)
+	function getSpmd(bukti)
 	{
 		
 		var mulai = (idrow==baris) ? idrow-1 : idrow;
@@ -1178,14 +1025,18 @@ var dTableBSurats;
 
 	function kosong() {
 				
-		 $('#NO_BUKTI').val("+");		
-		 $('#KODES').val("");	
-		 $('#NAMAS').val("");	
+		 $('#NO_BUKTI').val("+");
+		 $('#NO_SPM').val("");	
+		 $('#NO_SO').val("");
+		 $('#KODEC').val("");
+		 $('#NAMAC').val("");	
 		 $('#ALAMAT').val("");	
 		 $('#KOTA').val("");	
 		 $('#NOTES').val("");	
 		 $('#TTOTAL_QTY').val("0.00");	
 		 $('#TTOTAL').val("0.00");
+		 $('#KODEP').val("");	
+		 $('#NAMAP').val("");
 		 
 		var html = '';
 		$('#detailx').html(html);	

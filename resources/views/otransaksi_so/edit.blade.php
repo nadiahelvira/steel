@@ -68,12 +68,11 @@
                             <div class="form-group row">
 
 								<div class="col-md-1">
-									<label style="color:red">*</label>									
                                     <label for="KODEC" class="form-label">Customer</label>
                                 </div>
                                	<div class="col-md-2 input-group" >
                                   <input type="text" class="form-control KODEC" id="KODEC" name="KODEC" placeholder="Pilih Customer"value="{{$header->KODEC}}" style="text-align: left" readonly >
-        						  <button type="button" class="btn btn-primary" onclick="browseCust()"><i class="fa fa-search"></i></button>
+
                                 </div>
                             </div>
 							
@@ -88,12 +87,7 @@
                                     <input type="text" class="form-control NAMAC" id="NAMAC" name="NAMAC" placeholder="-" value="{{$header->NAMAC}}" readonly>
                                 </div>
 								
-								<div class="col-md-1">
-									<!-- <input type="checkbox" class="form-check-input" id="PKP" name="PKP" value="$header->PKP" {{ ($header->PKP == 1) ? 'checked' : '' }}> -->
-									<input type="text" class="form-control PKP" id="PKP" name="PKP" placeholder="-" 
-									value="{{$header->PKP}}" readonly>
-									<label for="PKP">PKP</label>
-								</div>
+
                             </div>
 
 							
@@ -117,6 +111,34 @@
                                     <input type="text" class="form-control KOTA" id="KOTA" name="KOTA" value="{{$header->KOTA}}"placeholder="Kota" readonly>
                                 </div>
                             </div>							
+
+
+                            <div class="form-group row">
+
+								<div class="col-md-1">
+                                    <label for="KODEP" class="form-label">Sales</label>
+                                </div>
+                               	<div class="col-md-2 input-group" >
+                                  <input type="text" class="form-control KODEP" id="KODEP" name="KODEP" placeholder="Pilih Sales" value="{{$header->KODEP}}" style="text-align: left" readonly >
+
+                                </div>
+                            </div>
+							
+
+							<div class="form-group row">
+
+
+								<div class="col-md-1" align="left">
+                                    <label for="NAMAP" class="form-label"></label>
+                                </div>
+								<div class="col-md-4">
+                                    <input type="text" class="form-control NAMAP" id="NAMAP" name="NAMAP" placeholder="-" value="{{$header->NAMAP}}" readonly>
+                                </div>
+								
+
+                            </div>
+
+
 							
 							<div class="form-group row">
                                 <div class="col-md-1">
@@ -156,9 +178,6 @@
 										<th width="200px" style="text-align:center">Harga</th>
 
 										<th width="200px" style="text-align:center">Total</th>							
-										<th width="200px" tyle="text-align: center;">DPP</th>								
-										<th width="200px" style="text-align: center;">PPN</th>	
-
 										<th width="200px" style="text-align:center">Ket</th>
 										<th></th>										
                                     </tr>
@@ -198,13 +217,7 @@
 										<td><input name="QTY[]" onclick='select()' onblur="hitung()" value="{{$detail->QTY}}" id="QTY{{$no}}" type="text" style="text-align: right"  class="form-control QTY text-primary" ></td>
 										<td><input name="HARGA[]" onclick='select()' onblur="hitung()" value="{{$detail->HARGA}}" id="HARGA{{$no}}" type="text" style="text-align: right"  class="form-control HARGA text-primary" ></td>
  										<td><input name="TOTAL[]" onclick='select()' onblur="hitung()" value="{{$detail->TOTAL}}" id="TOTAL{{$no}}" type="text" style="text-align: right"  class="form-control TOTAL text-primary" readonly ></td>
-                                        
-										<td>
-											<input name="DPP[]"  onblur="hitung()" value="{{$detail->DPP}}" id="DPP{{$no}}" type="text" style="text-align: right"  class="form-control DPP text-primary" readonly >
-										</td>
-										<td>
-											<input name="PPNX[]"  onblur="hitung()" value="{{$detail->PPN}}" id="PPNX{{$no}}" type="text" style="text-align: right"  class="form-control PPNX text-primary" readonly >
-										</td>
+
 										<td>
                                             <input name="KET[]" id="KET{{$no}}" type="text" value="{{$detail->KET}}" class="form-control KET" >
                                         </td>       
@@ -253,23 +266,6 @@
                                 </div>
 							</div>
 							
-                            <div class="form-group row">
-                                <div class="col-md-8" align="right">
-                                    <label for="PPN" class="form-label">Ppn</label>
-                                </div>
-                                <div class="col-md-2">
-                                    <input type="text"  onclick="select()" onkeyup="hitung()" class="form-control PPN" id="PPN" name="PPN" placeholder="PPN" value="{{$header->PPN}}" style="text-align: right" readonly>
-                                </div>
-							</div>
-							
-                            <div class="form-group row">
-                                <div class="col-md-8" align="right">
-                                    <label for="NETT" class="form-label">Nett</label>
-                                </div>
-                                <div class="col-md-2">
-                                    <input type="text"  onclick="select()" onkeyup="hitung()" class="form-control NETT" id="NETT" name="NETT" placeholder="NETT" value="{{$header->NETT}}" style="text-align: right" readonly>
-                                </div>
-							</div>
 							
 						</div>
                                  
@@ -324,7 +320,36 @@
 						<th>Nama</th>
 						<th>Alamat</th>
 						<th>Kota</th>
-						<th>Status PKP</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+	
+
+ 	<div class="modal fade" id="browsePegModal" tabindex="-1" role="dialog" aria-labelledby="browsePegModalLabel" aria-hidden="true">
+	  <div class="modal-dialog mw-100 w-75" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="browsePegModalLabel">Cari Sales</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			<table class="table table-stripped table-bordered" id="table-bpeg">
+				<thead>
+					<tr>
+						<th>Pegawai#</th>
+						<th>Nama</th>
+
 					</tr>
 				</thead>
 				<tbody>
@@ -474,6 +499,7 @@
 		$('body').on('click', '.btn-delete', function() {
 			var val = $(this).parents("tr").remove();
 			baris--;
+			hitung();
 			nomor();
 		});
 		
@@ -503,11 +529,13 @@
 					for(i=0; i<resp.length; i++){
 						
 						dTableBCust.row.add([
-							'<a href="javascript:void(0);" onclick="chooseCustomer(\''+resp[i].KODEC+'\',  \''+resp[i].NAMAC+'\', \''+resp[i].ALAMAT+'\',  \''+resp[i].KOTA+'\',  \''+resp[i].PKP+'\')">'+resp[i].KODEC+'</a>',
+							'<a href="javascript:void(0);" onclick="chooseCustomer(\''+resp[i].KODEC+'\',  \''+resp[i].NAMAC+'\', \''+resp[i].ALAMAT+'\',  \''+resp[i].KOTA+'\' ,  \''+resp[i].KODEP+'\' ,  \''+resp[i].NAMAP+'\'  )">'+resp[i].KODEC+'</a>',
 							resp[i].NAMAC,
 							resp[i].ALAMAT,
 							resp[i].KOTA,
-							resp[i].PKP2,
+							resp[i].KODEP,
+							resp[i].NAMAP,
+							
 						]);
 					}
 					dTableBCust.draw();
@@ -524,12 +552,15 @@
 			$("#browseCustModal").modal("show");
 		}
 		
-		chooseCustomer = function(KODEC,NAMAC, ALAMAT, KOTA, PKP){
+		chooseCustomer = function(KODEC,NAMAC, ALAMAT, KOTA, KODEP, NAMAP ){
 			$("#KODEC").val(KODEC);
 			$("#NAMAC").val(NAMAC);
 			$("#ALAMAT").val(ALAMAT);
 			$("#KOTA").val(KOTA);			
-			$("#PKP").val(PKP);			
+			$("#KODEP").val(KODEP);
+			$("#NAMAP").val(NAMAP);			
+		
+				
 			$("#browseCustModal").modal("hide");
 		}
 		
@@ -554,6 +585,20 @@
 		
 //////////////////////////////////////////////////////
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 		var dTableBBarang;
 		var rowidBarang;
 		loadDataBBarang = function(){
@@ -790,8 +835,7 @@
 	function hitung() {
 		var TTOTAL_QTY = 0;
 		var TTOTAL = 0;
-		var PPN = 0;
-		var NETTX = 0;
+
 
 		
 		$(".QTY").each(function() {
@@ -799,39 +843,28 @@
 			let z = $(this).closest('tr');
 			var QTYX = parseFloat(z.find('.QTY').val().replace(/,/g, ''));
 			var HARGAX = parseFloat(z.find('.HARGA').val().replace(/,/g, ''));
-			var PPNX = parseFloat(z.find('.PPNX').val().replace(/,/g, ''));
-	
-			var PKP = parseFloat($('#PKP').val().replace(/,/g, ''));
+
 
             var TOTALX  =  ( QTYX * HARGAX );
 			z.find('.TOTAL').val(TOTALX);
 
-			var dpp = Math.floor(TOTALX / ((100+11)/100) );
-			z.find('.DPP').val(dpp);
 
 
-			if (PKP == 1) {
-				var PPNX = parseFloat((Math.round(TOTALX * 0.11 * 100) / 100).toFixed(0));
-			} else {
-				var PPNX = 0;
-			}
 
-			z.find('.PPNX').val(PPNX);	
 
 		    z.find('.HARGA').autoNumeric('update');			
 		    z.find('.QTY').autoNumeric('update');	
 		    z.find('.TOTAL').autoNumeric('update');				
-		    z.find('.DPP').autoNumeric('update');			
-		    z.find('.PPNX').autoNumeric('update');		
+	
 
             TTOTAL_QTY +=QTYX;		
             TTOTAL +=TOTALX;				
-            PPN +=PPNX;				
+   			
 		
 		});
 
 		
-		NETTX = TTOTAL + PPN ;
+
 		
 		if(isNaN(TTOTAL_QTY)) TTOTAL_QTY = 0;
 
@@ -844,11 +877,6 @@
 		$("#TTOTAL").autoNumeric('update');
 
 
-		$('#PPN').val(numberWithCommas(PPN));		
-		$("#PPN").autoNumeric('update');
-
-		$('#NETT').val(numberWithCommas(NETTX));		
-		$("#NETT").autoNumeric('update');
 				
 	}
 
@@ -1081,14 +1109,6 @@
 		            <input name='TOTAL[]' onclick='select()' onblur='hitung()' value='0' id='TOTAL${idrow}' type='text' style='text-align: right' class='form-control TOTAL text-primary' readonly required >
                 </td>
 
-				<td>
-					<input name='PPNX[]'  onblur='hitung()' value='0' id='PPNX${idrow}' type='text' style='text-align: right' class='form-control PPNX text-primary' readonly required >
-				</td>
-
-				<td>
-					<input name='DPP[]'  onblur='hitung()' value='0' id='DPP${idrow}' type='text' style='text-align: right' class='form-control DPP text-primary' readonly required >
-				</td>	
-				
                 <td>
 				    <input name='KET[]'   id='KET${idrow}' type='text' class='form-control  KET' required>
                 </td>
@@ -1111,15 +1131,7 @@
 			$("#TOTAL" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 		
 			
-			$("#DPP" + i.toString()).autoNumeric('init', {
-				aSign: '<?php echo ''; ?>',
-				vMin: '-999999999.99'
-			});
-			
-			$("#PPNX" + i.toString()).autoNumeric('init', {
-				aSign: '<?php echo ''; ?>',
-				vMin: '-999999999.99'
-			});	
+
 		}
 		
 		// $("#KD_BRG"+idrow).keypress(function(e){

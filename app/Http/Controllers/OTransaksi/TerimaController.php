@@ -291,9 +291,6 @@ class TerimaController extends Controller
                 'TOTAL_QTYA'         => (float) str_replace(',', '', $request['TOTAL_QTYA']),
                 'TOTAL_BENDELA'         => (float) str_replace(',', '', $request['TOTAL_BENDELA']),
                 'TOTAL_IKATA'         => (float) str_replace(',', '', $request['TOTAL_IKATA']),
-                'TOTAL_QTYB'         => (float) str_replace(',', '', $request['TOTAL_QTYB']),
-                'TOTAL_BENDELB'         => (float) str_replace(',', '', $request['TOTAL_BENDELB']),
-                'TOTAL_IKATB'         => (float) str_replace(',', '', $request['TOTAL_IKATB']),
                 'QTY_BELI'          => (float) str_replace(',', '', $request['QTY_BELI']),
                 'QTY_MUAT'          => (float) str_replace(',', '', $request['QTY_MUAT']),
                 'USRNM'             => Auth::user()->username,
@@ -328,9 +325,7 @@ class TerimaController extends Controller
                 $detail->QTYA      = (float) str_replace(',', '', $QTYA[$key]);
                 $detail->BENDELA   = (float) str_replace(',', '', $BENDELA[$key]);				
                 $detail->IKATA   = (float) str_replace(',', '', $IKATA[$key]);
-                $detail->QTYB      = (float) str_replace(',', '', $QTYB[$key]);
-                $detail->BENDELB   = (float) str_replace(',', '', $BENDELB[$key]);				
-                $detail->IKATB   = (float) str_replace(',', '', $IKATB[$key]);				
+			
                 $detail->save();
             }
         }	
@@ -339,7 +334,7 @@ class TerimaController extends Controller
 
 
         //  ganti 11
-    //    $variablell = DB::select('call terimains(?)', array($no_bukti));
+        $variablell = DB::select('call terimains(?)', array($no_bukti));
 		$no_buktix = $no_bukti;
 		
 		$terima = Terima::where('NO_BUKTI', $no_buktix )->first();
@@ -532,7 +527,7 @@ class TerimaController extends Controller
  
          
          return view('otransaksi_terima.edit', $data)
-		 ->with(['tipx' => $tipx, 'idx' => $idx, 'flagz' =>$this->FLAGZ, 'judul', $this->judul, 'golz' =>$this->GOLZ ]);
+		 ->with(['tipx' => $tipx, 'idx' => $idx, 'flagz' =>$this->FLAGZ, 'judul' => $this->judul, 'golz' =>$this->GOLZ ]);
       
     }
 
@@ -565,7 +560,7 @@ class TerimaController extends Controller
         );
 
         // ganti 20
-        // $variablell = DB::select('call terimadel(?)', array($terima['NO_BUKTI']));
+        $variablell = DB::select('call terimadel(?)', array($terima['NO_BUKTI']));
 
 		$this->setFlag($request);
         $FLAGZ = $this->FLAGZ;
@@ -595,9 +590,6 @@ class TerimaController extends Controller
                 'TOTAL_QTYA'         => (float) str_replace(',', '', $request['TOTAL_QTYA']),
                 'TOTAL_BENDELA'         => (float) str_replace(',', '', $request['TOTAL_BENDELA']),
                 'TOTAL_IKATA'         => (float) str_replace(',', '', $request['TOTAL_IKATA']),
-                'TOTAL_QTYB'         => (float) str_replace(',', '', $request['TOTAL_QTYB']),
-                'TOTAL_BENDELB'         => (float) str_replace(',', '', $request['TOTAL_BENDELB']),
-                'TOTAL_IKATB'         => (float) str_replace(',', '', $request['TOTAL_IKATB']),
                 'QTY_BELI'          => (float) str_replace(',', '', $request['QTY_BELI']),
                 'QTY_MUAT'          => (float) str_replace(',', '', $request['QTY_MUAT']),
 				'USRNM'             => Auth::user()->username,
@@ -638,9 +630,7 @@ class TerimaController extends Controller
                         'QTYA'       => (float) str_replace(',', '', $QTYA[$i]),
                         'BENDELA'    => (float) str_replace(',', '', $BENDELA[$i]),
                         'IKATA'    => (float) str_replace(',', '', $IKATA[$i]),
-                        'QTYB'       => (float) str_replace(',', '', $QTYB[$i]),
-                        'BENDELB'    => (float) str_replace(',', '', $BENDELB[$i]),
-                        'IKATB'    => (float) str_replace(',', '', $IKATB[$i]),
+
 						
                     ]
                 );
@@ -659,9 +649,6 @@ class TerimaController extends Controller
                         'QTYA'       => (float) str_replace(',', '', $QTYA[$i]),
                         'BENDELA'    => (float) str_replace(',', '', $BENDELA[$i]),
                         'IKATA'    => (float) str_replace(',', '', $IKATA[$i]),
-                        'QTYB'       => (float) str_replace(',', '', $QTYB[$i]),
-                        'BENDELB'    => (float) str_replace(',', '', $BENDELB[$i]),
-                        'IKATB'    => (float) str_replace(',', '', $IKATB[$i]),
                         'FLAG'       => $this->FLAGZ,
                         'GOL'        => $this->GOLZ,						
                     ]
@@ -671,7 +658,7 @@ class TerimaController extends Controller
 
 
         //  ganti 21
-        // $variablell = DB::select('call terimains(?)', array($terima['NO_BUKTI']));
+        $variablell = DB::select('call terimains(?)', array($terima['NO_BUKTI']));
 
  		$terima = Terima::where('NO_BUKTI', $no_buktix )->first();
 
@@ -713,7 +700,7 @@ class TerimaController extends Controller
         }
 		
 		
-    //    $variablell = DB::select('call terimadel(?)', array($terima['NO_BUKTI']));//
+       $variablell = DB::select('call terimadel(?)', array($terima['NO_BUKTI']));//
 
 
         // ganti 23
@@ -732,7 +719,7 @@ class TerimaController extends Controller
     }
     
     
-    public function cetak(Muat $terima)
+    public function cetak(Terima $terima)
     {
         $no_terima = $terima->NO_BUKTI;
 
@@ -777,6 +764,8 @@ class TerimaController extends Controller
                 'IKATB'      => $query[$key]->IKATB,
             ));
         }
+
+        DB::SELECT("UPDATE TERIMA SET POSTED=1 WHERE NO_BUKTI='$no_terima'");
 		
         $PHPJasperXML->setData($data);
         ob_end_clean();

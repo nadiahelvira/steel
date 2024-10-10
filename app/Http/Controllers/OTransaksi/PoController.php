@@ -34,7 +34,7 @@ class PoController extends Controller
         if ( $request->flagz == 'PO' && $request->golz == 'B' ) {
             $this->judul = "PO Bahan Baku";
         } else if ( $request->flagz == 'PO' && $request->golz == 'J' ) {
-            $this->judul = "PO Bahan Jadi";
+            $this->judul = "Purchase Order";
         } else if ( $request->flagz == 'PO' && $request->golz == 'N' ) {
             $this->judul = "PO Non";
         }
@@ -58,9 +58,9 @@ class PoController extends Controller
 	public function browse(Request $request)
     {
         $golz = $request->GOL;
-
         $CBG = Auth::user()->CBG;
-		
+   
+        
         $po = DB::SELECT("SELECT distinct PO.NO_BUKTI , PO.KODES, PO.NAMAS, 
 		                  PO.ALAMAT, PO.KOTA, PO.PKP from po, pod 
                           WHERE PO.NO_BUKTI = POD.NO_BUKTI AND PO.GOL ='$golz'
@@ -323,12 +323,8 @@ class PoController extends Controller
                 'GOL'              => $GOLZ,
                 'CBG'              => $CBG,
                 'NOTES'            => ($request['NOTES'] == null) ? "" : $request['NOTES'],
-				'PKP'              => (float) str_replace(',', '', $request['PKP']),
                 'TOTAL_QTY'        => (float) str_replace(',', '', $request['TTOTAL_QTY']),
                 'TOTAL'            => (float) str_replace(',', '', $request['TTOTAL']),
-				'PPN'               => (float) str_replace(',', '', $request['PPN']),
-				'DPP'               => (float) str_replace(',', '', $request['DPP']),
-                'NETT'            => (float) str_replace(',', '', $request['NETT']),
                 'USRNM'            => Auth::user()->username,
                 'TG_SMP'           => Carbon::now(),
 				'created_by'       => Auth::user()->username,
@@ -345,9 +341,7 @@ class PoController extends Controller
         $QTY        = $request->input('QTY');
         $HARGA      = $request->input('HARGA');		
         $TOTAL      = $request->input('TOTAL');		
-        $KET        = $request->input('KET');  	
-        $PPNX      = $request->input('PPNX');		
-        $DPP      = $request->input('DPP');		
+        $KET        = $request->input('KET');  		
 
         // Check jika value detail ada/tidak
         if ($REC) {
@@ -370,8 +364,6 @@ class PoController extends Controller
                 $detail->HARGA       = (float) str_replace(',', '', $HARGA[$key]);
                 $detail->TOTAL       = (float) str_replace(',', '', $TOTAL[$key]); 
                 $detail->SISA       = (float) str_replace(',', '', $QTY[$key]); 
-                $detail->PPN       = (float) str_replace(',', '', $PPNX[$key]);
-                $detail->DPP       = (float) str_replace(',', '', $DPP[$key]);
 
 				$detail->KET         = ($KET[$key] == null) ? "" :  $KET[$key];				
                 $detail->save();
@@ -629,9 +621,6 @@ class PoController extends Controller
                 'NOTES'            => ($request['NOTES'] == null) ? "" : $request['NOTES'],
                 'TOTAL_QTY'        => (float) str_replace(',', '', $request['TTOTAL_QTY']),
                 'TOTAL'            => (float) str_replace(',', '', $request['TTOTAL']),
-				'PKP'              => (float) str_replace(',', '', $request['PKP']),
-				'PPN'              => (float) str_replace(',', '', $request['PPN']),
-                'NETT'             => (float) str_replace(',', '', $request['NETT']),
 				'USRNM'            => Auth::user()->username,
                 'TG_SMP'           => Carbon::now(),
 				'updated_by'       => Auth::user()->username,
@@ -683,8 +672,6 @@ class PoController extends Controller
                         'HARGA'      => (float) str_replace(',', '', $HARGA[$i]),
                         'TOTAL'      => (float) str_replace(',', '', $TOTAL[$i]),
                         'SISA'      => (float) str_replace(',', '', $QTY[$i]),
-                        'PPN'      => (float) str_replace(',', '', $PPNX[$i]),
-                        'DPP'      => (float) str_replace(',', '', $DPP[$i]),
 
                         'KET'        => ($KET[$i] == null) ? "" :  $KET[$i],	
 						
@@ -710,8 +697,6 @@ class PoController extends Controller
                         'HARGA'      => (float) str_replace(',', '', $HARGA[$i]),
                         'TOTAL'      => (float) str_replace(',', '', $TOTAL[$i]),
                         'SISA'        => (float) str_replace(',', '', $QTY[$i]),
-                        'PPN'      => (float) str_replace(',', '', $PPNX[$i]),
-                        'DPP'      => (float) str_replace(',', '', $DPP[$i]),
                         'FLAG'       => $this->FLAGZ,
                         'GOL'        => $this->GOLZ,
                         'PER'        => $periode,
@@ -811,6 +796,8 @@ class PoController extends Controller
             ));
         }
 		
+        DB::SELECT("UPDATE PO SET POSTED=1 WHERE NO_BUKTI='$no_po'");
+
         $PHPJasperXML->setData($data);
         ob_end_clean();
         $PHPJasperXML->outpage("I");

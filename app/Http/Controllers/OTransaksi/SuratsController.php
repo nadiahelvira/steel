@@ -34,11 +34,11 @@ class SuratsController extends Controller
         if ( $request->flagz == 'JL' && $request->golz == 'B' ) {
             $this->judul = "Surat Jalan Bahan Baku";
         } else if ( $request->flagz == 'JL' && $request->golz == 'J' ){
-            $this->judul = "Surat Jalan Barang Jadi";
+            $this->judul = "Surat Jalan";
         } else if ( $request->flagz == 'AJ' && $request->golz == 'B' ){
             $this->judul = "Retur Surat Jalan Bahan";
         } else if ( $request->flagz == 'AJ' && $request->golz == 'J' ){
-            $this->judul = "Retur Surat Jalan Barang";
+            $this->judul = "Retur Surat Jalan";
         }
 
         $this->FLAGZ = $request->flagz;
@@ -64,10 +64,10 @@ class SuratsController extends Controller
 
         $CBG = Auth::user()->CBG;
 		
-        $surats = DB::SELECT("SELECT distinct surats.NO_BUKTI, surats.NO_SO, surats.KODEC, surats.NAMAC, 
-		                  surats.ALAMAT, surats.KOTA from surats, suratsd 
+        $surats = DB::SELECT("SELECT  surats.NO_BUKTI, surats.NO_SPM, surats.NO_SO, surats.KODEC, surats.NAMAC, 
+		                  surats.ALAMAT, surats.KOTA, suratsd.KD_BRG, suratsd.NA_BRG, suratsd.QTY, suratsd.HARGA, suratsd.TOTAL from surats, suratsd 
                           WHERE surats.NO_BUKTI = suratsD.NO_BUKTI AND surats.GOL ='$golz' 
-                          AND surats.CBG = '$CBG' AND suratsd.SISA > 0	");
+                          AND surats.CBG = '$CBG' AND surats.No_RETUR ='' 	");
         return response()->json($surats);
     }
 	
@@ -80,16 +80,15 @@ class SuratsController extends Controller
 		return response()->json($so);
 	}
 
-    public function browseSo(Request $request)
+    public function browseSpm(Request $request)
     {
         $golz = $request->GOL;
 
         $CBG = Auth::user()->CBG;
 		
-		$so = DB::SELECT("SELECT sod.NO_ID, so.NO_BUKTI, so.TGL, so.NAMAC, sod.KD_BRG, sod.NA_BRG, sod.SATUAN, sod.QTY, SOD.KIRIM, sod.HARGA,
-                                SOD.SISA from so, sod 
-                        WHERE so.NO_BUKTI=sod.NO_BUKTI AND so.CBG = '$CBG' 
-                        and sod.SISA>0 and so.KODEC='".$request->kodec."' AND so.GOL ='$golz' ");
+		$so = DB::SELECT("SELECT  spm.NO_BUKTI, spm.TGL, spm.NO_SO, spm.KODEC, spm.NAMAC, spm.ALAMAT, spm.KOTA, spm.KODEP, spm.NAMAP, spmd.KD_BRG, spmd.NA_BRG, spmd.SATUAN, spmd.QTY from spm, spmd 
+                        WHERE spm.NO_BUKTI=spmd.NO_BUKTI AND spm.CBG = '$CBG' 
+                        and spm.NO_SURATS =''  AND spm.GOL ='$golz' ");
 		return response()->json($so);
 	}
 	
@@ -102,12 +101,12 @@ class SuratsController extends Controller
 
         //     $filterbukti = " WHERE NO_BUKTI='".$request->NO_SO."' ";
         // }
-        $sod = DB::SELECT("SELECT REC, KD_BHN, NA_BHN, SATUAN , QTY, HARGA, KIRIM, SISA, TOTAL, KET, KD_BRG, NA_BRG
-                            from sod
+        $spmd= DB::SELECT("SELECT REC, KD_BRG, NA_BRG, SATUAN , QTY, HARGA, TOTAL, KET
+                            from spmd
                             where NO_BUKTI='".$request->nobukti."' ORDER BY NO_BUKTI ");
 	
 
-		return response()->json($sod);
+		return response()->json($spmd);
 	}
 
 
@@ -171,7 +170,7 @@ class SuratsController extends Controller
                                 <i class="fas fa-edit"></i>
                                     Edit
                                 </a>
-                                <a class="dropdown-item btn btn-danger" href="cetak/' . $row->NO_ID . '">
+                                <a class="dropdown-item btn btn-danger" href="surats/cetak/' . $row->NO_ID . '">
                                     <i class="fa fa-print" aria-hidden="true"></i>
                                     Print
                                 </a> 									
@@ -257,7 +256,7 @@ class SuratsController extends Controller
         $bulan    = session()->get('periode')['bulan'];
         $tahun    = substr(session()->get('periode')['tahun'], -2);
 
-        $query = DB::table('surats')->select('NO_BUKTI')->where('PER', $periode)->where('FLAG', 'SJ')
+        $query = DB::table('surats')->select('NO_BUKTI')->where('PER', $periode)->where('FLAG', $this->FLAGZ)
                 ->where('GOL', $this->GOLZ)->where('CBG', $CBG)->orderByDesc('NO_BUKTI')->limit(1)->get();
 		
         if( $GOLZ=='B'){
@@ -293,12 +292,17 @@ class SuratsController extends Controller
                 'TGL'           => date('Y-m-d', strtotime($request['TGL'])),	
                 'JTEMPO'           => date('Y-m-d', strtotime($request['JTEMPO'])),	
                 'PER'           => $periode,			
-                'FLAG'          => 'SJ',							
+                'FLAG'          => $FLAGZ,							
                 'GOL'           => $GOLZ,
+                'NO_SPM'         => ($request['NO_SPM']==null) ? "" : $request['NO_SPM'],
                 'NO_SO'         => ($request['NO_SO']==null) ? "" : $request['NO_SO'],
                 'TRUCK'         => ($request['TRUCK']==null) ? "" : $request['TRUCK'],
                 'SOPIR'         => ($request['SOPIR']==null) ? "" : $request['SOPIR'],
                 'VIA'           => ($request['VIA']==null) ? "" : $request['VIA'],
+
+                'KODEP'         => ($request['KODEP']==null) ? "" : $request['KODEP'],	
+				'NAMAP'		    => ($request['NAMAP']==null) ? "" : $request['NAMAP'],
+				
                 'KODEC'         => ($request['KODEC']==null) ? "" : $request['KODEC'],	
 				'NAMAC'		    =>($request['NAMAC']==null) ? "" : $request['NAMAC'],
 				'ALAMAT'		=>($request['ALAMAT']==null) ? "" : $request['ALAMAT'],
@@ -341,7 +345,7 @@ class SuratsController extends Controller
 				// $detail->NO_SO	= $NO_SO[$key];
 				$detail->REC	= $REC[$key];
 				$detail->PER	= $periode;
-				$detail->FLAG	= 'SJ';
+				$detail->FLAG	= $FLAGZ;
 				$detail->GOL	= $GOLZ;
 				// $detail->TYP	= ($TYP[$key]==null) ? '' : $TYP[$key];
 				// $detail->NO_TERIMA	= ($NO_TERIMA[$key]==null) ? '' : $NO_TERIMA[$key];
@@ -599,9 +603,14 @@ class SuratsController extends Controller
                 'TGL'           => date('Y-m-d', strtotime($request['TGL'])),	
                 'JTEMPO'           => date('Y-m-d', strtotime($request['JTEMPO'])),	
                 'NO_SO'         => ($request['NO_SO']==null) ? "" : $request['NO_SO'],
+                'NO_SPM'         => ($request['NO_SO']==null) ? "" : $request['NO_SPM'],
                 'TRUCK'         => ($request['TRUCK']==null) ? "" : $request['TRUCK'],
                 'SOPIR'         => ($request['SOPIR']==null) ? "" : $request['SOPIR'],
                 'VIA'           => ($request['VIA']==null) ? "" : $request['VIA'],
+                
+                'KODEP'         => ($request['KODEP']==null) ? "" : $request['KODEP'],	
+				'NAMAP'		    => ($request['NAMAP']==null) ? "" : $request['NAMAP'],
+				
                 'KODEC'         => ($request['KODEC']==null) ? "" : $request['KODEC'],	
 				'NAMAC'		    =>($request['NAMAC']==null) ? "" : $request['NAMAC'],
 				'ALAMAT'		=>($request['ALAMAT']==null) ? "" : $request['ALAMAT'],
@@ -653,7 +662,7 @@ class SuratsController extends Controller
                         // 'NO_SO'      => ($NO_SO[$i]==null) ? "" :  $NO_SO[$i],
                         'REC'        => $REC[$i],
 				        'PER'        => $surats->PER,	
-				        'FLAG'       => 'SJ',					
+				        'FLAG'       => $FLAGZ,					
 				        'GOL'        => $GOLZ,					
                         // 'TYP'        => ($TYP[$i]==null) ? "" :  $TYP[$i],
                         // 'NO_TERIMA'  => ($NO_TERIMA[$i]==null) ? "" :  $NO_TERIMA[$i],	
@@ -684,7 +693,7 @@ class SuratsController extends Controller
                     [
                         // 'NO_SO'      => ($NO_SO[$i]==null) ? "" :  $NO_SO[$i],
                         'REC'        => $REC[$i],
-				        'FLAG'       => 'SJ',					
+				        'FLAG'       => $FLAGZ,					
 				        'GOL'        => $GOLZ,					
                         // 'TYP'        => ($TYP[$i]==null) ? "" :  $TYP[$i],
                         // 'NO_TERIMA'  => ($NO_TERIMA[$i]==null) ? "" :  $NO_TERIMA[$i],	
@@ -764,64 +773,44 @@ class SuratsController extends Controller
 
         $file     = 'suratsc';
         $PHPJasperXML = new PHPJasperXML();
-        $PHPJasperXML->load_xml_file(base_path() . ('/app/resuratsrtc01/phpjasperxml/' . $file . '.jrxml'));
+        $PHPJasperXML->load_xml_file(base_path() . ('/app/reportc01/phpjasperxml/' . $file . '.jrxml'));
 
-        $query = DB::SELECT("
-			SELECT NO_BUKTI,  TGL, KODES, NAMAS, TOTAL_QTY, NOTES, TOTAL, ALAMAT, KOTA
-			FROM surats 
-			WHERE surats.NO_BUKTI='$no_surats' 
-			ORDER BY NO_BUKTI;
+        $query = DB::SELECT("SELECT surats.NO_BUKTI, surats.TGL, surats.NAMAC, surats.NO_SO, suratsd.KD_BRG, suratsd.NA_BRG, 
+                                    suratsd.QTY, suratsd.HARGA, suratsd.TOTAL, surats.KODEP, surats.NAMAP, 
+                                    surats.ALAMAT, surats.KOTA
+                            FROM surats, suratsd 
+                            WHERE surats.NO_BUKTI = suratsd.NO_BUKTI AND surats.NO_BUKTI='$no_surats' 
+                            ;
 		");
 
-        $xno_surats1       = $query[0]->NO_BUKTI;
-        $xtgl1         = $query[0]->TGL;
-        $xkodes1       = $query[0]->KODES;
-        $xnamas1       = $query[0]->NAMAS;
-        $xtotal1       = $query[0]->TOTAL_QTY;
-        $xnotes1       = $query[0]->NOTES;
-        $xharga1       = $query[0]->TOTAL;
-        $xalamat1      = $query[0]->ALAMAT;
-        $xkota1        = $query[0]->KOTA;
         
-        $PHPJasperXML->arrayParameter = array("HARGA1" => (float) $xharga1, "TOTAL1" => (float) $xtotal1, "NO_PO1" => (string) $xno_surats1,
-                                     "TGL1" => (string) $xtgl1,  "KODES1" => (string) $xkodes1,  "NAMAS1" => (string) $xnamas1, "NOTES1" => (string) $xnotes1, "ALAMAT1" => (string) $xalamat1, "KOTA1" => (string) $xkota1 );
-        $PHPJasperXML->arraysqltable = array();
-
-
-        $query2 = DB::SELECT("
-			SELECT NO_BUKTI, TGL, KODES, NAMAS, if(ALAMAT='','NOT-FOUND.png',ALAMAT) as ALAMAT, NO_PO,  IF ( FLAG='BL' , 'A','B' ) AS FLAG, AJU, BL, EMKL, KD_BRG, NA_BRG, KG, RPHARGA AS HARGA, RPTOTAL AS TOTAL, 0 AS BAYAR,  NOTES
-			FROM beli 
-			WHERE beli.NO_PO='$no_surats'  UNION ALL 
-			SELECT NO_BUKTI, TGL, KODES, NAMAS, if(ALAMAT='','NOT-FOUND.png',ALAMAT) as ALAMAT,  NO_PO,  'C' AS FLAG, '' AS AJU, '' AS BL, '' AS EMKL,  '' AS KD_BRG, '' AS NA_BRG, 0 AS KG, 
-			0 AS HARGA, 0 AS TOTAL, BAYAR, NOTES
-			FROM hut 
-			WHERE hut.NO_PO='$no_surats' 
-			ORDER BY TGL, FLAG, NO_BUKTI;
-		");
-
         $data = [];
 
-        foreach ($query2 as $key => $value) {
+        foreach ($query as $key => $value) {
             array_push($data, array(
-                'NO_BUKTI' => $query2[$key]->NO_BUKTI,
-                'TGL'      => $query2[$key]->TGL,
-                'KODES'    => $query2[$key]->KODES,
-                'NAMAS'    => $query2[$key]->NAMAS,
-                'ALAMAT'    => $query2[$key]->ALAMAT,
-                'AJU'    => $query2[$key]->AJU,
-                'BL'       => $query2[$key]->BL,
-                'EMKL'    => $query2[$key]->EMKL,
-                'KG'       => $query2[$key]->KG,
-                'HARGA'    => $query2[$key]->HARGA,
-                'TOTAL'    => $query2[$key]->TOTAL,
-                'BAYAR'    => $query2[$key]->BAYAR,
-                'NOTES'    => $query2[$key]->NOTES
+                'NO_BUKTI' => $query[$key]->NO_BUKTI,
+                'TGL'      => $query[$key]->TGL,
+                'NAMAC'  => $query[$key]->NAMAC,
+                'NO_SO'    => $query[$key]->NO_SO,
+                'KD_BRG'   => $query[$key]->KD_BRG,
+                'NA_BRG'   => $query[$key]->NA_BRG,
+                'QTY_BELI' => $query[$key]->QTY_BELI,
+                'ALAMAT'  => $query[$key]->ALAMAT,
+                'KOTA'    => $query[$key]->KOTA,
+                'NOPOL'    => $query[$key]->NOPOL,
+                'TELP'     => $query[$key]->TELP,
+                'SEAL'     => $query[$key]->SEAL,
+                'T_CONT'   => $query[$key]->T_CONT,
+                'QTY'      => $query[$key]->QTY,
             ));
         }
 		
+        DB::SELECT("UPDATE SURATS SET POSTED=1 WHERE NO_BUKTI='$no_surats'");
+
         $PHPJasperXML->setData($data);
         ob_end_clean();
         $PHPJasperXML->outpage("I");
+       
        
     }
 	

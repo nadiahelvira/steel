@@ -1,0 +1,4 @@
+[03-Oct-2024 01:35:10 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Console\Kernel' not found in /home/januar13/public_html/steel/app/Console/Kernel.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Console/Kernel.php on line 8

@@ -147,10 +147,10 @@
                                     placeholder="Masukkan Kontak" value="{{$header->KONTAK}}">
                                 </div>
 
-								<div class="col-md-2">
+								<div class="col-md-1">
 									<label for="GOL" class="form-label">Golongan</label>
 								</div>
-								<div class="col-md-2">
+								<div class="col-md-1">
 									<select id="GOL" class="form-control"  name="GOL">
 										<option value="Y" {{ ($header->GOL == 'Y') ? 'selected' : '' }}>Y</option>
 										<option value="Z" {{ ($header->GOL == 'Z') ? 'selected' : '' }}>Z</option>
@@ -165,6 +165,19 @@
                                 <div class="col-md-4">
                                     <input type="text" class="form-control EMAIL" id="EMAIL"name="EMAIL"
                                     placeholder="Masukkan Email" value="{{$header->EMAIL}}">
+                                </div>
+
+								<div class="col-md-1">
+									<label style="color:red">*</label>									
+                                    <label for="KODEP" class="form-label">Sales</label>
+                                </div>
+                               	<div class="col-md-2 input-group" >
+                                  <input type="text" class="form-control KODEP" id="KODEP" name="KODEP" placeholder="Pilih Pegawai"value="{{$header->KODEP}}" style="text-align: left" readonly >
+        						  <button type="button" class="btn btn-primary" onclick="browsePegawai()" style="width:40px"><i class="fa fa-search"></i></button>
+                                </div>
+        
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control NAMAP" id="NAMAP" name="NAMAP" placeholder="" value="{{$header->NAMAP}}" readonly>
                                 </div>
                             </div> 
  
@@ -302,6 +315,36 @@
         </div><!-- /.container-fluid -->
     </div>
     <!-- /.content -->
+
+	<div class="modal fade" id="browsePegawaiModal" tabindex="-1" role="dialog" aria-labelledby="browsePegawaiModalLabel" aria-hidden="true">
+	 <div class="modal-dialog mw-100 w-75" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="browsePegawaiModalLabel">Cari Pegawai</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			<table class="table table-stripped table-bordered" id="table-pegawai">
+				<thead>
+					<tr>
+						<th>Kode</th>
+						<th>Nama</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+	
 @endsection
 
 @section('footer-scripts')
@@ -358,6 +401,61 @@
 		
     });
 
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+		//CHOOSE Pegawai
+		var dTableBPegawai;
+		loadDataBPegawai = function(){
+			$.ajax(
+			{
+				type: 'GET',    
+				url: '{{url('pegawai/browse')}}',
+
+				success: function( response )
+				{
+			
+					resp = response;
+					if(dTableBPegawai){
+						dTableBPegawai.clear();
+					}
+					for(i=0; i<resp.length; i++){
+						
+						dTableBPegawai.row.add([
+							'<a href="javascript:void(0);" onclick="choosePegawai(\''+resp[i].KODEP+'\',  \''+resp[i].NAMAP+'\' )">'+resp[i].KODEP+'</a>',
+							resp[i].NAMAP,
+						]);
+					}
+					dTableBPegawai.draw();
+				}
+			});
+		}
+		
+		dTableBPegawai = $("#table-pegawai").DataTable({
+			
+		});
+		
+		browsePegawai = function(){
+			loadDataBPegawai();
+			$("#browsePegawaiModal").modal("show");
+		}
+		
+		choosePegawai = function(KODEP,NAMAP){
+			$("#KODEP").val(KODEP);
+			$("#NAMAP").val(NAMAP);
+			$("#browsePegawaiModal").modal("hide");
+		}
+		
+		$("#KODEP").keypress(function(e){
+
+			if(e.keyCode == 46){
+				e.preventDefault();
+				browsePegawai();
+			}
+		}); 
+		
+		
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 	function baru() {
 		

@@ -118,7 +118,7 @@
                                 </div>
 								<div class="col-md-2">
 									<input type="text" onclick="select()" class="form-control QTY_BELI" id="QTY_BELI" name="QTY_BELI" placeholder="" 
-									value="{{ number_format( $header->QTY_BELI, 0, '.', ',') }}" style="text-align: right" >
+									value="{{$header->QTY_BELI}}" style="text-align: right" >
 								</div>
                             </div>
 							
@@ -132,12 +132,13 @@
 									<thead>
 										<tr>
 										<th width="100px" style="text-align:center">No.</th>
-											<th width="200px" style="text-align:center">No Container</th>
+
 											<th width="200px" style="text-align:center">Sopir</th>
 
 											<th width="200px" style="text-align:center">Nopol</th>
 
 											<th width="200px" style="text-align:center">Telp</th>
+											<th width="200px" style="text-align:center">Container#</th>
 											<th width="200px" style="text-align:center">Seal</th>  
 
 											<th width="200px" style="text-align:center">T_Cont</th>
@@ -159,9 +160,6 @@
 											</td>
 
 											<td>
-												<input name="NO_CONT[]" id="NO_CONT{{$no}}" type="text" class="form-control NO_CONT" value="{{$detail->NO_CONT}}">
-											</td>
-											<td>
 												<input name="SOPIR[]" id="SOPIR{{$no}}" type="text" class="form-control SOPIR" value="{{$detail->SOPIR}}">
 											</td>
 											<td>
@@ -171,10 +169,13 @@
 												<input name="TELP[]" id="TELP{{$no}}" type="text" class="form-control TELP" value="{{$detail->TELP}}">
 											</td>	
 											<td>
+												<input name="NO_CONT[]" id="NO_CONT{{$no}}" type="text" class="form-control NO_CONT" value="{{$detail->NO_CONT}}">
+											</td>
+											<td>
 												<input name="SEAL[]" id="SEAL{{$no}}" type="text" class="form-control SEAL" value="{{$detail->SEAL}}">
 											</td>									
 											<td>
-												<input name="T_CONT[]" onclick="select()" onblur="hitung()" value="{{$detail->T_CONT}}" id="T_CONT{{$no}}" type="text" style="text-align: right"  class="form-control T_CONT" >
+												<input name="T_CONT[]"  value="{{$detail->T_CONT}}" id="T_CONT{{$no}}" type="text" style="text-align: right"  class="form-control T_CONT" >
 											</td>								
 											<td>
 												<input name="QTY[]" onclick="select()" onblur="hitung()" value="{{$detail->QTY}}" id="QTY{{$no}}" type="text" style="text-align: right"  class="form-control QTY" >
@@ -246,36 +247,6 @@
     </div>
 
 
- 	<div class="modal fade" id="browsePoModal" tabindex="-1" role="dialog" aria-labelledby="browsePoModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-xl" role="document">
-		<div class="modal-content">
-		  <div class="modal-header">
-			<h5 class="modal-title" id="browsePoModalLabel">Cari Po</h5>
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			  <span aria-hidden="true">&times;</span>
-			</button>
-		  </div>
-		  <div class="modal-body">
-			<table class="table table-stripped table-bordered" id="table-bpo">
-				<thead>
-					<tr>
-						<th>PO#</th>
-						<th>Suplier</th>
-						<th>Nama</th>
-						<th>Alamat</th>
-						<th>Kota</th>
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
-		  </div>
-		  <div class="modal-footer">
-			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		  </div>
-		</div>
-	  </div>
-	</div>
 
 	<div class="modal fade" id="browseBeliModal" tabindex="-1" role="dialog" aria-labelledby="browseBeliModalLabel" aria-hidden="true">
 	  <div class="modal-dialog modal-xl" role="document">
@@ -291,7 +262,8 @@
 				<thead>
 					<tr>
 						<th>No Beli</th>
-						<th>No PO</th>
+						<th>Tgl</th>
+						<th>PO#</th>
 						<th>Barang</th>
 						<th>Qty</th>
 					</tr>
@@ -308,75 +280,9 @@
 	</div>
 
 
-	<div class="modal fade" id="browseBarangModal" tabindex="-1" role="dialog" aria-labelledby="browseBarangModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-xl" role="document">
-		<div class="modal-content">
-		  <div class="modal-header">
-			<h5 class="modal-title" id="browseBarangModalLabel">Cari Item</h5>
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			  <span aria-hidden="true">&times;</span>
-			</button>
-		  </div>
-		  <div class="modal-body">
-			<table class="table table-stripped table-bordered" id="table-bbarang">
-				<thead>
-					<tr>
-						<th>Item#</th>
-						<th>Nama</th>
-						<th>Satuan</th>
-						<th>Qty</th>
-						<th>Kirim</th>
-						<th>Sisa</th>
-						<th>Harga</th>	
-							
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
-		  </div>
-		  <div class="modal-footer">
-			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		  </div>
-		</div>
-	  </div>
-	</div>
 
 
-	<div class="modal fade" id="browseBahanModal" tabindex="-1" role="dialog" aria-labelledby="browseBahanModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-xl" role="document">
-		<div class="modal-content">
-		  <div class="modal-header">
-			<h5 class="modal-title" id="browseBahanModalLabel">Cari Item</h5>
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			  <span aria-hidden="true">&times;</span>
-			</button>
-		  </div>
-		  <div class="modal-body">
-			<table class="table table-stripped table-bordered" id="table-bbahan">
-				<thead>
-					<tr>
-						<th>Item#</th>
-						<th>Nama</th>
-						<th>Satuan</th>
-						<th>Qty</th>
-						<th>Kirim</th>
-						<th>Sisa</th>
-						<th>Harga</th>	
-						
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
-		  </div>
-		  <div class="modal-footer">
-			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		  </div>
-		</div>
-	  </div>
-	</div>
-	
+
 	
 	
 
@@ -442,7 +348,6 @@
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
 			
-			$("#T_CONT" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 			$("#QTY" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 		}	
 
@@ -451,6 +356,7 @@
         $('body').on('click', '.btn-delete', function() {
 			var val = $(this).parents("tr").remove();
 			baris--;
+			hitung();
 			nomor();
 			
 		});
@@ -461,171 +367,6 @@
 		
 		
  	
-		
-//		CHOOSE Po
- 		var dTableBPo;
-		loadDataBPo = function(){
-		
-			$.ajax(
-			{
-				type: 'GET', 		
-				url: '{{url('po/browse')}}',
-				data: {
-					'GOL': "{{$golz}}",
-				},
-
-				success: function( response )
-				{
-					resp = response;
-					if(dTableBPo){
-						dTableBPo.clear();
-					}
-					for(i=0; i<resp.length; i++){
-						
-						dTableBPo.row.add([
-							'<a href="javascript:void(0);" onclick="choosePo(\''+resp[i].NO_BUKTI+'\' ,\''+resp[i].KODES+'\',  \''+resp[i].NAMAS+'\', \''+resp[i].ALAMAT+'\',  \''+resp[i].KOTA+'\',  \''+resp[i].PKP+'\')">'+resp[i].NO_BUKTI+'</a>',
-							resp[i].KODES,
-							resp[i].NAMAS,
-							resp[i].ALAMAT,
-							resp[i].KOTA,
-						]);
-					}
-					dTableBPo.draw();
-				}
-			});
-		}
-		
-		dTableBPo = $("#table-bpo").DataTable({
-			
-		});
-		
-		browsePo = function(){
-			loadDataBPo();
-			$("#browsePoModal").modal("show");
-
-		}
-		
-		choosePo = function( NO_BUKTI,KODES,NAMAS, ALAMAT, KOTA, PKP){
-
-			$("#NO_PO").val(NO_BUKTI);
-			$("#KODES").val(KODES);
-			$("#NAMAS").val(NAMAS);
-			$("#ALAMAT").val(ALAMAT);
-			$("#KOTA").val(KOTA);			
-			$("#PKP").val(PKP);			
-			$("#browsePoModal").modal("hide");
-			
-			getPod(NO_BUKTI);
-		}
-		
-		$("#NO_PO").keypress(function(e){
-
-			if(e.keyCode == 46){
-				 e.preventDefault();
-				 browsePo();
-			}
-		}); 
-
-////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////
-
-	// function getPod(bukti)
-	// {
-		
-	// 	var mulai = (idrow==baris) ? idrow-1 : idrow;
-
-	// 	$.ajax(
-	// 		{
-	// 			type: 'GET',    
-	// 			url: "{{url('po/browse_pod')}}",
-	// 			data: {
-	// 				nobukti: bukti,
-	// 				'GOL': "{{$golz}}",
-	// 			},
-	// 			success: function( resp )
-	// 			{
-	// 				var html = '';
-	// 				for(i=0; i<resp.length; i++){
-	// 					html+=`<tr>
-    //                                 <td><input name='REC[]' id='REC${i}' value=${resp[i].REC+1} type='text' class='REC form-control' onkeypress='return tabE(this,event)' readonly></td>
-                                    
-	// 								<td {{( $golz =='B') ? '' : 'hidden' }} >
-	// 				 			    	<input name='KD_BHN[]' id='KD_BHN${i}' value="${resp[i].KD_BHN}" type='text' class='form-control KD_BHN' readonly>
-	// 					            </td>
-	// 					            <td {{( $golz =='B') ? '' : 'hidden' }} >
-	// 					 				<input name='NA_BHN[]' id='NA_BHN${i}' value="${resp[i].NA_BHN}" type='text' class='form-control  NA_BHN' readonly>
-	// 					            </td>
-
-	// 								<td {{( $golz =='J' || $golz =='N') ? '' : 'hidden' }} >
-	// 									<input name='KD_BRG[]' id='KD_BRG${i}' value="${resp[i].KD_BRG}" type='text' class='form-control KD_BRG' readonly>
-	// 					            </td>
-	// 					            <td {{( $golz =='J' || $golz =='N') ? '' : 'hidden' }} >
-	// 					 			    <input name='NA_BRG[]' id='NA_BRG${i}' value="${resp[i].NA_BRG}" type='text' class='form-control  NA_BRG' readonly>
-	// 					            </td>
-									
-	// 								<td><input name='SATUAN_PO[]' id='SATUAN_PO${i}' value="${resp[i].SATUAN_PO}" type='text' class='form-control  SATUAN_PO' readonly></td>
-    //                                 <td>
-	// 									<input name='QTY_PO[]' onclick='select()' onblur='hitung()' id='QTY_PO${i}' value="${resp[i].QTY_PO}" type='text' style='text-align: right' class='form-control QTY_PO text-primary' readonly >
-	// 								</td>
-    //                                 <td>
-	// 									<input name='KALI[]' onclick='select()' onblur='hitung()' id='KALI${i}' value="${resp[i].KALI}" type='text' style='text-align: right' class='form-control KALI text-primary'> 
-	// 								</td>
-	// 								<td><input name='SATUAN[]' id='SATUAN${i}' value="${resp[i].SATUAN}" type='text' class='form-control  SATUAN' readonly></td>
-    //                                 <td>
-	// 									<input name='QTY[]' onclick='select()' onblur='hitung()' id='QTY${i}' value="${resp[i].QTY}" type='text' style='text-align: right' class='form-control QTY text-primary' readonly >
-	// 								</td>
-	// 								<td>
-	// 									<input name='HARGA[]' onclick='select()' onblur='hitung()' id='HARGA${i}' value="${resp[i].HARGA}" type='text' style='text-align: right' class='form-control HARGA text-primary' >
-	// 								</td>
-	// 								<td>
-	// 									<input name='TOTAL[]' onclick='select()' onblur='hitung()' id='TOTAL${i}' value="${resp[i].TOTAL}" type='text' style='text-align: right' class='form-control TOTAL text-primary' readonly >
-	// 								</td>
-	// 								<td>
-	// 									<input name='PPNX[]' onclick='select()' onblur='hitung()' id='PPNX${i}' value="0" type='text' style='text-align: right' class='form-control PPNX text-primary' readonly >
-	// 								</td>
-	// 								<td>
-	// 									<input name='DPP[]' onclick='select()' onblur='hitung()' id='DPP${i}' value="0" type='text' style='text-align: right' class='form-control DPP text-primary' readonly >
-	// 								</td>
-	// 								<td><input name='KET[]' id='KET${i}' value="" type='text' class='form-control  KET'></td>
-                                    
-
-	// 								<td><button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button></td>
-    //                             </tr>`;
-	// 				}
-	// 				$('#detailPod').html(html);
-
-	// 				$(".QTY_PO").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-	// 				$(".QTY_PO").autoNumeric('update');
-
-	// 				$(".QTY").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-	// 				$(".QTY").autoNumeric('update');
-					
-	// 				$(".HARGA").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-	// 				$(".HARGA").autoNumeric('update');
-					
-	// 				$(".KALI").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-	// 				$(".KALI").autoNumeric('update');
-					
-	// 				$(".TOTAL").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-	// 				$(".TOTAL").autoNumeric('update');
-					
-	// 				$(".PPNX").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-	// 				$(".PPNX").autoNumeric('update');
-					
-	// 				$(".DPP").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-	// 				$(".DPP").autoNumeric('update');
-
-
-	// 				idrow=resp.length;
-	// 				baris=resp.length;
-
-	// 				nomor();
-	// 				hitung();
-	// 			}
-	// 		});
-	// }
-
 //////////////////////////////////////////////////////////////////
 
 //		CHOOSE Beli
@@ -650,6 +391,7 @@
 						
 						dTableBBeli.row.add([
 							'<a href="javascript:void(0);" onclick="chooseBeli(\''+resp[i].NO_BUKTI+'\', \''+resp[i].NO_PO+'\' ,\''+resp[i].KD_BRG+'\',  \''+resp[i].NA_BRG+'\', \''+resp[i].QTY+'\' )">'+resp[i].NO_BUKTI+'</a>',
+							resp[i].TGL,					
 							resp[i].NO_PO,
 							resp[i].NA_BRG,
 							resp[i].QTY,
@@ -676,6 +418,8 @@
 			$("#KD_BRG").val(KD_BRG);
 			$("#NA_BRG").val(NA_BRG);
 			$("#QTY_BELI").val(QTY);			
+		    $("#QTY_BELI").autoNumeric('update');
+		
 			$("#browseBeliModal").modal("hide");
 			
 			// getPod(NO_PO);
@@ -691,147 +435,12 @@
 
 ////////////////////////////////////////////////////////////////////
 
-		//CHOOSE Bahan
-		var dTableBBahan;
-		var rowidBahan;
-		loadDataBBahan = function(){
-			$.ajax(
-			{
-				type: 'GET',    
-				url: "{{url('po/browse_detail')}}",
-				data: 
-				{
-                    KD_BHN : $("#KD_BHN"+rowidBahan).val(),
-                    NO_PO : $("#NO_PO").val(), 					
-				},
-				success: function( response )
-				{
-					resp = response;
-					if(dTableBBahan){
-						dTableBBahan.clear();
-					}
-					for(i=0; i<resp.length; i++){
-						
-						dTableBBahan.row.add([
-							'<a href="javascript:void(0);" onclick="chooseBahan(\''+resp[i].KD_BHN+'\',\''+resp[i].NA_BHN+'\', \''+resp[i].SATUAN_PO+'\' , \''+resp[i].QTY_PO+'\', \''+resp[i].KIRIM+'\' , \''+resp[i].SISA+'\' , \''+resp[i].HARGA+'\' , \''+resp[i].SATUAN+'\', \''+resp[i].QTY+'\', \''+resp[i].KALI+'\' )">'+resp[i].KD_BHN+'</a>',
-							resp[i].NA_BHN,
-							resp[i].SATUAN_PO,
-							resp[i].QTY_PO,
-							resp[i].KIRIM,
-							resp[i].SISA,
-							resp[i].HARGA,
-							
-						]);
-					}
-					dTableBBahan.draw();
-				}
-			});
-		}
-		
-		dTableBBahan = $("#table-bbahan").DataTable({
-			
-		});
-		
-		browseBahan = function(rid){
-			rowidBahan = rid;
-			loadDataBBahan();
-			$("#browseBahanModal").modal("show");
-		}
-		
-		chooseBahan = function(KD_BHN, NA_BHN, SATUAN_PO, QTY_PO, KIRIM, SISA, HARGA, SATUAN, QTY, KALI ){
-			$("#KD_BHN"+rowidBahan).val(KD_BHN);
-			$("#NA_BHN"+rowidBahan).val(NA_BHN);
-			$("#SATUAN_PO"+rowidBahan).val(SATUAN_PO);
-			$("#QTY_PO"+rowidBahan).val(SISA);
-			$("#HARGA"+rowidBahan).val(HARGA);
-			$("#SATUAN"+rowidBahan).val(SATUAN);
-			$("#QTY"+rowidBahan).val(QTY);
-			$("#KALI"+rowidBahan).val(KALI);
-			hitung();
-			
-			
-			$("#browseBahanModal").modal("hide");
-		}
-		
-		
-		$("#KD_BHN0").keypress(function(e){
-			if(e.keyCode == 46){
-				e.preventDefault();
-				browseBahan(0);
-			}
-		}); 
+    }); 
+	
 
 //////////////////////////////////////////////////////////////////////
 		
-		var dTableBBarang;
-		var rowidBarang;
-		loadDataBBarang = function(){
-			$.ajax(
-			{
-				type: 'GET',    
-				url: "{{url('po/browse_detail2')}}",
-				data: 
-				{
-                    KD_BRG : $("#KD_BRG"+rowidBarang).val(),
-                    NO_PO : $("#NO_PO").val(), 					
-				},				
-				
-				success: function( response )
-				{
-					resp = response;
-					if(dTableBBarang){
-						dTableBBarang.clear();
-					}
-					for(i=0; i<resp.length; i++){
-						
-						dTableBBarang.row.add([
-							'<a href="javascript:void(0);" onclick="chooseBarang(\''+resp[i].KD_BRG+'\',\''+resp[i].NA_BRG+'\', \''+resp[i].SATUAN_PO+'\' , \''+resp[i].QTY_PO+'\' , \''+resp[i].KIRIM+'\' , \''+resp[i].SISA+'\' , \''+resp[i].HARGA+'\', \''+resp[i].SATUAN+'\', \''+resp[i].QTY+'\', \''+resp[i].KALI+'\'  )">'+resp[i].KD_BRG+'</a>',
-							resp[i].NA_BRG,
-							resp[i].SATUAN_PO,
-							resp[i].QTY_PO,
-							resp[i].KIRIM,
-							resp[i].SISA,
-							resp[i].HARGA,							
-						]);
-					}
-					dTableBBarang.draw();
-				}
-			});
-		}
-		
-		dTableBBarang = $("#table-bbarang").DataTable({
-			
-		});
-		
-		browseBarang = function(rid){
-			rowidBarang = rid;
-			loadDataBBarang();
-			$("#browseBarangModal").modal("show");
-		}
-		
-		chooseBarang = function(KD_BRG, NA_BRG, SATUAN_PO, QTY_PO, KIRIM, SISA, HARGA, SATUAN, QTY, KALI ){
-			$("#KD_BRG"+rowidBarang).val(KD_BRG);
-			$("#NA_BRG"+rowidBarang).val(NA_BRG);
-			$("#SATUAN_PO"+rowidBarang).val(SATUAN_PO);
-			$("#QTY_PO"+rowidBarang).val(SISA);
-			$("#HARGA"+rowidBarang).val(HARGA);
-			$("#SATUAN"+rowidBarang).val(SATUAN);			
-			$("#QTY"+rowidBarang).val(QTY);			
-			$("#KALI"+rowidBarang).val(KALI);			
-			$("#browseBarangModal").modal("hide");
-			hitung();
-		}
-		
-		
-		$("#KD_BRG0").keypress(function(e){
-			if(e.keyCode == 46){
-				e.preventDefault();
-				browseBarang(0);
-			}
-		}); 
-
-	});
-
+	
 
 ///////////////////////////////////////		
     
@@ -941,10 +550,10 @@
 		$(".QTY").each(function() {
 			
 			let z = $(this).closest('tr');
-			var QTY_BELI = parseFloat(z.find('.QTY').val().replace(/,/g, ''));
+			var QTYX = parseFloat(z.find('.QTY').val().replace(/,/g, ''));
 
 
-            TOTAL_QTY +=QTY_BELI;			
+            TOTAL_QTY +=QTYX;			
 		
 		});
 
@@ -952,7 +561,8 @@
 
 		$('#TOTAL_QTY').val(numberWithCommas(TOTAL_QTY));		
 		$("#TOTAL_QTY").autoNumeric('update');
-
+		$("#QTY_BELI").autoNumeric('update');
+		
 		
 	}
 	
@@ -1150,9 +760,6 @@
 					<input name='REC[]' id='REC${idrow}' type='text' class='REC form-control' onkeypress='return tabE(this,event)' readonly>
 	            </td>
 
-                <td>
-				    <input name='NO_CONT[]'   id='NO_CONT${idrow}' type='text' class='form-control  NO_CONT'>
-                </td>
 
 				<td>
 					<input name='SOPIR[]'   id='SOPIR${idrow}' type='text' class='form-control  SOPIR'>
@@ -1166,12 +773,16 @@
 					<input name='TELP[]'   id='TELP${idrow}' type='text' class='form-control  TELP'>
 				</td>
 
+                <td>
+				    <input name='NO_CONT[]'   id='NO_CONT${idrow}' type='text' class='form-control  NO_CONT'>
+                </td>
+                
 				<td>
 					<input name='SEAL[]'   id='SEAL${idrow}' type='text' class='form-control  SEAL'>
 				</td>
 				
 				<td>
-		            <input name='T_CONT[]' onclick ='select()' onblur='hitung()' value='0' id='T_CONT${idrow}' type='text' style='text-align: right' class='form-control T_CONT text-primary' >
+		            <input name='T_CONT[]'  value='' id='T_CONT${idrow}' type='text' style='text-align: right' class='form-control T_CONT text-primary' >
                 </td>
 				
 				<td>
@@ -1190,11 +801,7 @@
 		
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
-			$("#T_CONT" + i.toString()).autoNumeric('init', {
-				aSign: '<?php echo ''; ?>',
-				vMin: '-999999999.99'
-			});
-			
+
 			$("#QTY" + i.toString()).autoNumeric('init', {
 				aSign: '<?php echo ''; ?>',
 				vMin: '-999999999.99'

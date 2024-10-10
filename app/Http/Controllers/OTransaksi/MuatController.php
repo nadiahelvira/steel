@@ -68,13 +68,13 @@ class MuatController extends Controller
 
 		$CBG = Auth::user()->CBG;
 
-        $muat = DB::SELECT("SELECT distinct muat.NO_BUKTI , muat.NO_BELI, muat.NO_PO, muat.KD_BRG, 
+        $muat = DB::SELECT("SELECT muat.NO_BUKTI , muat.TGL, muat.NO_BELI, muat.NO_PO, muat.KD_BRG, 
 		                  muat.NA_BRG, muatd.QTY AS QTY_MUAT, muat.QTY_BELI as QTY_BELI, muatd.NO_CONT,
                           muatd.SOPIR, muatd.NOPOL, muatd.SEAL
                           from muat, muatd 
-                          WHERE muat.NO_BUKTI = muatd.NO_BUKTI AND muat.FLAG='MT' 
+                          WHERE muat.NO_BUKTI = muatd.NO_BUKTI AND muat.FLAG='MT' AND muatd.no_terima = ''  
                           AND muat.GOL ='$golz'
-                          AND muat.CBG = '$CBG'");
+                          AND muat.CBG = '$CBG' order by muat.TGL");
         return response()->json($muat);
     }
 	
@@ -330,7 +330,7 @@ class MuatController extends Controller
 
 
         //  ganti 11
-    //    $variablell = DB::select('call muatins(?)', array($no_bukti));
+        $variablell = DB::select('call muatins(?)', array($no_bukti));
 		$no_buktix = $no_bukti;
 		
 		$muat = Muat::where('NO_BUKTI', $no_buktix )->first();
@@ -523,7 +523,7 @@ class MuatController extends Controller
  
          
          return view('otransaksi_muat.edit', $data)
-		 ->with(['tipx' => $tipx, 'idx' => $idx, 'flagz' =>$this->FLAGZ, 'judul', $this->judul, 'golz' =>$this->GOLZ ]);
+		 ->with(['tipx' => $tipx, 'idx' => $idx, 'flagz' =>$this->FLAGZ, 'judul' => $this->judul, 'golz' =>$this->GOLZ ]);
       
     }
 
@@ -556,7 +556,7 @@ class MuatController extends Controller
         );
 
         // ganti 20
-        // $variablell = DB::select('call muatdel(?)', array($muat['NO_BUKTI']));
+        $variablell = DB::select('call muatdel(?)', array($muat['NO_BUKTI']));
 
 		$this->setFlag($request);
         $FLAGZ = $this->FLAGZ;
@@ -654,7 +654,7 @@ class MuatController extends Controller
 
 
         //  ganti 21
-        // $variablell = DB::select('call muatins(?)', array($muat['NO_BUKTI']));
+        $variablell = DB::select('call muatins(?)', array($muat['NO_BUKTI']));
 
  		$muat = Muat::where('NO_BUKTI', $no_buktix )->first();
 
@@ -696,7 +696,7 @@ class MuatController extends Controller
         }
 		
 		
-    //    $variablell = DB::select('call muatdel(?)', array($muat['NO_BUKTI']));//
+        $variablell = DB::select('call muatdel(?)', array($muat['NO_BUKTI']));//
 
 
         // ganti 23
@@ -754,6 +754,8 @@ class MuatController extends Controller
             ));
         }
 		
+        DB::SELECT("UPDATE MUAT SET POSTED=1 WHERE NO_BUKTI='$no_muat'");
+
         $PHPJasperXML->setData($data);
         ob_end_clean();
         $PHPJasperXML->outpage("I");

@@ -92,7 +92,7 @@ class PiuController extends Controller
                                 <i class="fas fa-edit"></i>
                                     Edit
                                 </a>	
-                                <a class="dropdown-item btn btn-danger" href="piu/print/' . $row->NO_ID . '">
+                                <a class="dropdown-item btn btn-danger" href="piu/cetak/' . $row->NO_ID . '">
                                     <i class="fa fa-print" aria-hidden="true"></i>
                                     Print
                                 </a> 									
@@ -188,10 +188,15 @@ class PiuController extends Controller
                 'PER'              => $periode,
                 'KODEC'            => ($request['KODEC']==null) ? "" : $request['KODEC'],			
                 'NAMAC'            => ($request['NAMAC']==null) ? "" : $request['NAMAC'],
-				'FLAG'             => 'B',
+				'FLAG'             => $FLAGZ,
 				'NOTES'            => ($request['NOTES']==null) ? "" : $request['NOTES'],
                 'BAYAR'            => (float) str_replace(',', '', $request['TBAYAR']),
                 'LAIN'             => (float) str_replace(',', '', $request['TLAIN']),
+                
+				'KODEP'            => ($request['KODEP']==null) ? "" : $request['KODEP'],
+				'NAMAP'            => ($request['NAMAP']==null) ? "" : $request['NAMAP'],
+                'KOM'             => (float) str_replace(',', '', $request['KOM']),
+                'TKOM'             => (float) str_replace(',', '', $request['TKOM']),
 				'USRNM'            => Auth::user()->username,
 				'TG_SMP'           => Carbon::now(),
 				'CBG'              => $CBG
@@ -425,7 +430,7 @@ class PiuController extends Controller
  
          
          return view('otransaksi_piu.edit', $data)
-		 ->with(['tipx' => $tipx, 'idx' => $idx, 'flagz' =>$this->FLAGZ, 'judul', $this->judul ]);
+		 ->with(['tipx' => $tipx, 'idx' => $idx, 'flagz' =>$this->FLAGZ, 'judul' => $this->judul ]);
       
     }
 
@@ -466,9 +471,15 @@ class PiuController extends Controller
 				'NOTES'            => ($request['NOTES']==null) ? "" : $request['NOTES'],
                 'BAYAR'            => (float) str_replace(',', '', $request['TBAYAR']),
                 'LAIN'             => (float) str_replace(',', '', $request['TLAIN']),
+                
+				'KODEP'            => ($request['KODEP']==null) ? "" : $request['KODEP'],
+				'NAMAP'            => ($request['NAMAP']==null) ? "" : $request['NAMAP'],
+                'KOM'             => (float) str_replace(',', '', $request['KOM']),
+                'TKOM'             => (float) str_replace(',', '', $request['TKOM']),
 				'USRNM'            => Auth::user()->username,
 				'TG_SMP'           => Carbon::now(),
-				'CBG'              => $CBG	
+				'CBG'              => $CBG,	
+				'FLAG'             => $FLAGZ	
             ]
         );
 
@@ -582,7 +593,43 @@ class PiuController extends Controller
    
     public function cetak(Piu $piu)
     {
-       
+        $no_piu = $piu->NO_BUKTI;
+
+        $file     = 'piuc';
+        $PHPJasperXML = new PHPJasperXML();
+        $PHPJasperXML->load_xml_file(base_path() . ('/app/reportc01/phpjasperxml/' . $file . '.jrxml'));
+
+        $query = DB::SELECT("SELECT piu.NO_BUKTI, piu.TGL, piu.KODEC, piu.NAMAC, piu.BACNO, piu.BNAMA, 
+                                    piud.NO_FAKTUR, piud.TOTAL,
+                                    piud.BAYAR, piud.SISA
+                            FROM piu, piud
+                            WHERE piu.NO_BUKTI='$no_piu' AND piu.NO_BUKTI = piud.NO_BUKTI 
+                            ;
+		");
+
+        
+        $data = [];
+
+        foreach ($query as $key => $value) {
+            array_push($data, array(
+                'NO_BUKTI' => $query[$key]->NO_BUKTI,
+                'TGL'      => $query[$key]->TGL,
+                'KODEC'    => $query[$key]->KODEC,
+                'NAMAC'    => $query[$key]->NAMAC,
+                'BACNO'    => $query[$key]->BACNO,
+                'BNAMA'    => $query[$key]->BNAMA,
+                'NO_FAKTUR'       => $query[$key]->NO_FAKTUR,
+                'TOTAL'    => $query[$key]->TOTAL,
+                'BAYAR'    => $query[$key]->BAYAR,
+                'SISA'    => $query[$key]->SISA
+            ));
+        }
+
+        DB::SELECT("UPDATE piu SET POSTED=1 WHERE NO_BUKTI='$no_piu'");
+		
+        $PHPJasperXML->setData($data);
+        ob_end_clean();
+        $PHPJasperXML->outpage("I"); 
     }
  
     

@@ -46,49 +46,22 @@ class BrgController extends Controller
     public function browse(Request $request)
     {   
 		$kd_brgx = $request->KD_BRG;
-		$pkpx = $request->PKP;
         $golz = $request->GOL;
 
 		$filter_kd_brg='';
 
-        if( $pkpx == '0' ){
+
 
             if (!empty($request->KD_BRG)) {
 			
-                $filter_kd_brg = " WHERE KD_BRG ='".$request->KD_BRG."' ";
+                $filter_kd_brg = " AND KD_BRG ='".$request->KD_BRG."' ";
             } 
                 
                 $brg = DB::SELECT("SELECT KD_BRG, TRIM(REPLACE(REPLACE(REPLACE(brg.NA_BRG, '\n', ' '), '\r', ' '), '\t', ' ')) as NA_BRG,
                                 brg.SATUAN
-                                FROM brg
+                                FROM brg WHERE GOL='$golz'
                                 $filter_kd_brg
-                                AND PN='0'
-                                AND GOL='$golz'
-                                ORDER BY KD_BRG  ");
-                            
-            if	( empty($brg) ) {
-                
-                $brg = DB::SELECT("SELECT KD_BRG, TRIM(REPLACE(REPLACE(REPLACE(brg.NA_BRG, '\n', ' '), '\r', ' '), '\t', ' ')) as NA_BRG,
-                                    brg.SATUAN
-                                FROM brg
-                                WHERE PN='0'
-                                AND GOL='$golz'
-                                ORDER BY KD_BRG ");			
-            }
-
-        } elseif ($pkpx =! '0')  {
-
-            if (!empty($request->KD_BRG)) {
-			
-                $filter_kd_brg = " WHERE KD_BRG ='".$request->KD_BRG."' ";
-            } 
-                
-                $brg = DB::SELECT("SELECT KD_BRG, TRIM(REPLACE(REPLACE(REPLACE(brg.NA_BRG, '\n', ' '), '\r', ' '), '\t', ' ')) as NA_BRG,
-                                brg.SATUAN
-                                FROM brg
-                                $filter_kd_brg
-                                AND PN<>'0'
-                                AND GOL='$golz'
+                             
                                 ORDER BY KD_BRG  ");
                             
             if	( empty($brg) ) {
@@ -100,11 +73,7 @@ class BrgController extends Controller
                                 ORDER BY KD_BRG ");			
             }
 
-        }
-		
-        
 
-		
         return response()->json($brg);
     }
 

@@ -47,6 +47,7 @@
 				     		            <th scope="col" style="text-align: center">-</th>							
                             <th scope="col" style="text-align: center">Kode</th>
                             <th scope="col" style="text-align: center">Nama</th>
+                            <th scope="col" style="text-align: center">Status</th>
                             <th scope="col" style="text-align: center">Alamat</th>
                             <th scope="col" style="text-align: center">Kota</th>
                             <th scope="col" style="text-align: center">Telpon</th>
@@ -97,7 +98,8 @@
                 },
 				
                 {data: 'KODEP', name: 'KODEP'},
-                {data: 'NAMAP', name: 'NAMAC' },
+                {data: 'NAMAP', name: 'NAMAP' },
+                {data: 'STA', name: 'STA'},
                 {data: 'ALAMAT', name: 'ALAMAT' },				
                 {data: 'KOTA', name: 'KOTA'},
                 {data: 'TELPON', name: 'TELPON'},

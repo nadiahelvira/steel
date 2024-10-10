@@ -81,10 +81,10 @@
 							<div class="form-group row">
 								<div {{( $flagz =='JL') ? '' : 'hidden' }} class="col-md-1" align="right">
 									<label style="color:red">*</label>									
-                                    <label for="NO_SURAT" class="form-label">SJ#</label>
+                                    <label for="NO_SURATS" class="form-label">SJ#</label>
                                 </div>
                                	<div {{( $flagz =='JL') ? '' : 'hidden' }} class="col-md-2 input-group" >
-                                  <input type="text" class="form-control NO_SURAT" id="NO_SURAT" name="NO_SURAT" placeholder="Pilih SJ"value="{{$header->NO_SURAT}}" style="text-align: left" readonly >
+                                  <input type="text" class="form-control NO_SURATS" id="NO_SURATS" name="NO_SURATS" placeholder="Pilih SJ"value="{{$header->NO_SURATS}}" style="text-align: left" readonly >
         						  <button type="button" class="btn btn-primary" onclick="browseSurats()"><i class="fa fa-search"></i></button>
                                 </div>
 
@@ -99,11 +99,20 @@
 
 								<div class="col-md-1" align="right">
 									<!-- <label style="color:red">*</label>									 -->
+                                    <label for="NO_SPM" class="form-label">SPM#</label>
+                                </div>
+                               	<div class="col-md-2 input-group" >
+                                  <input type="text" class="form-control NO_SPM" id="NO_SPM" name="NO_SPM" placeholder="Pilih SPM"value="{{$header->NO_SPM}}" style="text-align: left" readonly >
+        				
+                                </div>
+                            
+                            	<div class="col-md-1" align="right">
+									<!-- <label style="color:red">*</label>									 -->
                                     <label for="NO_SO" class="form-label">SO#</label>
                                 </div>
                                	<div class="col-md-2 input-group" >
                                   <input type="text" class="form-control NO_SO" id="NO_SO" name="NO_SO" placeholder="Pilih SO"value="{{$header->NO_SO}}" style="text-align: left" readonly >
-        						  <!-- <button type="button" class="btn btn-primary" onclick="browseCust()"><i class="fa fa-search"></i></button> -->
+        			
                                 </div>
                             </div>
 							
@@ -144,7 +153,20 @@
                             </div>
 							
 							
-							
+                            <div class="form-group row">
+								<div class="col-md-1" align="left">
+									<label style="color:red;font-size:20px">* </label>	
+                                    <label for="KODEP" class="form-label">Sales#</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control KODEP" id="KODEP" name="KODPC" placeholder="Kode Customer" value="{{$header->KODEC}}" readonly>
+                                </div>
+
+								<div class="col-md-4">
+                                    <input type="text" class="form-control NAMAP" id="NAMAP" name="NAMAP" placeholder="-" value="{{$header->NAMAC}}" readonly>
+                                </div>
+                            </div>
+                            
 							<div class="form-group row">
                                 <div class="col-md-1">
                                     <label for="NOTES" class="form-label">Notes</label>
@@ -191,7 +213,9 @@
 										
 									</thead>
 									<tbody>
-									
+
+                                    <tbody id="detailSod">
+								
 									<?php $no=0 ?>
 									@foreach ($detail as $detail)
 										<tr>
@@ -349,7 +373,8 @@
 			<table class="table table-stripped table-bordered" id="table-bsurats">
 				<thead>
 					<tr>
-						<th>No Surat Jalan</th>
+						<th>No Surat</th>
+						<th>SPM#</th>
 						<th>SO</th>
 						<th>Customer</th>
 						<th>Nama</th>
@@ -517,7 +542,7 @@
         if ( $tipx == 'new' )
 		{
 			 baru();	
-             tambah();				 
+         //    tambah();				 
 		}
 
         if ( $tipx != 'new' )
@@ -544,6 +569,7 @@
 		$('body').on('click', '.btn-delete', function() {
 			var val = $(this).parents("tr").remove();
 			baris--;
+			hitung();
 			nomor();
 		});
 		
@@ -561,7 +587,7 @@
 			$.ajax(
 			{
 				type: 'GET', 		
-				url: '{{url('surats/browse')}}',
+				url: '{{url('jual/browseSurat')}}',
 				data: {
 					'GOL': "{{$golz}}",
 				},
@@ -574,7 +600,8 @@
 					for(i=0; i<resp.length; i++){
 						
 						dTableBSurats.row.add([
-							'<a href="javascript:void(0);" onclick="chooseSurats(\''+resp[i].NO_BUKTI+'\' , \''+resp[i].NO_SO+'\', \''+resp[i].KODEC+'\',  \''+resp[i].NAMAC+'\', \''+resp[i].ALAMAT+'\',  \''+resp[i].KOTA+'\')">'+resp[i].NO_BUKTI+'</a>',
+							'<a href="javascript:void(0);" onclick="chooseSurats(\''+resp[i].NO_BUKTI+'\' , \''+resp[i].NO_SPM+'\',  \''+resp[i].NO_SO+'\', \''+resp[i].KODEC+'\',  \''+resp[i].NAMAC+'\', \''+resp[i].ALAMAT+'\',  \''+resp[i].KOTA+'\' , \''+resp[i].KODEP+'\',  \''+resp[i].NAMAP+'\'  )">'+resp[i].NO_BUKTI+'</a>',
+							resp[i].NO_SPM,
 							resp[i].NO_SO,
 							resp[i].KODEC,
 							resp[i].NAMAC,
@@ -596,14 +623,22 @@
 			$("#browseSuratsModal").modal("show");
 		}
 		
-		chooseSurats = function(NO_BUKTI, NO_SO, KODEC,NAMAC, ALAMAT, KOTA){
-			$("#NO_SURAT").val(NO_BUKTI);
+		chooseSurats = function(NO_BUKTI, NO_SPM, NO_SO, KODEC,NAMAC, ALAMAT, KOTA, KODEP, NAMAP ){
+			$("#NO_SURATS").val(NO_BUKTI);
+			$("#NO_SPM").val(NO_BUKTI);
 			$("#NO_SO").val(NO_SO);
 			$("#KODEC").val(KODEC);
 			$("#NAMAC").val(NAMAC);
 			$("#ALAMAT").val(ALAMAT);
-			$("#KOTA").val(KOTA);			
+			$("#KOTA").val(KOTA);
+			$("#KODEP").val(KODEP);
+			$("#NAMAP").val(NAMAP);			
+			
 			$("#browseSuratsModal").modal("hide");
+			
+			getSuratsd(NO_BUKTI);
+								
+			
 		}
 		
 		$("#NO_SURAT").keypress(function(e){
@@ -636,7 +671,7 @@
 					for(i=0; i<resp.length; i++){
 						
 						dTableBJual.row.add([
-							'<a href="javascript:void(0);" onclick="chooseJual(\''+resp[i].NO_BUKTI+'\' , \''+resp[i].NO_SO+'\', \''+resp[i].KODEC+'\',  \''+resp[i].NAMAC+'\', \''+resp[i].ALAMAT+'\',  \''+resp[i].KOTA+'\')">'+resp[i].NO_BUKTI+'</a>',
+							'<a href="javascript:void(0);" onclick="chooseJual(\''+resp[i].NO_BUKTI+'\' , \''+resp[i].NO_SO+'\', \''+resp[i].KODEC+'\',  \''+resp[i].NAMAC+'\', \''+resp[i].ALAMAT+'\',  \''+resp[i].KOTA+'\',  \''+resp[i].KODEP+'\',  \''+resp[i].NAMAP+'\'  )">'+resp[i].NO_BUKTI+'</a>',
 							resp[i].NO_SO,
 							resp[i].KODEC,
 							resp[i].NAMAC,
@@ -658,14 +693,20 @@
 			$("#browseJualModal").modal("show");
 		}
 		
-		chooseJual = function(NO_BUKTI, NO_SO, KODEC,NAMAC, ALAMAT, KOTA){
+		chooseJual = function(NO_BUKTI, NO_SO, KODEC,NAMAC, ALAMAT, KOTA, KODEP, NAMAP ){
 			$("#NO_JUAL").val(NO_BUKTI);
 			$("#NO_SO").val(NO_SO);
 			$("#KODEC").val(KODEC);
 			$("#NAMAC").val(NAMAC);
 			$("#ALAMAT").val(ALAMAT);
-			$("#KOTA").val(KOTA);			
+			$("#KOTA").val(KOTA);
+			$("#KODEP").val(KODEP);
+			$("#NAMAP").val(NAMAP);
+			
 			$("#browseJualModal").modal("hide");
+			
+			getSuratsd(NO_BUKTI);
+					
 		}
 		
 		$("#NO_JUAL").keypress(function(e){
@@ -677,140 +718,94 @@
 		}); 
 ////////////////////////////////////////////////////////////////////
 
-		//CHOOSE Bahan
-		var dTableBBahan;
-		var rowidBahan;
-		loadDataBBahan = function(){
-			$.ajax(
+
+
+
+	function getSuratsd(bukti)
+	{
+		
+	
+		var mulai = (idrow==baris) ? idrow-1 : idrow;
+
+		$.ajax(
 			{
 				type: 'GET',    
-				url: "{{url('so/browse_detail')}}",
-				data: 
-				{
-                    KD_BHN : $("#KD_BHN"+rowidBahan).val(),
-                    NO_SO : $("#NO_SO").val(), 					
+				url: "{{url('jual/browse_detail')}}",
+				data: {
+					nobukti: bukti,
 				},
-				success: function( response )
+				success: function( resp )
 				{
-					resp = response;
-					if(dTableBBahan){
-						dTableBBahan.clear();
-					}
+					var html = '';
 					for(i=0; i<resp.length; i++){
-						
-						dTableBBahan.row.add([
-							'<a href="javascript:void(0);" onclick="chooseBahan(\''+resp[i].KD_BHN+'\',\''+resp[i].NA_BHN+'\', \''+resp[i].SATUAN+'\' , \''+resp[i].QTY+'\', \''+resp[i].KIRIM+'\' , \''+resp[i].SISA+'\' , \''+resp[i].HARGA+'\' )">'+resp[i].KD_BHN+'</a>',
-							resp[i].NA_BHN,
-							resp[i].SATUAN,
-							resp[i].QTY,
-							resp[i].KIRIM,
-							resp[i].SISA,
-							resp[i].HARGA,
-							
-						]);
-					}
-					dTableBBahan.draw();
-				}
-			});
-		}
-		
-		dTableBBahan = $("#table-bbahan").DataTable({
-			
-		});
-		
-		browseBahan = function(rid){
-			rowidBahan = rid;
-			loadDataBBahan();
-			$("#browseBahanModal").modal("show");
-		}
-		
-		chooseBahan = function(KD_BHN, NA_BHN, SATUAN, QTY, KIRIM, SISA, HARGA ){
-			$("#KD_BHN"+rowidBahan).val(KD_BHN);
-			$("#NA_BHN"+rowidBahan).val(NA_BHN);
-			$("#SATUAN"+rowidBahan).val(SATUAN);
-			$("#QTY"+rowidBahan).val(SISA);
-			$("#HARGA"+rowidBahan).val(HARGA);
-			hitung();
-			
-			
-			$("#browseBahanModal").modal("hide");
-		}
-		
-		
-		$("#KD_BHN0").keypress(function(e){
-			if(e.keyCode == 46){
-				e.preventDefault();
-				browseBahan(0);
-			}
-		}); 
-
-//////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-		
- 		var dTableBBarang;
-		var rowidBarang;
-		loadDataBBarang = function(){
-			$.ajax(
-			{
-				type: 'GET',    
-				url: "{{url('so/browse_detail2')}}",
-				data: 
-				{
-                    KD_BRG : $("#KD_BRG"+rowidBarang).val(),
-                    NO_SO : $("#NO_SO").val(), 					
-				},				
 				
-				success: function( response )
-				{
-					resp = response;
-					if(dTableBBarang){
-						dTableBBarang.clear();
+						html+=`<tr>
+                                    <td><input name='REC[]' id='REC${i}' value=${resp[i].REC+1} type='text' class='REC form-control' onkeypress='return tabE(this,event)' readonly></td>
+                                    <td {{($golz == 'B') ? 'hidden' : '' }} ><input name='KD_BRG[]' data-rowid=${i} id='KD_BRG${i}' value="${resp[i].KD_BRG}" type='text' class='form-control KD_BRG' readonly></td>
+                                    <td {{($golz == 'B') ? 'hidden' : '' }}><input name='NA_BRG[]' data-rowid=${i} id='NA_BRG${i}' value="${resp[i].NA_BRG}" type='text' class='form-control  NA_BRG' readonly></td>
+                                    <td {{($golz == 'J') ? 'hidden' : '' }} ><input name='KD_BHN[]' data-rowid=${i} id='KD_BHN${i}' value="${resp[i].KD_BHN}" type='text' class='form-control KD_BHN' readonly></td>
+                                    <td {{($golz == 'J') ? 'hidden' : '' }} ><input name='NA_BHN[]' data-rowid=${i} id='NA_BHN${i}' value="${resp[i].NA_BHN}" type='text' class='form-control  NA_BHN' readonly></td>
+                                    <td><input name='SATUAN[]' data-rowid=${i} id='SATUAN${i}' value="${resp[i].SATUAN}" type='text' class='form-control  SATUAN' placeholder="Satuan"  readonly></td>
+                                    <td>
+										<input name='QTY[]' onclick='select()' onkeyup='hitung()' id='QTY${i}' value="${resp[i].QTY}" type='text' style='text-align: right' class='form-control QTY text-primary' readonly >
+									</td>
+									<td>
+										<input name='HARGA[]' onclick='select()' onkeyup='hitung()' id='HARGA${i}' value="${resp[i].HARGA}" type='text' style='text-align: right' class='form-control HARGA text-primary' readonly> 
+									</td>
+									<td>
+										<input name='TOTAL[]' onclick='select()' onkeyup='hitung()' id='TOTAL${i}' value="${resp[i].TOTAL}" type='text' style='text-align: right' class='form-control TOTAL text-primary' readonly> 
+									</td>
+									<td>
+										<input name='DPP[]' onclick='select()' onkeyup='hitung()' id='DPP${i}' value="0.00" type='text' style='text-align: right' class='form-control DPP text-primary' readonly> 
+									</td>
+									<td>
+										<input name='PPN[]' onclick='select()' onkeyup='hitung()' id='PPN${i}' value="0.00" type='text' style='text-align: right' class='form-control PPN text-primary' readonly> 
+									</td>
+									
+                                    <td><input name='KET[]' id='KET${i}' value="${resp[i].KET}" type='text' class='form-control  KET' required></td>
+                                    <td><button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button></td>
+                                </tr>`;
 					}
-					for(i=0; i<resp.length; i++){
-						
-						dTableBBarang.row.add([
-							'<a href="javascript:void(0);" onclick="chooseBarang(\''+resp[i].KD_BRG+'\',\''+resp[i].NA_BRG+'\', \''+resp[i].SATUAN+'\' , \''+resp[i].QTY+'\' , \''+resp[i].KIRIM+'\' , \''+resp[i].SISA+'\' , \''+resp[i].HARGA+'\'  )">'+resp[i].KD_BRG+'</a>',
-							resp[i].NA_BRG,
-							resp[i].SATUAN,
-							resp[i].QTY,
-							resp[i].KIRIM,
-							resp[i].SISA,
-							resp[i].HARGA,							
-						]);
-					}
-					dTableBBarang.draw();
+					$('#detailSod').html(html);
+
+					$(".QTY").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+					$(".QTY").autoNumeric('update');
+
+					$(".HARGA").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+					$(".HARGA").autoNumeric('update');
+
+					$(".TOTAL").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+					$(".TOTAL").autoNumeric('update');
+					
+					$(".DPP").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+					$(".DPP").autoNumeric('update');
+
+					$(".PPN").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+					$(".PPN").autoNumeric('update');
+					
+					
+					/*
+					$(".KD_BHN").each(function() {
+						var getid = $(this).attr('id');
+						var noid = getid.substring(6,11);
+
+						$("#KD_BHN"+noid).keypress(function(e){
+							if(e.keyCode == 46){
+								e.preventDefault();
+								browseBhn(noid);
+							}
+						}); 
+					});*/
+
+					idrow=resp.length;
+					baris=resp.length;
+
+					nomor();
 				}
 			});
-		}
-		
-		dTableBBarang = $("#table-bbarang").DataTable({
-			
-		});
-		
-		browseBarang = function(rid){
-			rowidBarang = rid;
-			loadDataBBarang();
-			$("#browseBarangModal").modal("show");
-		}
-		
-		chooseBarang = function(KD_BRG, NA_BRG, SATUAN, QTY, KIRIM, SISA, HARGA){
-			$("#KD_BRG"+rowidBarang).val(KD_BRG);
-			$("#NA_BRG"+rowidBarang).val(NA_BRG);
-			$("#SATUAN"+rowidBarang).val(SATUAN);
-			$("#QTY"+rowidBarang).val(SISA);
-			$("#HARGA"+rowidBarang).val(HARGA);			
-			$("#browseBarangModal").modal("hide");
-			hitung();
-		}
-		
-		
-		$("#KD_BRG0").keypress(function(e){
-			if(e.keyCode == 46){
-				e.preventDefault();
-				browseBarang(0);
-			}
-		}); 
+	}
+	
+
 	});
 
 
@@ -909,12 +904,6 @@
 
 			var TOTALX = QTYX * HARGAX;
 
-			// var dpp = Math.floor(TOTALX / ((100+11)/100) );
-			var dpp = Math.floor(TOTALX - ppn );
-			z.find('.DPP').val(dpp);
-
-			var ppn = TOTALX - dpp;
-			z.find('.PPNX').val(ppn);	
 		
 			z.find('.QTY').val(QTYX);			
 		    z.find('.QTY').autoNumeric('update');
@@ -931,7 +920,7 @@
 			
 		});
 		
-	    PPNX =  TTOTAL * 11 / 100;
+		
 		NETTX = PPNX + TTOTAL;
 		
 		if(isNaN(TTOTAL_QTY)) TTOTAL_QTY = 0;
@@ -1106,6 +1095,8 @@
 				
 		 $('#NO_BUKTI').val("+");	
 		 $('#NO_SO').val("");
+		 $('#NO_SPM').val("");
+		 $('#NO_SURATS').val("");		 
 		 $('#KODEC').val("");
 		 $('#NAMAC').val("");
 		 $('#ALAMAT').val("");

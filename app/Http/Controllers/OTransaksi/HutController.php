@@ -91,7 +91,7 @@ class HutController extends Controller
                                 <i class="fas fa-edit"></i>
                                     Edit
                                 </a>	
-                                <a class="dropdown-item btn btn-danger" href="hut/print/' . $row->NO_ID . '">
+                                <a class="dropdown-item btn btn-danger" href="hut/cetak/' . $row->NO_ID . '">
                                     <i class="fa fa-print" aria-hidden="true"></i>
                                     Print
                                 </a> 									
@@ -246,7 +246,8 @@ class HutController extends Controller
 
 
 //  ganti 11
-		// $variablell = DB::select('call hutins(?)',array($no_bukti));
+    
+		 $variablell = DB::select('call hutins(?,?)', array($no_bukti, $no_bukti2));
 
        $no_buktix = $no_bukti;
 		
@@ -445,7 +446,7 @@ class HutController extends Controller
  
          
          return view('otransaksi_hut.edit', $data)
-		 ->with(['tipx' => $tipx, 'idx' => $idx, 'flagz' =>$this->FLAGZ, 'judul', $this->judul ]);
+		 ->with(['tipx' => $tipx, 'idx' => $idx, 'flagz' =>$this->FLAGZ, 'judul' => $this->judul ]);
       	 
          
     }
@@ -467,7 +468,7 @@ class HutController extends Controller
         );
 		
 // ganti 20
-		// $variablell = DB::select('call hutdel(?)',array($hut['NO_BUKTI']));		
+		 $variablell = DB::select('call hutdel(?)',array($hut['NO_BUKTI']));		
 
         // ganti 20
         $periode = $request->session()->get('periode')['bulan']. '/' . $request->session()->get('periode')['tahun'];
@@ -557,7 +558,7 @@ class HutController extends Controller
 
 
 //  ganti 21
-		// $variablell = DB::select('call hutins(?)',array($hut['NO_BUKTI']));
+		 $variablell = DB::select('call hutins(?)',array($hut['NO_BUKTI']));
 		
 
  		$hut = Hut::where('NO_BUKTI', $no_buktix )->first();
@@ -592,7 +593,7 @@ class HutController extends Controller
                 ->with(['judul' => $this->judul, 'flagz' => $this->FLAGZ]);
         }
 		
-		// $variablell = DB::select('call hutdel(?)',array($hut['NO_BUKTI']));
+	    $variablell = DB::select('call hutdel(?)',array($hut['NO_BUKTI']));
 		
 		
 // ganti 23
@@ -609,7 +610,43 @@ class HutController extends Controller
    
     public function cetak(Hut $hut)
     {
-       
+        $no_hut = $hut->NO_BUKTI;
+
+        $file     = 'hutc';
+        $PHPJasperXML = new PHPJasperXML();
+        $PHPJasperXML->load_xml_file(base_path() . ('/app/reportc01/phpjasperxml/' . $file . '.jrxml'));
+
+        $query = DB::SELECT("SELECT hut.NO_BUKTI, hut.TGL, hut.KODES, hut.NAMAS, hut.BACNO, hut.BNAMA, 
+                                    hutd.NO_FAKTUR, hutd.TOTAL,
+                                    hutd.BAYAR, hutd.SISA
+                            FROM hut, hutd
+                            WHERE hut.NO_BUKTI='$no_hut' AND hut.NO_BUKTI = hutd.NO_BUKTI 
+                            ;
+		");
+
+        
+        $data = [];
+
+        foreach ($query as $key => $value) {
+            array_push($data, array(
+                'NO_BUKTI' => $query[$key]->NO_BUKTI,
+                'TGL'      => $query[$key]->TGL,
+                'KODES'    => $query[$key]->KODES,
+                'NAMAS'    => $query[$key]->NAMAS,
+                'BACNO'    => $query[$key]->BACNO,
+                'BNAMA'    => $query[$key]->BNAMA,
+                'NO_FAKTUR'       => $query[$key]->NO_FAKTUR,
+                'TOTAL'    => $query[$key]->TOTAL,
+                'BAYAR'    => $query[$key]->BAYAR,
+                'SISA'    => $query[$key]->SISA
+            ));
+        }
+
+        DB::SELECT("UPDATE HUT SET POSTED=1 WHERE NO_BUKTI='$no_hut'");
+		
+        $PHPJasperXML->setData($data);
+        ob_end_clean();
+        $PHPJasperXML->outpage("I"); 
     }
  
     

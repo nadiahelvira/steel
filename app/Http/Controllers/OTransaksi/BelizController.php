@@ -507,7 +507,7 @@ class BelizController extends Controller
  
          
          return view('otransaksi_beliz.edit', $data)
-		 ->with(['tipx' => $tipx, 'idx' => $idx, 'flagz' =>$this->FLAGZ, 'judul', $this->judul, 'golz' =>$this->GOLZ ]);
+		 ->with(['tipx' => $tipx, 'idx' => $idx, 'flagz' =>$this->FLAGZ, 'judul' => $this->judul, 'golz' =>$this->GOLZ ]);
       
     }
 

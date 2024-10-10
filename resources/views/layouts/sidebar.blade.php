@@ -142,14 +142,14 @@
               </li>
               @endif
 
-              <!-- @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="purchase"))
+              @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="purchase"))
               <li class="nav-item">
-                <a href="{{url('bhn')}}" class="nav-link">
+                <a href="{{url('pegawai')}}" class="nav-link">
                   <i class="nav-icon fas fa-layer-group icon-gree"></i>
-                  <p>Bahan</p>
+                  <p>Pegawai</p>
                 </a>
               </li>
-              @endif -->
+              @endif 
 
               @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="sales"))
               <li class="nav-item">
@@ -220,7 +220,7 @@
               <li class="nav-item {{ (Request::is('po*')) ? 'active' : '' }}">
                 <a href="{{url('po?flagz=PO&golz=J')}}" class="nav-link">
                    <!-- <i class="nav-icon fas fa-cart-plus icon-yellow"></i>  -->
-                  <p>PO</p>
+                  <p>Purchase Order</p>
                 </a>
               </li>
 
@@ -241,11 +241,18 @@
               <li class="nav-item">
                 <a href="{{url('terima?flagz=HP&golz=J')}}" class="nav-link">
                   <!-- <i class="nav-icon fas fa-store icon-white"></i> -->
-                  <p>Terima</p>
+                  <p>Terima-A</p>
                 </a>
               </li>
               
-
+              <li class="nav-item">
+                <a href="{{url('terimab?flagz=HP&golz=J')}}" class="nav-link">
+                  <!-- <i class="nav-icon fas fa-store icon-white"></i> -->
+                  <p>Terima-B</p>
+                </a>
+              </li>
+              
+              
               <li class="nav-item">
                 <a href="{{url('utbeli?flagz=UM')}}" class="nav-link">
                   <!-- <i class="nav-icon fas fa-comments-dollar icon-green"></i> -->
@@ -273,7 +280,7 @@
            @endif			 		
           </li> 
 
-          <li class="nav-item">
+<!--          <li class="nav-item">
           @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="purchase"))
 			      <a href="#" class="nav-link">
               <i class="nav-icon fas fa-hand-holding-heart icon-ocean"></i>
@@ -286,21 +293,21 @@
 			      <ul class="nav nav-treeview">
               <li class="nav-item {{ (Request::is('po*')) ? 'active' : '' }}">
                 <a href="{{url('po?flagz=PO&golz=N')}}" class="nav-link">
-                   <!-- <i class="nav-icon fas fa-cart-plus icon-yellow"></i>  -->
+                   <!-- <i class="nav-icon fas fa-cart-plus icon-yellow"></i>  
                   <p>PO Non</p>
                 </a>
               </li>
 			  
               <li class="nav-item">
                 <a href="{{url('beli?flagz=BL&golz=N')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-store icon-white"></i> -->
+                  <!-- <i class="nav-icon fas fa-store icon-white"></i> 
                   <p>Pembelian Non</p>
                 </a>
               </li>
 
               <li class="nav-item">
                 <a href="{{url('beli?flagz=RB&golz=N')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-store icon-white"></i> -->
+                  <!-- <i class="nav-icon fas fa-store icon-white"></i> 
                   <p>Retur Pembelian Non</p>
                 </a>
               </li>
@@ -309,7 +316,7 @@
            @endif			 		
           </li>
 
-
+-->
           <li class="nav-item">
           @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="sales"))
 			      <a href="#" class="nav-link">
@@ -324,20 +331,26 @@
 
               <li class="nav-item">
                 <a href="{{url('so?flagz=SO&golz=J')}}" class="nav-link">
-                  <p>SO Bahan Jadi</p>
+                  <p>Sales Order</p>
                 </a>
               </li>
 
               <li class="nav-item">
-                <a href="{{url('surats?flagz=SJ&golz=J')}}" class="nav-link">
-                  <p>Surat Jalan Barang Jadi </p>
+                <a href="{{url('spm?flagz=SM&golz=J')}}" class="nav-link">
+                  <p>Surat Perintah Muat </p>
+                </a>
+              </li>
+              
+              <li class="nav-item">
+                <a href="{{url('surats?flagz=JL&golz=J')}}" class="nav-link">
+                  <p>Surat Jalan </p>
                 </a>
               </li>
 
               <li class="nav-item">
                 <a href="{{url('jual?flagz=JL&golz=J')}}" class="nav-link">
                   <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
-                  <p>Penjualan Bahan Jadi</p>
+                  <p>Invoice</p>
                 </a>
               </li>
 
@@ -363,12 +376,6 @@
                 </a>
               </li>
 			  
-              <li class="nav-item">
-                <a href="{{url('stocka?flagz=KB')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-film icon-yellow"></i> -->
-                  <p>Koreksi Stock Bahan </p>
-                </a>
-              </li>
 			  
               <li class="nav-item">
                 <a href="{{url('stockb?flagz=KZ')}}" class="nav-link">
@@ -778,6 +785,24 @@
                 <a href="{{url('periode')}}" class="nav-link">
                   <i class="nav-icon fas fa-truck icon-blue"></i>
                   <p>Ganti Periode</p>
+                </a>
+              </li>
+              @endif 
+
+              @if (Auth::user()->hasRole('superadmin|operational'))
+              <li class="nav-item">
+                <a href="{{url('po_selesai/index-posting')}}" class="nav-link">
+                  <i class="nav-icon fas fa-bug icon-pink"></i>
+                  <p>PO Selesai</p>
+                </a>
+              </li>
+              @endif 
+
+              @if (Auth::user()->hasRole('superadmin|operational'))
+              <li class="nav-item">
+                <a href="{{url('so_selesai/index-posting')}}" class="nav-link">
+                  <i class="nav-icon fas fa-bug icon-white"></i>
+                  <p>SO Selesai</p>
                 </a>
               </li>
               @endif 

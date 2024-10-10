@@ -303,17 +303,9 @@ class UtjualController extends Controller
                 'ACNOB'            => ($request['ACNOB'] == null) ? "" : $request['ACNOB'],
                 'NACNOB'           => ($request['NACNOB'] == null) ? "" : $request['NACNOB'],
                 'NOTES'            => ($request['NOTES'] == null) ? "" : $request['NOTES'],
-                'KD_BRG'           => ($request['KD_BRG'] == null) ? "" : $request['KD_BRG'],
-                'NA_BRG'           => ($request['NA_BRG'] == null) ? "" : $request['NA_BRG'],
-				'GUDANG'           => ($request['GUDANG'] == null) ? "" : $request['GUDANG'],
-                'QTY'              => (float) str_replace(',', '', $request['QTY']),
-                'KG'               => (float) str_replace(',', '', $request['KG']),
-                'HARGA'            => (float) str_replace(',', '', $request['HARGA']),
                 'TOTAL'            => (float) str_replace(',', '', $request['TOTAL']),
-                'DPP'              => (float) str_replace(',', '', $request['DPP']),
-                'PPN'              => (float) str_replace(',', '', $request['PPN']),				
-                'RPSISA'           => ($FLAGZ == 'UM') ? (float) str_replace(',', '', $request['TOTAL'] ) * -1  : (float) str_replace(',', '', $request['TOTAL'] ),      
-                'RPTOTAL'          => ($FLAGZ == 'UM') ? (float) str_replace(',', '', $request['TOTAL'] ) * -1  : (float) str_replace(',', '', $request['TOTAL'] ), 
+                'NETT'           => ($FLAGZ == 'UM') ? (float) str_replace(',', '', $request['TOTAL'] ) * -1  : (float) str_replace(',', '', $request['TOTAL'] ),      
+                'SISA'          => ($FLAGZ == 'UM') ? (float) str_replace(',', '', $request['TOTAL'] ) * -1  : (float) str_replace(',', '', $request['TOTAL'] ), 
                 'BACNO'            => ($request['BACNO'] == null) ? "" : $request['BACNO'],
                 'BNAMA'            => ($request['BNAMA'] == null) ? "" : $request['BNAMA'],				
                 'NO_BANK'          => $no_bukti2,
@@ -527,7 +519,7 @@ class UtjualController extends Controller
  
          
          return view('otransaksi_utjual.edit', $data)
-		 ->with(['tipx' => $tipx, 'idx' => $idx, 'flagz' =>$this->FLAGZ, 'judul', $this->judul ]);
+		 ->with(['tipx' => $tipx, 'idx' => $idx, 'flagz' =>$this->FLAGZ, 'judul' =>  $this->judul ]);
 			 
     
       
@@ -580,22 +572,12 @@ class UtjualController extends Controller
                 'NO_SO'            => ($request['NO_SO'] == null) ? "" : $request['NO_SO'],
                 'KODEC'            => ($request['KODEC'] == null) ? "" : $request['KODEC'],
                 'NAMAC'            => ($request['NAMAC'] == null) ? "" : $request['NAMAC'],
-                'TRUCK'            => ($request['TRUCK'] == null) ? "" : $request['TRUCK'],
-                'SOPIR'            => ($request['SOPIR'] == null) ? "" : $request['SOPIR'],
                 'ALAMAT'           => ($request['ALAMAT'] == null) ? "" : $request['ALAMAT'],
                 'KOTA'             => ($request['KOTA'] == null) ? "" : $request['KOTA'],
                 'NOTES'            => ($request['NOTES'] == null) ? "" : $request['NOTES'],
-                'KD_BRG'           => ($request['KD_BRG'] == null) ? "" : $request['KD_BRG'],
-                'NA_BRG'           => ($request['NA_BRG'] == null) ? "" : $request['NA_BRG'],
-				'GUDANG'           => ($request['GUDANG'] == null) ? "" : $request['GUDANG'],
-                'QTY'              => (float) str_replace(',', '', $request['QTY']),
-                'KG'               => (float) str_replace(',', '', $request['KG']),				
-                'HARGA'            => (float) str_replace(',', '', $request['HARGA']),
                 'TOTAL'            => (float) str_replace(',', '', $request['TOTAL']),
-                'DPP'              => (float) str_replace(',', '', $request['DPP']),
-                'PPN'              => (float) str_replace(',', '', $request['PPN']),				
-                'RPSISA'           => ($FLAGZ == 'UM') ? (float) str_replace(',', '', $request['TOTAL'] ) * -1  : (float) str_replace(',', '', $request['TOTAL'] ),      
-                'RPTOTAL'          => ($FLAGZ == 'UM') ? (float) str_replace(',', '', $request['TOTAL'] ) * -1  : (float) str_replace(',', '', $request['TOTAL'] ),      
+                'NETT'           => ($FLAGZ == 'UM') ? (float) str_replace(',', '', $request['TOTAL'] ) * -1  : (float) str_replace(',', '', $request['TOTAL'] ),      
+                'SISA'          => ($FLAGZ == 'UM') ? (float) str_replace(',', '', $request['TOTAL'] ) * -1  : (float) str_replace(',', '', $request['TOTAL'] ),      
                 'ACNOB'            => ($request['ACNOB'] == null) ? "" : $request['ACNOB'],
                 'NACNOB'           => ($request['NACNOB'] == null) ? "" : $request['NACNOB'],			
                 'BACNO'            => ($request['BACNO'] == null) ? "" : $request['BACNO'],

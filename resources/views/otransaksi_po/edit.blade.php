@@ -117,11 +117,6 @@
                                 </div>
 
 								
-								<div class="col-md-1">
-									<input type="text" class="form-control PKP" id="PKP" name="PKP" placeholder="-" 
-									value="{{$header->PKP}}" readonly>
-									<label for="PKP">PKP</label>
-								</div>
                             </div>
 
 							
@@ -183,9 +178,6 @@
                                         <th width="200px" style="text-align:center">Harga</th>
                
                                         <th width="200px" style="text-align:center">Total</th>
-										<th width="200px" style="text-align:center">PPN</th>
-										<th width="200px" style="text-align:center">DPP</th>
-        
                                         <th width="200px" style="text-align:center">Ket</th>
 
                                         <th></th>
@@ -236,13 +228,6 @@
 										    <input name="TOTAL[]" onclick="select()" onblur="hitung()"  value="{{$detail->TOTAL}}" id="TOTAL{{$no}}" type="text" style="text-align: right"  class="form-control TOTAL" readonly>
 										</td>
 
-										<td>
-											<input name="PPNX[]" onblur="hitung()"  value="{{$detail->PPN}}" id="PPNX{{$no}}" type="text" style="text-align: right"  class="form-control PPNX" readonly>
-										</td>
-										<td>
-											<input name="DPP[]" onblur="hitung()"  value="{{$detail->DPP}}" id="DPP{{$no}}" type="text" style="text-align: right"  class="form-control DPP" readonly>
-										</td>
-	
 										 
                                         <td>
                                           <input name="KET[]" id="KET{{$no}}" type="text" class="form-control KET" value="{{$detail->KET}}"  >
@@ -287,30 +272,14 @@
 						
 							<div class="form-group row">
                                 <div class="col-md-8" align="right">
-                                    <label for="TTOTAL" class="form-label">TOTAL</label>
+                                    <label for="TTOTAL" class="form-label">Ttotal</label>
                                 </div>
                                 <div class="col-md-2">
                                     <input type="text"  onclick="select()" onkeyup="hitung()" class="form-control TTOTAL" id="TTOTAL" name="TTOTAL" placeholder="" value="{{$header->TOTAL}}" style="text-align: right" readonly>
                                 </div>
 							</div>
 
-                            <div class="form-group row">
-                                <div class="col-md-8" align="right">
-                                    <label for="PPN" class="form-label">PPN</label>
-                                </div>
-                                <div class="col-md-2">
-                                    <input type="text"  onclick="select()" onkeyup="hitung()" class="form-control PPN" id="PPN" name="PPN" placeholder="" value="{{$header->PPN}}" style="text-align: right" readonly>
-                                </div>
-							</div>
-							
-                            <div class="form-group row">
-                                <div class="col-md-8" align="right">
-                                    <label for="NETT" class="form-label">NETT</label>
-                                </div>
-                                <div class="col-md-2">
-                                    <input type="text"  onclick="select()" onkeyup="hitung()" class="form-control NETT" id="NETT" name="NETT" placeholder="" value="{{$header->NETT}}" style="text-align: right" readonly>
-                                </div>
-							</div>
+
 							
 						</div>
 						
@@ -501,7 +470,7 @@
 		
 		$("#TTOTAL_QTY").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
 		$("#TTOTAL").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
-		$("#PPN").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
+		// $("#PPN").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
 		$("#NETT").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
 
 
@@ -510,8 +479,8 @@
 			$("#QTY" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 			
 			$("#HARGA" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-			$("#PPNX" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-			$("#DPP" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+			// $("#PPNX" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+			// $("#DPP" + i.toStri?ng()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 
 			$("#TOTAL" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 		}	
@@ -541,7 +510,9 @@
         $('body').on('click', '.btn-delete', function() {
 			var val = $(this).parents("tr").remove();
 			baris--;
+			hitung();
 			nomor();
+			
 			
 		});
 
@@ -638,8 +609,7 @@
 				url: "{{url('brg/browse')}}",
 				async : false,
 				data: {
-						'KD_BRG': $("#KD_BRG"+rowidBarang).val(),
-						PKP : $("#PKP").val(), 	
+						'KD_BRG': $("#KD_BRG"+rowidBarang).val(),	
 						'GOL': "{{$golz}}",			
 					
 				},
@@ -844,11 +814,6 @@
 				alert("Barang# Harus Diisi.");
 			}
 
-			if ( $('#KD_BHN').val()=='' ) 
-            {				
-			    check = '1';
-				alert("Bahan# Harus Diisi.");
-			}
 			
 			
 			if ( tgl.substring(3,5) != bulanPer ) 
@@ -891,8 +856,7 @@
    function hitung() {
 		var TTOTAL_QTY = 0;
 		var TTOTAL = 0;
-		var PPN = 0;
-		var NETTX = 0;
+
 
 		
 		$(".QTY").each(function() {
@@ -900,39 +864,23 @@
 			let z = $(this).closest('tr');
 			var QTYX = parseFloat(z.find('.QTY').val().replace(/,/g, ''));
 			var HARGAX = parseFloat(z.find('.HARGA').val().replace(/,/g, ''));
-			var PPNX = parseFloat(z.find('.PPNX').val().replace(/,/g, ''));
 	
-			var PKP = parseFloat($('#PKP').val().replace(/,/g, ''));
 
             var TOTALX  =  ( QTYX * HARGAX );
 			z.find('.TOTAL').val(TOTALX);
 
-			var dpp = Math.floor(TOTALX / ((100+11)/100) );
-			z.find('.DPP').val(dpp);
-
-
-			if (PKP == 1) {
-				var PPNX = parseFloat((Math.round(TOTALX * 0.11 * 100) / 100).toFixed(0));
-			} else {
-				var PPNX = 0;
-			}
-
-			z.find('.PPNX').val(PPNX);	
 
 		    z.find('.HARGA').autoNumeric('update');			
 		    z.find('.QTY').autoNumeric('update');	
 		    z.find('.TOTAL').autoNumeric('update');				
-		    z.find('.DPP').autoNumeric('update');			
-		    z.find('.PPNX').autoNumeric('update');		
+	
 
             TTOTAL_QTY +=QTYX;		
-            TTOTAL +=TOTALX;				
-            PPN +=PPNX;				
+            TTOTAL +=TOTALX;							
 		
 		});
 
 		
-		NETTX = TTOTAL + PPN ;
 		
 		if(isNaN(TTOTAL_QTY)) TTOTAL_QTY = 0;
 
@@ -945,11 +893,7 @@
 		$("#TTOTAL").autoNumeric('update');
 
 
-		$('#PPN').val(numberWithCommas(PPN));		
-		$("#PPN").autoNumeric('update');
 
-		$('#NETT').val(numberWithCommas(NETTX));		
-		$("#NETT").autoNumeric('update');
 
 		
 	}
@@ -1036,10 +980,10 @@
 			if ( $tipx != 'new' )
 			{
 				$("#KD_BHN" + i.toString()).attr("readonly", true);	
-				$("#KD_BHN" + i.toString()).removeAttr('onblur');
+			//	$("#KD_BHN" + i.toString()).removeAttr('onblur');
 				
-				$("#KD_BRG" + i.toString()).attr("readonly", true);	
-				$("#KD_BRG" + i.toString()).removeAttr('onblur');
+				$("#KD_BRG" + i.toString()).attr("readonly", false);	
+			//	$("#KD_BRG" + i.toString()).removeAttr('onblur');
 			} 
 		}
 
@@ -1113,8 +1057,7 @@
 		 $('#NOTES').val("");	
 		 $('#TTOTAL_QTY').val("0.00");	
 		 $('#TTOTAL').val("0.00");
-		 $('#PPN').val("0.00")
-		 $('#NETT').val("0.00")
+
 		 
 		var html = '';
 		$('#detailx').html(html);	
@@ -1185,14 +1128,7 @@
 				<td>
 		            <input name='TOTAL[]' onclick='select()' onblur='hitung()' value='0' id='TOTAL${idrow}' type='text' style='text-align: right' class='form-control TOTAL text-primary' readonly required >
                 </td>	
-
-				<td>
-		            <input name='PPNX[]'  onblur='hitung()' value='0' id='PPNX${idrow}' type='text' style='text-align: right' class='form-control PPNX text-primary' readonly required >
-                </td>
-
-				<td>
-					<input name='DPP[]'  onblur='hitung()' value='0' id='DPP${idrow}' type='text' style='text-align: right' class='form-control DPP text-primary' readonly required >
-				</td>			
+		
 					
                 <td>
 				    <input name='KET[]'   id='KET${idrow}' type='text' class='form-control  KET' required>
@@ -1224,15 +1160,6 @@
 				vMin: '-999999999.99'
 			});		
 			
-			$("#DPP" + i.toString()).autoNumeric('init', {
-				aSign: '<?php echo ''; ?>',
-				vMin: '-999999999.99'
-			});
-			
-			$("#PPNX" + i.toString()).autoNumeric('init', {
-				aSign: '<?php echo ''; ?>',
-				vMin: '-999999999.99'
-			});	 
 
 					
 		}

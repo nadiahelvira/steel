@@ -335,25 +335,15 @@ class UtbeliController extends Controller
                 'NO_BUKTI'         => $no_bukti,
                 'TGL'              => date('Y-m-d', strtotime($request['TGL'])),
                 'PER'              => $periode,
-                'NO_BL'            => ($request['NO_PO'] == null) ? "" : $request['NO_BL'],
                 'NO_PO'            => ($request['NO_PO'] == null) ? "" : $request['NO_PO'],
                 'KODES'            => ($request['KODES'] == null) ? "" : $request['KODES'],
                 'NAMAS'            => ($request['NAMAS'] == null) ? "" : $request['NAMAS'],
                 'ALAMAT'           => ($request['ALAMAT'] == null) ? "" : $request['ALAMAT'],
                 'KOTA'             => ($request['KOTA'] == null) ? "" : $request['KOTA'],
                 'FLAG'             =>  $FLAGZ,
-                // 'GOL'              =>  $GOLZ,
                 'NOTES'            => ($request['NOTES'] == null) ? "" : $request['NOTES'],
-                'KG'               => (float) str_replace(',', '', $request['KG']),
-                'SISA'               => (float) str_replace(',', '', $request['KG']),
-                'HARGA'            => (float) str_replace(',', '', $request['HARGA']),
-                'LAIN'             => (float) str_replace(',', '', $request['LAIN']),
-                'TOTAL'            => (float) str_replace(',', '', $request['TOTAL']),
-                'RPRATE'           => (float) str_replace(',', '', $request['RPRATE']),
-                'RPHARGA'          => (float) str_replace(',', '', $request['RPHARGA']),
-                'RPLAIN'           => (float) str_replace(',', '', $request['RPLAIN']),				
-                'RPTOTAL'          => ($FLAGZ == 'UM') ? (float) str_replace(',', '', $request['TOTAL'] ) * -1  : (float) str_replace(',', '', $request['RPTOTAL'] ),      
-				'RPSISA'           => ($FLAGZ == 'UM') ? (float) str_replace(',', '', $request['TOTAL'] ) * -1  : (float) str_replace(',', '', $request['RPTOTAL'] ),      
+                'NETT'          => ($FLAGZ == 'UM') ? (float) str_replace(',', '', $request['TOTAL'] ) * -1  : (float) str_replace(',', '', $request['RPTOTAL'] ),      
+				'SISA'           => ($FLAGZ == 'UM') ? (float) str_replace(',', '', $request['TOTAL'] ) * -1  : (float) str_replace(',', '', $request['RPTOTAL'] ),      
                 'ACNOA'            => ($request['ACNOA'] == null) ? "" : $request['ACNOA'],
                 'NACNOA'           => ($request['NACNOA'] == null) ? "" : $request['NACNOA'],
                 'ACNOB'            => $ACNOB,
@@ -371,10 +361,10 @@ class UtbeliController extends Controller
 
 
 		if ( $FLAGZ == 'UM' ) {
-			// $variablell = DB::select('call umins(?,?)', array($no_bukti, $no_bukti2));
+			 $variablell = DB::select('call umins(?,?)', array($no_bukti, $no_bukti2));
 
         } else if ( $FLAGZ == 'TH' ) {
-            // $variablell = DB::select('call thutins(?)', array($no_bukti));
+             $variablell = DB::select('call thutins(?)', array($no_bukti));
         }
 		
 
@@ -562,7 +552,7 @@ class UtbeliController extends Controller
  
          
          return view('otransaksi_utbeli.edit', $data)
-		 ->with(['tipx' => $tipx, 'idx' => $idx, 'golz' =>$this->GOLZ, 'flagz' =>$this->FLAGZ, 'judul', $this->judul ]);
+		 ->with(['tipx' => $tipx, 'idx' => $idx, 'golz' =>$this->GOLZ, 'flagz' =>$this->FLAGZ, 'judul' => $this->judul ]);
 			 
     
       
@@ -590,11 +580,11 @@ class UtbeliController extends Controller
 		
 		if ( $FLAGZ == 'UM' ) {
 
-            // $variablell = DB::select('call umdel(?,?)', array($utbeli['NO_BUKTI'], '0'));
+             $variablell = DB::select('call umdel(?,?)', array($utbeli['NO_BUKTI'], '0'));
 
 
         } else if ( $FLAGZ == 'TH' ) {
-            // $variablell = DB::select('call thutdel(?)', array($utbeli['NO_BUKTI']));
+             $variablell = DB::select('call thutdel(?)', array($utbeli['NO_BUKTI']));
 
         }
 		
@@ -610,16 +600,9 @@ class UtbeliController extends Controller
                 'ALAMAT'           => ($request['ALAMAT'] == null) ? "" : $request['ALAMAT'],
                 'KOTA'             => ($request['KOTA'] == null) ? "" : $request['KOTA'],
                 'NOTES'            => ($request['NOTES'] == null) ? "" : $request['NOTES'],
-                'KG'               => (float) str_replace(',', '', $request['KG']),
-                'SISA'             => (float) str_replace(',', '', $request['KG']),			
-                'HARGA'            => (float) str_replace(',', '', $request['HARGA']),
-                'LAIN'             => (float) str_replace(',', '', $request['LAIN']),
                 'TOTAL'            => (float) str_replace(',', '', $request['TOTAL']),
-                'RPRATE'           => (float) str_replace(',', '', $request['RPRATE']),
-                'RPHARGA'          => (float) str_replace(',', '', $request['RPHARGA']),
-                'RPLAIN'           => (float) str_replace(',', '', $request['RPLAIN']),				
-                'RPTOTAL'          => ( $FLAGZ == 'UM') ? (float) str_replace(',', '', $request['TOTAL'] ) * -1  : (float) str_replace(',', '', $request['RPTOTAL'] ),      
-				'RPSISA'           => ( $FLAGZ == 'UM') ? (float) str_replace(',', '', $request['TOTAL'] ) * -1  : (float) str_replace(',', '', $request['RPTOTAL'] ),      
+                'NETT'          => ( $FLAGZ == 'UM') ? (float) str_replace(',', '', $request['TOTAL'] ) * -1  : (float) str_replace(',', '', $request['RPTOTAL'] ),      
+				'SISA'           => ( $FLAGZ == 'UM') ? (float) str_replace(',', '', $request['TOTAL'] ) * -1  : (float) str_replace(',', '', $request['RPTOTAL'] ),      
                 		
                 'ACNOA'            => ($request['ACNOA'] == null) ? "" : $request['ACNOA'],				
 				'NACNOA'           => ($request['NACNOA'] == null) ? "" : $request['NACNOA'],
@@ -629,7 +612,6 @@ class UtbeliController extends Controller
                 'USRNM'            => Auth::user()->username,
                 'updated_by'       => Auth::user()->username,
                 'CBG'              => $CBG,
-                'TGL_BL'           => date('Y-m-d', strtotime($request['TGL_BL'])),
                 'TG_SMP'           => Carbon::now()
             ]
         );
@@ -640,10 +622,10 @@ class UtbeliController extends Controller
 
 		if ( $FLAGZ == 'UM' ) {
           
-    	    // $variablell = DB::select('call umins(?,?)', array($utbeli['NO_BUKTI'], 'X'));
+    	     $variablell = DB::select('call umins(?,?)', array($utbeli['NO_BUKTI'], 'X'));
 
         } else if ( $FLAGZ == 'TH' ) {
-            // $variablell = DB::select('call thutins(?)', array($utbeli['NO_BUKTI']));
+             $variablell = DB::select('call thutins(?)', array($utbeli['NO_BUKTI']));
         }
 		
 		
@@ -679,10 +661,10 @@ class UtbeliController extends Controller
 				
 		if ( $FLAGZ == 'UM' ) {
            
-		//    $variablell = DB::select('call umdel(?,?)', array($utbeli['NO_BUKTI'], '1'));
+		    $variablell = DB::select('call umdel(?,?)', array($utbeli['NO_BUKTI'], '1'));
 
         } else if ( $FLAGZ == 'TH' ) {
-            // $variablell = DB::select('call thutdel(?)', array($utbeli['NO_BUKTI']));
+             $variablell = DB::select('call thutdel(?)', array($utbeli['NO_BUKTI']));
         }
 		
         $deleteBeli = Beli::find($utbeli->NO_ID);

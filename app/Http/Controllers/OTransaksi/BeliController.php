@@ -36,7 +36,7 @@ class BeliController extends Controller
         } else if ( $request->flagz == 'RB' && $request->golz == 'B' ) {
             $this->judul = "Retur Pembelian Bahan Baku";
         } else if ( $request->flagz == 'BL' && $request->golz == 'J' ) {
-            $this->judul = "Pembelian Bahan Jadi";
+            $this->judul = "Pembelian Barang";
         } else if ( $request->flagz == 'RB' && $request->golz == 'J' ) {
             $this->judul = "Retur Pembelian Bahan Jadi";
         } else if ( $request->flagz == 'BL' && $request->golz == 'N' ) {
@@ -75,11 +75,11 @@ class BeliController extends Controller
 
 		$CBG = Auth::user()->CBG;
 
-        $beli = DB::SELECT("SELECT distinct beli.NO_BUKTI , beli.KODES, beli.NAMAS, 
+        $beli = DB::SELECT("SELECT beli.NO_BUKTI , beli.TGL, beli.KODES, beli.NAMAS, 
 		                  beli.ALAMAT, beli.KOTA, beli.PKP, beli.NO_PO, belid.KD_BRG, belid.NA_BRG, belid.QTY from beli, belid 
-                          WHERE beli.NO_BUKTI = belid.NO_BUKTI AND beli.FLAG='BL' 
+                          WHERE beli.NO_BUKTI = belid.NO_BUKTI AND beli.FLAG='BL' AND BELID.NO_MUAT ='' 
                           AND beli.GOL ='$golz'
-                          AND beli.CBG = '$CBG'");
+                          AND beli.CBG = '$CBG' order by beli.TGL ");
         return response()->json($beli);
     }
 	
@@ -99,7 +99,7 @@ class BeliController extends Controller
 		}
 		
 		$beli = DB::SELECT("SELECT NO_BUKTI, TGL, KODES, 
-		            NAMAS, TOTAL, BAYAR, SISA from beli
+		            NAMAS, NETT AS TOTAL, BAYAR, SISA from beli
 		            $filterkodes 
                     AND beli.CBG = '$CBG'
                     ORDER BY NO_BUKTI ");
@@ -304,9 +304,9 @@ class BeliController extends Controller
                 'NOTES'            => ($request['NOTES'] == null) ? "" : $request['NOTES'],
                 'TOTAL_QTY'        => (float) str_replace(',', '', $request['TTOTAL_QTY']),
                 'TOTAL'            => (float) str_replace(',', '', $request['TTOTAL']),
-				'PPN'               => (float) str_replace(',', '', $request['PPN']),
+				// 'PPN'               => (float) str_replace(',', '', $request['PPN']),
 				'PKP'               => (float) str_replace(',', '', $request['PKP']),
-				'DPP'               => (float) str_replace(',', '', $request['DPP']),
+				// 'DPP'               => (float) str_replace(',', '', $request['DPP']),
                 'NETT'            => (float) str_replace(',', '', $request['NETT']),
                 'SISA'            => (float) str_replace(',', '', $request['NETT']),
                 'USRNM'            => Auth::user()->username,
@@ -328,8 +328,8 @@ class BeliController extends Controller
         $SATUAN_PO     = $request->input('SATUAN_PO');
         $QTY_PO        = $request->input('QTY_PO');
         $HARGA      = $request->input('HARGA');		
-        $PPNX      = $request->input('PPNX');		
-        $DPP      = $request->input('DPP');		
+        // $PPNX      = $request->input('PPNX');		
+        // $DPP      = $request->input('DPP');		
         $TOTAL      = $request->input('TOTAL');
 	
         $KET        = $request->input('KET');  
@@ -353,12 +353,9 @@ class BeliController extends Controller
                 $detail->NA_BRG      = ($NA_BRG[$key] == null) ? "" :  $NA_BRG[$key];
                 $detail->SATUAN      = ($SATUAN[$key] == null) ? "" :  $SATUAN[$key];				
                 $detail->QTY         = (float) str_replace(',', '', $QTY[$key]);
-                $detail->KALI           = (float) str_replace(',', '', $KALI[$key]);
-                $detail->SATUAN_PO   = ($SATUAN_PO[$key] == null) ? "" :  $SATUAN_PO[$key];				
-                $detail->QTY_PO      = (float) str_replace(',', '', $QTY_PO[$key]);
                 $detail->HARGA       = (float) str_replace(',', '', $HARGA[$key]);
-                $detail->PPN       = (float) str_replace(',', '', $PPNX[$key]);
-                $detail->DPP       = (float) str_replace(',', '', $DPP[$key]);
+                // $detail->PPN       = (float) str_replace(',', '', $PPNX[$key]);
+                // $detail->DPP       = (float) str_replace(',', '', $DPP[$key]);
                 $detail->TOTAL       = (float) str_replace(',', '', $TOTAL[$key]); 
 				$detail->KET         = ($KET[$key] == null) ? "" :  $KET[$key];				
                 $detail->save();
@@ -562,7 +559,7 @@ class BeliController extends Controller
  
          
          return view('otransaksi_beli.edit', $data)
-		 ->with(['tipx' => $tipx, 'idx' => $idx, 'flagz' =>$this->FLAGZ, 'judul', $this->judul, 'golz' =>$this->GOLZ ]);
+		 ->with(['tipx' => $tipx, 'idx' => $idx, 'flagz' =>$this->FLAGZ, 'judul' => $this->judul, 'golz' =>$this->GOLZ ]);
       
     }
 
@@ -621,7 +618,7 @@ class BeliController extends Controller
                 'NOTES'            => ($request['NOTES'] == null) ? "" : $request['NOTES'],
                 'TOTAL_QTY'        => (float) str_replace(',', '', $request['TTOTAL_QTY']),
                 'TOTAL'            => (float) str_replace(',', '', $request['TTOTAL']),
-				'PPN'              => (float) str_replace(',', '', $request['PPN']),
+				// 'PPN'              => (float) str_replace(',', '', $request['PPN']),
 				'PKP'              => (float) str_replace(',', '', $request['PKP']),
                 'NETT'             => (float) str_replace(',', '', $request['NETT']),
 		   	    'SISA'             => (float) str_replace(',', '', $request['NETT']), 
@@ -652,8 +649,8 @@ class BeliController extends Controller
         $SATUAN_PO  = $request->input('SATUAN_PO');
         $QTY_PO     = $request->input('QTY_PO');
         $HARGA      = $request->input('HARGA');
-        $PPNX      = $request->input('PPNX');
-        $DPP      = $request->input('DPP');
+        // $PPNX      = $request->input('PPNX');
+        // $DPP      = $request->input('DPP');
         $TOTAL      = $request->input('TOTAL');
         $KET = $request->input('KET');			
 
@@ -676,12 +673,9 @@ class BeliController extends Controller
                         'NA_BRG'     => ($NA_BRG[$i] == null) ? "" :  $NA_BRG[$i],
                         'SATUAN'     => ($SATUAN[$i] == null) ? "" :  $SATUAN[$i],						
                         'QTY'        => (float) str_replace(',', '', $QTY[$i]),
-                        'KALI'          => (float) str_replace(',', '', $KALI[$i]),
-                        'SATUAN_PO'  => ($SATUAN_PO[$i] == null) ? "" :  $SATUAN_PO[$i],				
-                        'QTY_PO'     => (float) str_replace(',', '', $QTY_PO[$i]),
                         'HARGA'      => (float) str_replace(',', '', $HARGA[$i]),
-                        'PPN'      => (float) str_replace(',', '', $PPNX[$i]),
-                        'DPP'      => (float) str_replace(',', '', $DPP[$i]),
+                        // 'PPN'      => (float) str_replace(',', '', $PPNX[$i]),
+                        // 'DPP'      => (float) str_replace(',', '', $DPP[$i]),
                         'TOTAL'      => (float) str_replace(',', '', $TOTAL[$i]),
                         'KET'        => ($KET[$i] == null) ? "" :  $KET[$i],	
 						
@@ -704,14 +698,11 @@ class BeliController extends Controller
                         'NA_BRG'     => ($NA_BRG[$i] == null) ? "" :  $NA_BRG[$i],
                         'SATUAN'     => ($SATUAN[$i] == null) ? "" :  $SATUAN[$i],						
                         'QTY'        => (float) str_replace(',', '', $QTY[$i]),
-                        'KALI'          => (float) str_replace(',', '', $KALI[$i]),
-                        'SATUAN_PO'  => ($SATUAN_PO[$i] == null) ? "" :  $SATUAN_PO[$i],				
-                        'QTY_PO'     => (float) str_replace(',', '', $QTY_PO[$i]),
                         'HARGA'      => (float) str_replace(',', '', $HARGA[$i]),
                         'TOTAL'      => (float) str_replace(',', '', $TOTAL[$i]),
-                        'PPN'      => (float) str_replace(',', '', $PPNX[$i]),
+                        // 'PPN'      => (float) str_replace(',', '', $PPNX[$i]),
                         'KET'        => ($KET[$i] == null) ? "" :  $KET[$i],
-                        'DPP'      => (float) str_replace(',', '', $DPP[$i]),	
+                        // 'DPP'      => (float) str_replace(',', '', $DPP[$i]),	
                         'FLAG'       => $this->FLAGZ,
                         'GOL'        => $this->GOLZ,						
                     ]
@@ -824,6 +815,8 @@ class BeliController extends Controller
                 'NO_PO'    => $query[$key]->NO_PO
             ));
         }
+
+        DB::SELECT("UPDATE BELI SET POSTED=1 WHERE NO_BUKTI='$no_beli'");
 		
         $PHPJasperXML->setData($data);
         ob_end_clean();

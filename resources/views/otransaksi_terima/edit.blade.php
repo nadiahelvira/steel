@@ -177,13 +177,9 @@
 									<thead>
 										<tr>
 										<th width="100px" style="text-align:center">No.</th>
-											<th width="200px" style="text-align:center">Batang A</th>
-											<th width="200px" style="text-align:center">Bendel A</th>
 											<th width="200px" style="text-align:center">Ikat A</th>
-
-											<th width="200px" style="text-align:center">Batang B</th>
-											<th width="200px" style="text-align:center">Bendel B</th>
-											<th width="200px" style="text-align:center">Ikat B</th>
+											<th width="200px" style="text-align:center">Bendel A</th>
+											<th width="200px" style="text-align:center">Batang</th>
 											<th></th>
 																
 										</tr>
@@ -201,28 +197,18 @@
 											</td>
 
 											<td>
-												<input name="QTYA[]" onclick="select()" onblur="hitung()" value="{{$detail->QTYA}}" id="QTYA{{$no}}" type="text" style="text-align: right"  class="form-control QTYA" >
-											</td> 
+												<input name="IKATA[]" onclick="select()" onblur="hitung()" value="{{$detail->IKATA}}" id="IKATA{{$no}}" type="text" style="text-align: right"  class="form-control IKATA" >
+											</td>
+											
 
 											<td>
 												<input name="BENDELA[]" onclick="select()" onblur="hitung()" value="{{$detail->BENDELA}}" id="BENDELA{{$no}}" type="text" style="text-align: right"  class="form-control BENDELA" >
 											</td>
 
 											<td>
-												<input name="IKATA[]" onclick="select()" onblur="hitung()" value="{{$detail->IKATA}}" id="IKATA{{$no}}" type="text" style="text-align: right"  class="form-control IKATA" >
-											</td>
+												<input name="QTYA[]" onclick="select()" onblur="hitung()" value="{{$detail->QTYA}}" id="QTYA{{$no}}" type="text" style="text-align: right"  class="form-control QTYA" >
+											</td> 
 
-											<td>
-												<input name="QTYB[]" onclick="select()" onblur="hitung()" value="{{$detail->QTYB}}" id="QTYB{{$no}}" type="text" style="text-align: right"  class="form-control QTYB" >
-											</td>
-
-											<td>
-												<input name="BENDELB[]" onclick="select()" onblur="hitung()" value="{{$detail->BENDELB}}" id="BENDELB{{$no}}" type="text" style="text-align: right"  class="form-control BENDELB" >
-											</td>
-
-											<td>
-												<input name="IKATB[]" onclick="select()" onblur="hitung()" value="{{$detail->IKATB}}" id="IKATB{{$no}}" type="text" style="text-align: right"  class="form-control IKATB" >
-											</td>
 											
 											<td>
 												<button type='button' id='DELETEX{{$no}}'  class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>
@@ -236,13 +222,10 @@
 
 									<tfoot>
 										<td></td>
-										<td><input class="form-control TOTAL_QTYA  text-primary" style="text-align: right"  id="TOTAL_QTYA" name="TOTAL_QTYA" value="{{$header->TOTAL_QTYA}}" readonly></td>
-										<td><input class="form-control TOTAL_BENDELA  text-primary" style="text-align: right"  id="TOTAL_BENDELA" name="TOTAL_BENDELA" value="{{$header->TOTAL_BENDELA}}" readonly></td>
 										<td><input class="form-control TOTAL_IKATA  text-primary" style="text-align: right"  id="TOTAL_IKATA" name="TOTAL_IKATA" value="{{$header->TOTAL_IKATA}}" readonly></td>
-										<td><input class="form-control TOTAL_QTYB  text-primary" style="text-align: right"  id="TOTAL_QTYB" name="TOTAL_QTYB" value="{{$header->TOTAL_QTYB}}" readonly></td>
-										<td><input class="form-control TOTAL_BENDELB  text-primary" style="text-align: right"  id="TOTAL_BENDELB" name="TOTAL_BENDELB" value="{{$header->TOTAL_BENDELB}}" readonly></td>
-										<td><input class="form-control TOTAL_IKATB  text-primary" style="text-align: right"  id="TOTAL_IKATB" name="TOTAL_IKATB" value="{{$header->TOTAL_IKATB}}" readonly></td>
-										
+                    					<td><input class="form-control TOTAL_BENDELA  text-primary" style="text-align: right"  id="TOTAL_BENDELA" name="TOTAL_BENDELA" value="{{$header->TOTAL_BENDELA}}" readonly></td>
+										<td><input class="form-control TOTAL_QTYA  text-primary" style="text-align: right"  id="TOTAL_QTYA" name="TOTAL_QTYA" value="{{$header->TOTAL_QTYA}}" readonly></td>
+
 										<td></td>
 									</tfoot>
 								</table>
@@ -287,36 +270,7 @@
     </div>
 
 
- 	<div class="modal fade" id="browsePoModal" tabindex="-1" role="dialog" aria-labelledby="browsePoModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-xl" role="document">
-		<div class="modal-content">
-		  <div class="modal-header">
-			<h5 class="modal-title" id="browsePoModalLabel">Cari Po</h5>
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			  <span aria-hidden="true">&times;</span>
-			</button>
-		  </div>
-		  <div class="modal-body">
-			<table class="table table-stripped table-bordered" id="table-bpo">
-				<thead>
-					<tr>
-						<th>PO#</th>
-						<th>Suplier</th>
-						<th>Nama</th>
-						<th>Alamat</th>
-						<th>Kota</th>
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
-		  </div>
-		  <div class="modal-footer">
-			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		  </div>
-		</div>
-	  </div>
-	</div>
+
 
 	<div class="modal fade" id="browseMuatModal" tabindex="-1" role="dialog" aria-labelledby="browseMuatModalLabel" aria-hidden="true">
 	  <div class="modal-dialog modal-xl" role="document">
@@ -332,11 +286,14 @@
 				<thead>
 					<tr>
 						<th>No Muat</th>
-						<th>No Beli</th>
-						<th>No PO</th>
+						<th>Tgl</th>
+						<th>Beli#</th>
+						<th>PO#</th>
+						<th>Truck</th>
+						<th>Sopir</th>
 						<th>Barang</th>
 						<th>Qty Muat</th>
-						<th>Qty Beli</th>
+
 					</tr>
 				</thead>
 				<tbody>
@@ -350,77 +307,6 @@
 	  </div>
 	</div>
 
-
-	<div class="modal fade" id="browseBarangModal" tabindex="-1" role="dialog" aria-labelledby="browseBarangModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-xl" role="document">
-		<div class="modal-content">
-		  <div class="modal-header">
-			<h5 class="modal-title" id="browseBarangModalLabel">Cari Item</h5>
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			  <span aria-hidden="true">&times;</span>
-			</button>
-		  </div>
-		  <div class="modal-body">
-			<table class="table table-stripped table-bordered" id="table-bbarang">
-				<thead>
-					<tr>
-						<th>Item#</th>
-						<th>Nama</th>
-						<th>Satuan</th>
-						<th>Qty</th>
-						<th>Kirim</th>
-						<th>Sisa</th>
-						<th>Harga</th>	
-							
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
-		  </div>
-		  <div class="modal-footer">
-			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		  </div>
-		</div>
-	  </div>
-	</div>
-
-
-	<div class="modal fade" id="browseBahanModal" tabindex="-1" role="dialog" aria-labelledby="browseBahanModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-xl" role="document">
-		<div class="modal-content">
-		  <div class="modal-header">
-			<h5 class="modal-title" id="browseBahanModalLabel">Cari Item</h5>
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			  <span aria-hidden="true">&times;</span>
-			</button>
-		  </div>
-		  <div class="modal-body">
-			<table class="table table-stripped table-bordered" id="table-bbahan">
-				<thead>
-					<tr>
-						<th>Item#</th>
-						<th>Nama</th>
-						<th>Satuan</th>
-						<th>Qty</th>
-						<th>Kirim</th>
-						<th>Sisa</th>
-						<th>Harga</th>	
-						
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
-		  </div>
-		  <div class="modal-footer">
-			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		  </div>
-		</div>
-	  </div>
-	</div>
-	
-	
 	
 
 @endsection
@@ -480,9 +366,7 @@
 		$("#TOTAL_QTYA").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
 		$("#TOTAL_BENDELA").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
 		$("#TOTAL_IKATA").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
-		$("#TOTAL_QTYB").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
-		$("#TOTAL_BENDELB").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
-		$("#TOTAL_IKATB").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
+
 		$("#QTY_BELI").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
 		$("#QTY_MUAT").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
 
@@ -494,10 +378,7 @@
 			$("#QTYA" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 			$("#BENDELA" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 			$("#IKATA" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-			$("#QTYB" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-			$("#BENDELB" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-			$("#IKATB" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-		
+
 		}	
 
 
@@ -505,6 +386,7 @@
         $('body').on('click', '.btn-delete', function() {
 			var val = $(this).parents("tr").remove();
 			baris--;
+			hitung();
 			nomor();
 			
 		});
@@ -516,171 +398,8 @@
 		
  	
 		
-//		CHOOSE Po
- 		var dTableBPo;
-		loadDataBPo = function(){
-		
-			$.ajax(
-			{
-				type: 'GET', 		
-				url: '{{url('po/browse')}}',
-				data: {
-					'GOL': "{{$golz}}",
-				},
-
-				success: function( response )
-				{
-					resp = response;
-					if(dTableBPo){
-						dTableBPo.clear();
-					}
-					for(i=0; i<resp.length; i++){
-						
-						dTableBPo.row.add([
-							'<a href="javascript:void(0);" onclick="choosePo(\''+resp[i].NO_BUKTI+'\' ,\''+resp[i].KODES+'\',  \''+resp[i].NAMAS+'\', \''+resp[i].ALAMAT+'\',  \''+resp[i].KOTA+'\',  \''+resp[i].PKP+'\')">'+resp[i].NO_BUKTI+'</a>',
-							resp[i].KODES,
-							resp[i].NAMAS,
-							resp[i].ALAMAT,
-							resp[i].KOTA,
-						]);
-					}
-					dTableBPo.draw();
-				}
-			});
-		}
-		
-		dTableBPo = $("#table-bpo").DataTable({
-			
-		});
-		
-		browsePo = function(){
-			loadDataBPo();
-			$("#browsePoModal").modal("show");
-
-		}
-		
-		choosePo = function( NO_BUKTI,KODES,NAMAS, ALAMAT, KOTA, PKP){
-
-			$("#NO_PO").val(NO_BUKTI);
-			$("#KODES").val(KODES);
-			$("#NAMAS").val(NAMAS);
-			$("#ALAMAT").val(ALAMAT);
-			$("#KOTA").val(KOTA);			
-			$("#PKP").val(PKP);			
-			$("#browsePoModal").modal("hide");
-			
-			getPod(NO_BUKTI);
-		}
-		
-		$("#NO_PO").keypress(function(e){
-
-			if(e.keyCode == 46){
-				 e.preventDefault();
-				 browsePo();
-			}
-		}); 
-
 ////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////
-
-	// function getPod(bukti)
-	// {
-		
-	// 	var mulai = (idrow==baris) ? idrow-1 : idrow;
-
-	// 	$.ajax(
-	// 		{
-	// 			type: 'GET',    
-	// 			url: "{{url('po/browse_pod')}}",
-	// 			data: {
-	// 				nobukti: bukti,
-	// 				'GOL': "{{$golz}}",
-	// 			},
-	// 			success: function( resp )
-	// 			{
-	// 				var html = '';
-	// 				for(i=0; i<resp.length; i++){
-	// 					html+=`<tr>
-    //                                 <td><input name='REC[]' id='REC${i}' value=${resp[i].REC+1} type='text' class='REC form-control' onkeypress='return tabE(this,event)' readonly></td>
-                                    
-	// 								<td {{( $golz =='B') ? '' : 'hidden' }} >
-	// 				 			    	<input name='KD_BHN[]' id='KD_BHN${i}' value="${resp[i].KD_BHN}" type='text' class='form-control KD_BHN' readonly>
-	// 					            </td>
-	// 					            <td {{( $golz =='B') ? '' : 'hidden' }} >
-	// 					 				<input name='NA_BHN[]' id='NA_BHN${i}' value="${resp[i].NA_BHN}" type='text' class='form-control  NA_BHN' readonly>
-	// 					            </td>
-
-	// 								<td {{( $golz =='J' || $golz =='N') ? '' : 'hidden' }} >
-	// 									<input name='KD_BRG[]' id='KD_BRG${i}' value="${resp[i].KD_BRG}" type='text' class='form-control KD_BRG' readonly>
-	// 					            </td>
-	// 					            <td {{( $golz =='J' || $golz =='N') ? '' : 'hidden' }} >
-	// 					 			    <input name='NA_BRG[]' id='NA_BRG${i}' value="${resp[i].NA_BRG}" type='text' class='form-control  NA_BRG' readonly>
-	// 					            </td>
-									
-	// 								<td><input name='SATUAN_PO[]' id='SATUAN_PO${i}' value="${resp[i].SATUAN_PO}" type='text' class='form-control  SATUAN_PO' readonly></td>
-    //                                 <td>
-	// 									<input name='QTY_PO[]' onclick='select()' onblur='hitung()' id='QTY_PO${i}' value="${resp[i].QTY_PO}" type='text' style='text-align: right' class='form-control QTY_PO text-primary' readonly >
-	// 								</td>
-    //                                 <td>
-	// 									<input name='KALI[]' onclick='select()' onblur='hitung()' id='KALI${i}' value="${resp[i].KALI}" type='text' style='text-align: right' class='form-control KALI text-primary'> 
-	// 								</td>
-	// 								<td><input name='SATUAN[]' id='SATUAN${i}' value="${resp[i].SATUAN}" type='text' class='form-control  SATUAN' readonly></td>
-    //                                 <td>
-	// 									<input name='QTY[]' onclick='select()' onblur='hitung()' id='QTY${i}' value="${resp[i].QTY}" type='text' style='text-align: right' class='form-control QTY text-primary' readonly >
-	// 								</td>
-	// 								<td>
-	// 									<input name='HARGA[]' onclick='select()' onblur='hitung()' id='HARGA${i}' value="${resp[i].HARGA}" type='text' style='text-align: right' class='form-control HARGA text-primary' >
-	// 								</td>
-	// 								<td>
-	// 									<input name='TOTAL[]' onclick='select()' onblur='hitung()' id='TOTAL${i}' value="${resp[i].TOTAL}" type='text' style='text-align: right' class='form-control TOTAL text-primary' readonly >
-	// 								</td>
-	// 								<td>
-	// 									<input name='PPNX[]' onclick='select()' onblur='hitung()' id='PPNX${i}' value="0" type='text' style='text-align: right' class='form-control PPNX text-primary' readonly >
-	// 								</td>
-	// 								<td>
-	// 									<input name='DPP[]' onclick='select()' onblur='hitung()' id='DPP${i}' value="0" type='text' style='text-align: right' class='form-control DPP text-primary' readonly >
-	// 								</td>
-	// 								<td><input name='KET[]' id='KET${i}' value="" type='text' class='form-control  KET'></td>
-                                    
-
-	// 								<td><button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button></td>
-    //                             </tr>`;
-	// 				}
-	// 				$('#detailPod').html(html);
-
-	// 				$(".QTY_PO").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-	// 				$(".QTY_PO").autoNumeric('update');
-
-	// 				$(".QTY").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-	// 				$(".QTY").autoNumeric('update');
-					
-	// 				$(".HARGA").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-	// 				$(".HARGA").autoNumeric('update');
-					
-	// 				$(".KALI").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-	// 				$(".KALI").autoNumeric('update');
-					
-	// 				$(".TOTAL").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-	// 				$(".TOTAL").autoNumeric('update');
-					
-	// 				$(".PPNX").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-	// 				$(".PPNX").autoNumeric('update');
-					
-	// 				$(".DPP").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-	// 				$(".DPP").autoNumeric('update');
-
-
-	// 				idrow=resp.length;
-	// 				baris=resp.length;
-
-	// 				nomor();
-	// 				hitung();
-	// 			}
-	// 		});
-	// }
-
-//////////////////////////////////////////////////////////////////
 
 //		CHOOSE Muat
 		var dTableBMuat;
@@ -704,11 +423,14 @@
 						
 						dTableBMuat.row.add([
 							'<a href="javascript:void(0);" onclick="chooseMuat(\''+resp[i].NO_BUKTI+'\', \''+resp[i].NO_BELI+'\' , \''+resp[i].NO_PO+'\' ,\''+resp[i].KD_BRG+'\',  \''+resp[i].NA_BRG+'\', \''+resp[i].QTY_BELI+'\', \''+resp[i].QTY_MUAT+'\', \''+resp[i].NO_CONT+'\', \''+resp[i].SOPIR+'\', \''+resp[i].NOPOL+'\', \''+resp[i].SEAL+'\' )">'+resp[i].NO_BUKTI+'</a>',
+							resp[i].TGL,
 							resp[i].NO_BELI,
 							resp[i].NO_PO,
+							resp[i].NOPOL,
+							resp[i].SOPIR,
 							resp[i].NA_BRG,
 							resp[i].QTY_MUAT,
-							resp[i].QTY_BELI,
+							
 						]);
 					}
 					dTableBMuat.draw();
@@ -753,147 +475,7 @@
 
 ////////////////////////////////////////////////////////////////////
 
-		//CHOOSE Bahan
-		var dTableBBahan;
-		var rowidBahan;
-		loadDataBBahan = function(){
-			$.ajax(
-			{
-				type: 'GET',    
-				url: "{{url('po/browse_detail')}}",
-				data: 
-				{
-                    KD_BHN : $("#KD_BHN"+rowidBahan).val(),
-                    NO_PO : $("#NO_PO").val(), 					
-				},
-				success: function( response )
-				{
-					resp = response;
-					if(dTableBBahan){
-						dTableBBahan.clear();
-					}
-					for(i=0; i<resp.length; i++){
-						
-						dTableBBahan.row.add([
-							'<a href="javascript:void(0);" onclick="chooseBahan(\''+resp[i].KD_BHN+'\',\''+resp[i].NA_BHN+'\', \''+resp[i].SATUAN_PO+'\' , \''+resp[i].QTY_PO+'\', \''+resp[i].KIRIM+'\' , \''+resp[i].SISA+'\' , \''+resp[i].HARGA+'\' , \''+resp[i].SATUAN+'\', \''+resp[i].QTY+'\', \''+resp[i].KALI+'\' )">'+resp[i].KD_BHN+'</a>',
-							resp[i].NA_BHN,
-							resp[i].SATUAN_PO,
-							resp[i].QTY_PO,
-							resp[i].KIRIM,
-							resp[i].SISA,
-							resp[i].HARGA,
-							
-						]);
-					}
-					dTableBBahan.draw();
-				}
-			});
-		}
-		
-		dTableBBahan = $("#table-bbahan").DataTable({
-			
 		});
-		
-		browseBahan = function(rid){
-			rowidBahan = rid;
-			loadDataBBahan();
-			$("#browseBahanModal").modal("show");
-		}
-		
-		chooseBahan = function(KD_BHN, NA_BHN, SATUAN_PO, QTY_PO, KIRIM, SISA, HARGA, SATUAN, QTY, KALI ){
-			$("#KD_BHN"+rowidBahan).val(KD_BHN);
-			$("#NA_BHN"+rowidBahan).val(NA_BHN);
-			$("#SATUAN_PO"+rowidBahan).val(SATUAN_PO);
-			$("#QTY_PO"+rowidBahan).val(SISA);
-			$("#HARGA"+rowidBahan).val(HARGA);
-			$("#SATUAN"+rowidBahan).val(SATUAN);
-			$("#QTY"+rowidBahan).val(QTY);
-			$("#KALI"+rowidBahan).val(KALI);
-			hitung();
-			
-			
-			$("#browseBahanModal").modal("hide");
-		}
-		
-		
-		$("#KD_BHN0").keypress(function(e){
-			if(e.keyCode == 46){
-				e.preventDefault();
-				browseBahan(0);
-			}
-		}); 
-
-//////////////////////////////////////////////////////////////////////
-		
-		var dTableBBarang;
-		var rowidBarang;
-		loadDataBBarang = function(){
-			$.ajax(
-			{
-				type: 'GET',    
-				url: "{{url('po/browse_detail2')}}",
-				data: 
-				{
-                    KD_BRG : $("#KD_BRG"+rowidBarang).val(),
-                    NO_PO : $("#NO_PO").val(), 					
-				},				
-				
-				success: function( response )
-				{
-					resp = response;
-					if(dTableBBarang){
-						dTableBBarang.clear();
-					}
-					for(i=0; i<resp.length; i++){
-						
-						dTableBBarang.row.add([
-							'<a href="javascript:void(0);" onclick="chooseBarang(\''+resp[i].KD_BRG+'\',\''+resp[i].NA_BRG+'\', \''+resp[i].SATUAN_PO+'\' , \''+resp[i].QTY_PO+'\' , \''+resp[i].KIRIM+'\' , \''+resp[i].SISA+'\' , \''+resp[i].HARGA+'\', \''+resp[i].SATUAN+'\', \''+resp[i].QTY+'\', \''+resp[i].KALI+'\'  )">'+resp[i].KD_BRG+'</a>',
-							resp[i].NA_BRG,
-							resp[i].SATUAN_PO,
-							resp[i].QTY_PO,
-							resp[i].KIRIM,
-							resp[i].SISA,
-							resp[i].HARGA,							
-						]);
-					}
-					dTableBBarang.draw();
-				}
-			});
-		}
-		
-		dTableBBarang = $("#table-bbarang").DataTable({
-			
-		});
-		
-		browseBarang = function(rid){
-			rowidBarang = rid;
-			loadDataBBarang();
-			$("#browseBarangModal").modal("show");
-		}
-		
-		chooseBarang = function(KD_BRG, NA_BRG, SATUAN_PO, QTY_PO, KIRIM, SISA, HARGA, SATUAN, QTY, KALI ){
-			$("#KD_BRG"+rowidBarang).val(KD_BRG);
-			$("#NA_BRG"+rowidBarang).val(NA_BRG);
-			$("#SATUAN_PO"+rowidBarang).val(SATUAN_PO);
-			$("#QTY_PO"+rowidBarang).val(SISA);
-			$("#HARGA"+rowidBarang).val(HARGA);
-			$("#SATUAN"+rowidBarang).val(SATUAN);			
-			$("#QTY"+rowidBarang).val(QTY);			
-			$("#KALI"+rowidBarang).val(KALI);			
-			$("#browseBarangModal").modal("hide");
-			hitung();
-		}
-		
-		
-		$("#KD_BRG0").keypress(function(e){
-			if(e.keyCode == 46){
-				e.preventDefault();
-				browseBarang(0);
-			}
-		}); 
-
-	});
-
 
 ///////////////////////////////////////		
     
@@ -1000,9 +582,6 @@
 		var TOTAL_QTYA = 0;
 		var TOTAL_BENDELA = 0;
 		var TOTAL_IKATA = 0;
-		var TOTAL_QTYB = 0;
-		var TOTAL_BENDELB = 0;
-		var TOTAL_IKATB = 0;
 
 		
 		$(".QTYA").each(function() {
@@ -1011,17 +590,17 @@
 			var QTYAX = parseFloat(z.find('.QTYA').val().replace(/,/g, ''));
 			var BENDELAX = parseFloat(z.find('.BENDELA').val().replace(/,/g, ''));
 			var IKATAX = parseFloat(z.find('.IKATA').val().replace(/,/g, ''));
-			var QTYBX = parseFloat(z.find('.QTYB').val().replace(/,/g, ''));
-			var BENDELBX = parseFloat(z.find('.BENDELB').val().replace(/,/g, ''));
-			var IKATBX = parseFloat(z.find('.IKATB').val().replace(/,/g, ''));
 
+
+            QTYAX = IKATAX * BENDELAX;
+
+			z.find('.QTYA').val(QTYAX);	
+		    z.find('.QTYA').autoNumeric('update');		
 
             TOTAL_QTYA +=QTYAX;			
             TOTAL_BENDELA +=BENDELAX;			
             TOTAL_IKATA +=IKATAX;			
-            TOTAL_QTYB +=QTYBX;			
-            TOTAL_BENDELB +=BENDELBX;			
-            TOTAL_IKATB +=IKATBX;			
+		
 		
 		});
 
@@ -1036,26 +615,10 @@
 		$("#TOTAL_BENDELA").autoNumeric('update');
 
 		if(isNaN(TOTAL_IKATA)) TOTAL_IKATA = 0;
-
-		$('#TOTAL_IKATA').val(numberWithCommas(TOTAL_IKATA));		
+		$('#TOTAL_IKATA').val(numberWithCommas(TOTAL_IKATA));	
 		$("#TOTAL_IKATA").autoNumeric('update');
 
-		if(isNaN(TOTAL_QTYB)) TOTAL_QTYB = 0;
-
-		$('#TOTAL_QTYB').val(numberWithCommas(TOTAL_QTYB));		
-		$("#TOTAL_QTYB").autoNumeric('update');
-
-		if(isNaN(TOTAL_BENDELB)) TOTAL_BENDELB = 0;
-
-		$('#TOTAL_BENDELB').val(numberWithCommas(TOTAL_BENDELB));		
-		$("#TOTAL_BENDELB").autoNumeric('update');
-
-		if(isNaN(TOTAL_IKATB)) TOTAL_IKATB = 0;
-
-		$('#TOTAL_IKATB').val(numberWithCommas(TOTAL_IKATB));		
-		$("#TOTAL_IKATB").autoNumeric('update');
-
-		
+				
 	}
 	
 
@@ -1125,19 +688,14 @@
 			$("#TOTAL_QTYA").attr("readonly", true);
 			$("#TOTAL_BENDELA").attr("readonly", true);
 			$("#TOTAL_IKATA").attr("readonly", true);
-			$("#TOTAL_QTYA").attr("readonly", true);
-			$("#TOTAL_BENDELB").attr("readonly", true);
-			$("#TOTAL_IKATB").attr("readonly", true);
-
+		
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
 			$("#REC" + i.toString()).attr("readonly", true);
-			$("#QTYA" + i.toString()).attr("readonly", false);
+			$("#QTYA" + i.toString()).attr("readonly", true);
 			$("#BENDELA" + i.toString()).attr("readonly", false);
 			$("#IKATA" + i.toString()).attr("readonly", false);
-			$("#QTYB" + i.toString()).attr("readonly", false);
-			$("#BENDELB" + i.toString()).attr("readonly", false);
-			$("#IKATB" + i.toString()).attr("readonly", false);
+
 
 			$("#DELETEX" + i.toString()).attr("hidden", false);
 
@@ -1198,9 +756,7 @@
 		$("#TOTAL_QTYA").attr("readonly", true);
 		$("#TOTAL_BENDELA").attr("readonly", true);
 		$("#TOTAL_IKATA").attr("readonly", true);
-		$("#TOTAL_QTYA").attr("readonly", true);
-		$("#TOTAL_BENDELB").attr("readonly", true);
-		$("#TOTAL_IKATB").attr("readonly", true);
+
 
 		
 		jumlahdata = 100;
@@ -1210,9 +766,7 @@
 			$("#QTYA" + i.toString()).attr("readonly", true);
 			$("#BENDELA" + i.toString()).attr("readonly", true);
 			$("#IKATA" + i.toString()).attr("readonly", true);
-			$("#QTYB" + i.toString()).attr("readonly", true);
-			$("#BENDELB" + i.toString()).attr("readonly", true);
-			$("#IKATB" + i.toString()).attr("readonly", true);
+
 
 			$("#DELETEX" + i.toString()).attr("hidden", true);
 		}
@@ -1236,9 +790,7 @@
 		 $('#TOTAL_QTYA').val("0.00"); 
 		 $('#TOTAL_BENDELA').val("0.00"); 
 		 $('#TOTAL_IKATA').val("0.00"); 
-		 $('#TOTAL_QTYB').val("0.00"); 
-		 $('#TOTAL_BENDELB').val("0.00"); 
-		 $('#TOTAL_IKATB').val("0.00"); 
+
 		 
 		 
 		var html = '';
@@ -1280,28 +832,19 @@
 	            </td>
 				
 				<td>
-		            <input name='QTYA[]' onclick ='select()' onblur='hitung()' value='0' id='QTYA${idrow}' type='text' style='text-align: right' class='form-control QTYA text-primary' >
+		            <input name='IKATA[]' onclick ='select()' onblur='hitung()' value='0' id='IKATA${idrow}' type='text' style='text-align: right' class='form-control IKATA text-primary' >
                 </td>
 				
 				<td>
 		            <input name='BENDELA[]' onclick ='select()' onblur='hitung()' value='0' id='BENDELA${idrow}' type='text' style='text-align: right' class='form-control BENDELA text-primary' >
                 </td>
 				
-				<td>
-		            <input name='IKATA[]' onclick ='select()' onblur='hitung()' value='0' id='IKATA${idrow}' type='text' style='text-align: right' class='form-control IKATA text-primary' >
-                </td>
 				
 				<td>
-		            <input name='QTYB[]' onclick ='select()' onblur='hitung()' value='0' id='QTYB${idrow}' type='text' style='text-align: right' class='form-control QTYB text-primary' >
+		            <input name='QTYA[]' onclick ='select()' onblur='hitung()' value='0' id='QTYA${idrow}' type='text' style='text-align: right' class='form-control QTYA text-primary' >
                 </td>
 				
-				<td>
-		            <input name='BENDELB[]' onclick ='select()' onblur='hitung()' value='0' id='BENDELB${idrow}' type='text' style='text-align: right' class='form-control BENDELB text-primary' >
-                </td>
-				
-				<td>
-		            <input name='IKATB[]' onclick ='select()' onblur='hitung()' value='0' id='IKATB${idrow}' type='text' style='text-align: right' class='form-control IKATB text-primary' >
-                </td>
+
 				
                 <td>
 					<button type='button' id='DELETEX${idrow}'  class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>
@@ -1311,8 +854,7 @@
         x.innerHTML = html;
         var html='';
 		
-		
-		
+	
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
 			$("#QTYA" + i.toString()).autoNumeric('init', {
@@ -1330,20 +872,6 @@
 				vMin: '-999999999.99'
 			});
 			
-			$("#QTYB" + i.toString()).autoNumeric('init', {
-				aSign: '<?php echo ''; ?>',
-				vMin: '-999999999.99'
-			});
-			
-			$("#BENDELB" + i.toString()).autoNumeric('init', {
-				aSign: '<?php echo ''; ?>',
-				vMin: '-999999999.99'
-			});
-			
-			$("#IKATB" + i.toString()).autoNumeric('init', {
-				aSign: '<?php echo ''; ?>',
-				vMin: '-999999999.99'
-			});
 			
 		}
 
@@ -1356,6 +884,7 @@
              e.preventDefault();
              e.currentTarget.blur();
          });
+         
      }
 </script>
 

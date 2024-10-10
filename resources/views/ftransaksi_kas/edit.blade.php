@@ -167,7 +167,7 @@
                                         </td>
                                         
 										<td>
-                                            <button type="button" id="DELETEX{{$no}}" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
+                                            <button type="button"   id="DELETEX{{$no}}" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="hitung()">
                                                 <i class="fa fa-fw fa-trash"></i>
                                             </button>
                                         </td>
@@ -325,6 +325,7 @@
 		$('body').on('click', '.btn-delete', function() {
 			var val = $(this).parents("tr").remove();
 			baris--;
+			hitung();
 			nomor();
 		});
 		
@@ -566,7 +567,7 @@
     function hitung() {
 		var TJUMLAH = 0;
 
-
+        alert('halo');
 		$(".JUMLAH").each(function() {
 			var val = parseFloat($(this).val().replace(/,/g, ''));
 			if(isNaN(val)) val = 0;
@@ -766,7 +767,7 @@
                 </td>
 
                 <td>
-					<button type='button' id='DELETEX${idrow}'  class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>
+					<button type='button'  id='DELETEX${idrow}'  class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick='hitung()'> <i class='fa fa-fw fa-trash'></i> </button>
                 </td>				
          </tr>`;
 				

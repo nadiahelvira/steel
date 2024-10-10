@@ -1,0 +1,132 @@
+[08-Oct-2024 03:33:59 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\OReport\base_path() in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RTerimaController.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RTerimaController.php on line 13
+[08-Oct-2024 03:44:56 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\OReport\base_path() in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RStockaController.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RStockaController.php on line 13
+[08-Oct-2024 04:26:35 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\OReport\base_path() in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RHutController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RHutController.php on line 14
+[08-Oct-2024 05:03:43 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'App\Http\Controllers\Controller' not found in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RPakaiController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RPakaiController.php on line 15
+[08-Oct-2024 05:10:36 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\OReport\base_path() in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RPiuController.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RPiuController.php on line 13
+[08-Oct-2024 05:11:26 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\OReport\base_path() in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RBrgController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RBrgController.php on line 15
+[08-Oct-2024 05:19:06 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\OReport\base_path() in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RMuatController.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RMuatController.php on line 13
+[08-Oct-2024 06:09:45 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\OReport\base_path() in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RCustController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RCustController.php on line 15
+[08-Oct-2024 06:56:47 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\OReport\base_path() in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RStokButuhController.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RStokButuhController.php on line 13
+[08-Oct-2024 07:25:49 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\OReport\base_path() in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RSuratsController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RSuratsController.php on line 14
+[08-Oct-2024 08:55:19 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\OReport\base_path() in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RKartuhController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RKartuhController.php on line 14
+[08-Oct-2024 09:28:28 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\OReport\base_path() in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RStokPerTahunController.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RStokPerTahunController.php on line 13
+[08-Oct-2024 09:43:24 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\OReport\base_path() in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RSupController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RSupController.php on line 15
+[08-Oct-2024 09:49:35 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\OReport\base_path() in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RBhnController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RBhnController.php on line 15
+[08-Oct-2024 11:06:43 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'App\Http\Controllers\Controller' not found in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RKikController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RKikController.php on line 15
+[08-Oct-2024 11:24:14 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\OReport\base_path() in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RStockbController.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RStockbController.php on line 13
+[08-Oct-2024 11:55:32 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\OReport\base_path() in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RPoController.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RPoController.php on line 13
+[08-Oct-2024 12:24:25 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\OReport\base_path() in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RPiuPerTahunController.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RPiuPerTahunController.php on line 13
+[08-Oct-2024 12:40:45 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\OReport\base_path() in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RJualController.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RJualController.php on line 13
+[08-Oct-2024 13:39:02 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\OReport\base_path() in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RUjController.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RUjController.php on line 13
+[08-Oct-2024 13:45:15 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\OReport\base_path() in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RTpiuController.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RTpiuController.php on line 13
+[08-Oct-2024 14:02:53 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\OReport\base_path() in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RSisaposoController.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RSisaposoController.php on line 13
+[08-Oct-2024 14:11:32 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\OReport\base_path() in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RPobController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RPobController.php on line 15
+[08-Oct-2024 14:15:45 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\OReport\base_path() in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RRekapBeliJualController.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RRekapBeliJualController.php on line 13
+[08-Oct-2024 14:30:29 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\OReport\base_path() in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RBeliController.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RBeliController.php on line 13
+[08-Oct-2024 15:01:31 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\OReport\base_path() in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RTimbangController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RTimbangController.php on line 14
+[08-Oct-2024 17:21:01 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\OReport\base_path() in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RUmController.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RUmController.php on line 13
+[08-Oct-2024 18:55:05 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\OReport\base_path() in /home/januar13/public_html/steel/app/Http/Controllers/OReport/ROrderkController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/OReport/ROrderkController.php on line 14
+[08-Oct-2024 19:16:45 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\OReport\base_path() in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RThutController.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RThutController.php on line 13
+[08-Oct-2024 19:31:15 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\OReport\base_path() in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RKartupController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RKartupController.php on line 14
+[08-Oct-2024 19:33:29 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\OReport\base_path() in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RSoController.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RSoController.php on line 13
+[08-Oct-2024 20:06:44 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\OReport\base_path() in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RKarstkController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RKarstkController.php on line 15
+[08-Oct-2024 20:23:00 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\OReport\base_path() in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RExpedisiController.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/OReport/RExpedisiController.php on line 13

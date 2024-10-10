@@ -1,0 +1,44 @@
+[29-Sep-2024 20:24:29 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\Facades\Route' not found in /home/januar13/public_html/steel/routes/web.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/routes/web.php on line 17
+[29-Sep-2024 22:09:40 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\Facades\Broadcast' not found in /home/januar13/public_html/steel/routes/channels.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/routes/channels.php on line 16
+[29-Sep-2024 22:36:14 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\Facades\Route' not found in /home/januar13/public_html/steel/routes/api.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/routes/api.php on line 17
+[30-Sep-2024 07:32:09 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\Facades\Artisan' not found in /home/januar13/public_html/steel/routes/console.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/routes/console.php on line 17
+[30-Sep-2024 12:46:28 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\Facades\Route' not found in /home/januar13/public_html/steel/routes/auth.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/routes/auth.php on line 13
+[05-Oct-2024 22:15:12 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\Facades\Route' not found in /home/januar13/public_html/steel/routes/web.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/routes/web.php on line 17
+[05-Oct-2024 22:15:12 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\Facades\Route' not found in /home/januar13/public_html/steel/routes/web.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/routes/web.php on line 17
+[05-Oct-2024 23:18:36 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\Facades\Route' not found in /home/januar13/public_html/steel/routes/web.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/routes/web.php on line 17
+[06-Oct-2024 02:03:21 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\Facades\Route' not found in /home/januar13/public_html/steel/routes/web.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/routes/web.php on line 17
+[06-Oct-2024 02:52:48 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\Facades\Route' not found in /home/januar13/public_html/steel/routes/web.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/routes/web.php on line 17
+[06-Oct-2024 03:31:38 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\Facades\Route' not found in /home/januar13/public_html/steel/routes/web.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/routes/web.php on line 17
