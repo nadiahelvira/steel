@@ -107,10 +107,13 @@
 									<label for="KOM" class="form-label">Komisi</label>
 								</div>
 								
-								<div class="col-md-2">
-									<input type="text" class="form-control KOM" onclick="select()"  id="KOM" name="KOM" placeholder="" value="{{ number_format($header->KOM, 2, '.', ',') }}" style="text-align: right; width:140px" readonly>
+
+ 								<div class="col-md-2">
+									<input type="text" hidden class="form-control KOM" onclick="select()"  id="KOM" name="KOM" placeholder="" value="{{ number_format($header->KOM, 2, '.', ',') }}" style="text-align: right; width:140px" readonly>
+
+									<input type="text" class="form-control TKOM" onclick="select()"  id="TKOM" name="TKOM" placeholder="" value="{{ number_format($header->TKOM, 2, '.', ',') }}" style="text-align: right; width:140px" readonly>
 								</div> 
-        
+								
                             </div>
 
 
@@ -165,16 +168,20 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td></td>
-                                    <!-- <td><input class="form-control TBAYAR  text-block font-weight-bold" style="text-align: right"  id="TBAYAR" name="TBAYAR" value="{{$header->BAYAR}}" readonly></td> -->
-                                    <td></td>
-                                    <td></td>
+
+                                    <<td><input class="form-control TBAYAR  text-block font-weight-bold" style="text-align: right"  id="TBAYAR" name="TBAYAR" value="{{$header->BAYAR}}" readonly></td>
+
+                                    <td></td>                                   
+                                    <td></td>                                   
+                                 
+                                  
+                                    
+                                    
                                 </tfoot>
+                                
+                                
                             </table>
-							
-  
-							
-														
+						
 								
 						</form>
 					</div>                               
@@ -187,26 +194,7 @@
 						
 						<hr style="margin-top: 30px; margin-buttom: 30px">		
                                  
-						<div class="tab-content mt-6">
-							<div class="form-group row">
-                                <div class="col-md-8" align="right">
-                                    <label for="TBAYAR" class="form-label">Total Bayar</label>
-                                </div>
-                                <div class="col-md-2">
-                                     <td><input class="form-control TBAYAR  text-bold font-weight-bold" style="text-align: right"  id="TBAYAR" name="TBAYAR" value="{{$header->BAYAR}}" readonly></td>
-                                </div>
-							</div>
-
-							<div class="form-group row">
-                                <div class="col-md-8" align="right">
-                                    <label for="TKOM" class="form-label">Total Komisi</label>
-                                </div>
-                                <div class="col-md-2">
-                                     <td><input class="form-control TKOM  text-bold font-weight-bold" style="text-align: right"  id="TKOM" name="TKOM" value="{{$header->TKOM}}" readonly></td>
-                                </div>
-							</div>
-							
-						</div>
+						
                                  
 						<div class="mt-3 col-md-12 form-group row">
 							<div class="col-md-4">

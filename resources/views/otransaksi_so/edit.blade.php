@@ -942,8 +942,8 @@
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
 			$("#REC" + i.toString()).attr("readonly", true);
-			$("#KD_BHN" + i.toString()).attr("readonly", false);
-			$("#KD_BRG" + i.toString()).attr("readonly", false);
+			$("#KD_BHN" + i.toString()).attr("readonly", true);
+			$("#KD_BRG" + i.toString()).attr("readonly", true);
 			$("#NA_BHN" + i.toString()).attr("readonly", true);
 			$("#NA_BRG" + i.toString()).attr("readonly", true);
 			$("#SATUAN" + i.toString()).attr("readonly", true);
@@ -955,17 +955,17 @@
 			$("#DELETEX" + i.toString()).attr("hidden", false);
 
 
-			$tipx = $('#tipx').val();
+			// $tipx = $('#tipx').val();
 		
 			
-			if ( $tipx != 'new' )
-			{
-				$("#KD_BHN" + i.toString()).attr("readonly", true);	
-				$("#KD_BHN" + i.toString()).removeAttr('onblur');
+			// if ( $tipx != 'new' )
+			// {
+			// 	$("#KD_BHN" + i.toString()).attr("readonly", true);	
+			// 	$("#KD_BHN" + i.toString()).removeAttr('onblur');
 				
-				$("#KD_BRG" + i.toString()).attr("readonly", true);	
-				$("#KD_BRG" + i.toString()).removeAttr('onblur');	
-			}
+			// 	$("#KD_BRG" + i.toString()).attr("readonly", true);	
+			// 	$("#KD_BRG" + i.toString()).removeAttr('onblur');	
+			// }
 		}
 
 		
@@ -1087,7 +1087,7 @@
                 </td>
 
 				<td {{( $golz =='J') ? '' : 'hidden' }} >
-				    <input name='KD_BRG[]' data-rowid=${idrow} onblur='browseBarang(${idrow})' id='KD_BRG${idrow}' type='text' class='form-control  KD_BRG' >
+				    <input name='KD_BRG[]' data-rowid=${idrow} onblur='browseBarang(${idrow})' id='KD_BRG${idrow}' type='text' class='form-control  KD_BRG' readonly >
                 </td>
                 <td {{( $golz =='J') ? '' : 'hidden' }} >
 				    <input name='NA_BRG[]'   id='NA_BRG${idrow}' type='text' class='form-control  NA_BRG' required readonly>

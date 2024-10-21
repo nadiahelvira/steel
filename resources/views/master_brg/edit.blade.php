@@ -105,12 +105,28 @@
                                     <label for="SATUAN" class="form-label">Satuan</label>
                                 </div>
 
-								<div class="col-md-1">
+								<div class="col-md-2">
 									<select id="SATUAN" class="form-control"  name="SATUAN">
 										<option value="DOS" {{ ($header->SATUAN == 'DOS') ? 'selected' : '' }}>DOS</option>
 										<option value="BATANG" {{ ($header->SATUAN == 'BATANG') ? 'selected' : '' }}>BATANG</option>
 									</select>
 								</div>
+
+								<div class="col-md-1">
+									<label style="color:red">*</label>	
+                                    <label for="KD_GRUP" class="form-label">Grup</label>
+                                </div>
+								
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control KD_GRUP" id="KD_GRUP" name="KD_GRUP"
+                                    placeholder="" value="{{$header->KD_GRUP}}" readonly>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control NA_GRUP" id="NA_GRUP" name="NA_GRUP"
+                                    placeholder="" value="{{$header->NA_GRUP}}" readonly>
+                                </div>
+
                             </div>
 
 							<div class="form-group row">
@@ -358,6 +374,34 @@
 	  </div>
 	</div>
 
+	<div class="modal fade" id="browseGrupModal" tabindex="-1" role="dialog" aria-labelledby="browseGrupModalLabel" aria-hidden="true">
+	 <div class="modal-dialog mw-100 w-75" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="browseGrupModalLabel">Cari Grup</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			<table class="table table-stripped table-bordered" id="table-bgrup">
+				<thead>
+					<tr>
+						<th>Grup</th>
+						<th>Nama</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
 @endsection
 @section('footer-scripts')
 <script src="{{ asset('js/autoNumerics/autoNumeric.min.js') }}"></script>
@@ -587,6 +631,61 @@
 		
 		//////////////////////////////////////////////////////////////////////////////////////////////////
 
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+		//CHOOSE Grup
+		var dTableBGrup;
+		loadDataBGrup = function(){
+			$.ajax(
+			{
+				type: 'GET',    
+				url: '{{url('grup/browse')}}',
+
+				success: function( response )
+				{
+			
+					resp = response;
+					if(dTableBGrup){
+						dTableBGrup.clear();
+					}
+					for(i=0; i<resp.length; i++){
+						
+						dTableBGrup.row.add([
+							'<a href="javascript:void(0);" onclick="chooseGrup(\''+resp[i].KODE+'\',  \''+resp[i].NAMA+'\' )">'+resp[i].KODE+'</a>',
+							resp[i].NAMA,
+						]);
+					}
+					dTableBGrup.draw();
+				}
+			});
+		}
+		
+		dTableBGrup = $("#table-bgrup").DataTable({
+			
+		});
+		
+		browseGrup = function(){
+			loadDataBGrup();
+			$("#browseGrupModal").modal("show");
+		}
+		
+		chooseGrup = function(KODE,NAMA){
+			$("#KD_GRUP").val(KODE);
+			$("#NA_GRUP").val(NAMA);
+			$("#browseGrupModal").modal("hide");
+		}
+		
+		$("#KD_GRUP").keypress(function(e){
+
+			if(e.keyCode == 46){
+				e.preventDefault();
+				browseGrup();
+			}
+		}); 
+		
+		
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 

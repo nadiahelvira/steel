@@ -81,29 +81,23 @@
 								</div>
 								<div class="col-md-2 input-group" >
 								<input type="text" class="form-control NO_MUAT" id="NO_MUAT" name="NO_MUAT" placeholder="Pilih Muat"value="{{$header->NO_MUAT}}" style="text-align: left" readonly >
-								<button type="button" class="btn btn-primary" onclick="browseMuat()"><i class="fa fa-search"></i></button>
+									<button type="button" class="btn btn-primary" onclick="browseMuat()"><i class="fa fa-search"></i></button>
 								</div>
-							</div>
-
-							<div class="form-group row">
 
 								<div class="col-md-1" align="right">
 									<label for="NO_BELI" class="form-label">No Beli</label>
 								</div>
 								<div class="col-md-2 input-group" >
-								<input type="text" class="form-control NO_BELI" id="NO_BELI" name="NO_BELI" placeholder="Pilih Beli"value="{{$header->NO_BELI}}" style="text-align: left" readonly >
+									<input type="text" class="form-control NO_BELI" id="NO_BELI" name="NO_BELI" placeholder="Pilih Beli"value="{{$header->NO_BELI}}" style="text-align: left" readonly >
 								</div>
-							</div>
-
-                            <div class="form-group row">
 
 								<div class="col-md-1" align="right">
-									 <label for="NO_PO" class="form-label">No PO</label>
-                                </div>
-                               	<div class="col-md-2 input-group" >
-                                  <input type="text" class="form-control NO_PO" id="NO_PO" name="NO_PO" placeholder="Pilih PO"value="{{$header->NO_PO}}" style="text-align: left" readonly >
-        						</div>
-                            </div>
+									<label for="NO_PO" class="form-label">No PO</label>
+								</div>
+								<div class="col-md-2 input-group" >
+									<input type="text" class="form-control NO_PO" id="NO_PO" name="NO_PO" placeholder="Pilih PO"value="{{$header->NO_PO}}" style="text-align: left" readonly >
+								</div>
+							</div>
 							
                             <div class="form-group row">
 								<div class="col-md-1" align="right">
@@ -166,6 +160,30 @@
 									value="{{ number_format( $header->QTY_BELI, 0, '.', ',') }}" style="text-align: right" >
 								</div>
                             </div>
+
+							<div class="form-group row">
+
+								<div class="col-md-1" align="right">
+									<label for="KAPAL" class="form-label">Kapal</label>
+								</div>
+								<div class="col-md-2">
+									<input type="text" class="form-control KAPAL" id="KAPAL" name="KAPAL" placeholder="-" value="{{$header->KAPAL}}">
+								</div>
+
+								<div class="col-md-1" align="right">
+									<label for="ETA" class="form-label">ETA</label>
+								</div>
+								<div class="col-md-2">
+									<input type="text" class="form-control ETA" id="ETA" name="ETA" placeholder="-" value="{{$header->ETA}}">
+								</div>
+
+								<div class="col-md-1" align="right">
+									<label for="TGL_MUAT" class="form-label">Tgl Muat</label>
+								</div>
+								<div class="col-md-2">
+								<input class="form-control date" id="TGL_MUAT" name="TGL_MUAT" data-date-format="dd-mm-yyyy" type="text" autocomplete="off" value="{{date('d-m-Y',strtotime($header->TGL_MUAT))}}">
+								</div>
+							</div>
 							
 							
                             <hr style="margin-top: 30px; margin-buttom: 30px">
@@ -688,6 +706,10 @@
 			$("#TOTAL_QTYA").attr("readonly", true);
 			$("#TOTAL_BENDELA").attr("readonly", true);
 			$("#TOTAL_IKATA").attr("readonly", true);
+
+			$("#KAPAL").attr("readonly", false);
+			$("#ETA").attr("readonly", false);
+			$("#TGL_MUAT").attr("readonly", false);
 		
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
@@ -756,6 +778,10 @@
 		$("#TOTAL_QTYA").attr("readonly", true);
 		$("#TOTAL_BENDELA").attr("readonly", true);
 		$("#TOTAL_IKATA").attr("readonly", true);
+
+		$("#KAPAL").attr("readonly", true);
+		$("#ETA").attr("readonly", true);
+		$("#TGL_MUAT").attr("readonly", true);
 
 
 		

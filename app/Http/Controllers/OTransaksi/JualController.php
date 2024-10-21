@@ -70,7 +70,9 @@ class JualController extends Controller
 		$CBG = Auth::user()->CBG;
 
         $jual = DB::SELECT("SELECT jual.NO_BUKTI, jual.NO_SO, jual.KODEC, jual.NAMAC, 
-		                  jual.ALAMAT, jual.KOTA, JUALD.KD_BRG, JUALD.NA_BRG, JUALD.QTY, JUALD.HARGA, JUALD.TOTAL from jual, juald 
+		                  jual.ALAMAT, jual.KOTA, jual.KODEP, jual.NAMAP, 
+                          JUALD.KD_BRG, JUALD.NA_BRG, JUALD.QTY, 
+                          JUALD.HARGA, JUALD.TOTAL from jual, juald 
                           WHERE jual.NO_BUKTI = jualD.NO_BUKTI AND jual.GOL ='$golz'
                           AND jual.CBG = '$CBG' AND NO_RETUR =''  ");
         return response()->json($jual);
@@ -359,8 +361,6 @@ class JualController extends Controller
                 $detail->KET      = ($KET[$key] == null) ? "" :  $KET[$key];				
                 $detail->QTY         = (float) str_replace(',', '', $QTY[$key]);
                 $detail->HARGA         = (float) str_replace(',', '', $HARGA[$key]);
-                $detail->PPN         = (float) str_replace(',', '', $PPNX[$key]);
-                $detail->DPP         = (float) str_replace(',', '', $DPP[$key]);
                 $detail->TOTAL         = (float) str_replace(',', '', $TOTAL[$key]);				
  		
                 $detail->save();
@@ -681,8 +681,7 @@ class JualController extends Controller
                         'KET'     => ($KET[$i] == null) ? "" :  $KET[$i],						
                         'QTY'        => (float) str_replace(',', '', $QTY[$i]),
                         'HARGA'        => (float) str_replace(',', '', $HARGA[$i]),
-                        'PPN'        => (float) str_replace(',', '', $PPNX[$i]),
-                        'DPP'        => (float) str_replace(',', '', $DPP[$i]),
+
                         'TOTAL'        => (float) str_replace(',', '', $TOTAL[$i]),
 						
                     ]
@@ -707,8 +706,7 @@ class JualController extends Controller
                         'QTY'        => (float) str_replace(',', '', $QTY[$i]),
                         'HARGA'      => (float) str_replace(',', '', $HARGA[$i]),
                         'TOTAL'      => (float) str_replace(',', '', $TOTAL[$i]),
-                        'PPN'        => (float) str_replace(',', '', $PPNX[$i]),
-                        'DPP'        => (float) str_replace(',', '', $DPP[$i]),
+
                         'FLAG'       => $this->FLAGZ,
                         'GOL'        => $this->GOLZ,
                         'PER'        => $periode,

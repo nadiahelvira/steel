@@ -695,7 +695,7 @@
 			<line>
 				<reportElement x="0" y="0" width="573" height="1" uuid="be2ff3c1-3b4c-4806-a284-be3e9ba7896c"/>
 			</line>
-			<textField pattern="#,##0.00">
+			<textField>
 				<reportElement x="96" y="0" width="39" height="20" uuid="d9291a97-14af-4610-858f-9b3278c6ae2a"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -793,7 +793,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["(Ka. Gudang)"]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.00">
+			<textField>
 				<reportElement x="135" y="0" width="37" height="20" uuid="b17c03d0-96fe-4cc9-bca6-5f9052e69eea"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -806,7 +806,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA["B2"]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.00">
+			<textField>
 				<reportElement x="172" y="0" width="38" height="20" uuid="7e92cf1c-3cf4-4468-a500-4d92a53a8747"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -819,7 +819,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA["B3"]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.00">
+			<textField>
 				<reportElement x="210" y="0" width="40" height="20" uuid="06ae8ce6-3ee2-45cd-b1a1-ae2176292ef7"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -832,7 +832,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA["B4"]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.00">
+			<textField>
 				<reportElement x="366" y="0" width="38" height="20" uuid="fda65441-03b0-43e0-b052-d3466313b94f"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -845,7 +845,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA["B8"]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.00">
+			<textField>
 				<reportElement x="250" y="0" width="40" height="20" uuid="acbbc3c5-903a-48ef-8996-b4813921c182"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -858,7 +858,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA["B5"]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.00">
+			<textField>
 				<reportElement x="290" y="0" width="38" height="20" uuid="bc049597-4e22-4bf3-bb4a-2bebdcef546b"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -871,7 +871,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA["B6"]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.00">
+			<textField>
 				<reportElement x="328" y="0" width="38" height="20" uuid="2eb519a8-7d2c-43bb-b307-3171cb7026d6"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -884,7 +884,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA["B7"]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.00">
+			<textField>
 				<reportElement x="442" y="0" width="38" height="20" uuid="abef54b0-c75e-4d76-a3cb-caafae9c41ed"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -897,7 +897,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA["B10"]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.00">
+			<textField>
 				<reportElement x="404" y="0" width="38" height="20" uuid="8cec0256-d209-4cd7-bbda-e654ed6b7113"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -949,7 +949,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA["Kg"]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.00">
 				<reportElement x="96" y="20" width="39" height="20" uuid="f4d592f1-cff6-4a35-86c1-86af44f056b7"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -960,7 +960,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{S01}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.00">
 				<reportElement x="250" y="20" width="40" height="20" uuid="754837dd-aeb0-4cac-9eb0-c73dc684726c"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -971,7 +971,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{S05}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.00">
 				<reportElement x="210" y="20" width="40" height="20" uuid="3480f9e5-be44-4672-a748-cad2cb23a6b9"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -982,7 +982,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{S04}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.00">
 				<reportElement x="172" y="20" width="38" height="20" uuid="5dd5aa36-dfea-4a37-8441-888b0f410adf"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -993,7 +993,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{S03}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.00">
 				<reportElement x="135" y="20" width="37" height="20" uuid="accd25b7-90ea-49a4-83f6-cedafd681c63"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1004,7 +1004,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{S02}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.00">
 				<reportElement x="290" y="20" width="38" height="20" uuid="ab106f20-c006-4233-b69f-67f7ebaa6806"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1015,7 +1015,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{S06}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.00">
 				<reportElement x="328" y="20" width="38" height="20" uuid="68259ad6-2950-4c86-b354-2eb5185724a0"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1026,7 +1026,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{S07}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.00">
 				<reportElement x="366" y="20" width="38" height="20" uuid="84824132-8c38-45d1-9792-e88c9cc097a5"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1037,7 +1037,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{S08}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.00">
 				<reportElement x="404" y="20" width="38" height="20" uuid="01d1c46f-25ff-4739-92de-0e97cb5b370f"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1048,7 +1048,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{S09}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.00">
 				<reportElement x="442" y="20" width="38" height="20" uuid="24f2eb15-3bec-4190-bed5-ce3a17f824f6"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>

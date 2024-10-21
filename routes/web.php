@@ -81,6 +81,17 @@ Route::post('/pegawai/update/{bhn}', 'App\Http\Controllers\Master\PegawaiControl
 Route::get('/pegawai/delete/{bhn}', 'App\Http\Controllers\Master\PegawaiController@destroy')->middleware(['auth'])->name('pegawai.delete');
 
 
+// Master Grup
+Route::get('/grup', 'App\Http\Controllers\Master\GrupController@index')->middleware(['auth'])->name('grup');
+Route::post('/grup/store', 'App\Http\Controllers\Master\GrupController@store')->middleware(['auth'])->name('grup/store');
+    // GET Grup
+    Route::get('/get-grup', 'App\Http\Controllers\Master\GrupController@getGrup')->middleware(['auth'])->name('get-grup');
+    Route::get('/grup/browse', 'App\Http\Controllers\Master\GrupController@browse')->middleware(['auth'])->name('grup/browse');
+    Route::get('grup/cekgrup', 'App\Http\Controllers\Master\GrupController@cekgrup')->middleware(['auth']);
+// Dynamic Grup
+Route::get('/grup/edit', 'App\Http\Controllers\Master\GrupController@edit')->middleware(['auth'])->name('grup.edit');
+Route::post('/grup/update/{grup}', 'App\Http\Controllers\Master\GrupController@update')->middleware(['auth'])->name('grup.update');
+Route::get('/grup/delete/{grup}', 'App\Http\Controllers\Master\GrupController@destroy')->middleware(['auth'])->name('grup.delete');
 
 
 // Master Suplier 
@@ -418,11 +429,6 @@ Route::post('/po_selesai/update/{po_selesai}', 'App\Http\Controllers\OTransaksi\
 Route::get('/get-po_selesai', 'App\Http\Controllers\OTransaksi\Po_selesaiController@getPo_selesai')->middleware(['auth'])->name('get-po_selesai');
 Route::get('/po_selesai/delete/{po_selesai}', 'App\Http\Controllers\OTransaksi\Po_selesaiController@destroy')->middleware(['auth'])->name('po_selesai.delete');
 
-Route::get('/po_selesai/browsebkk1', 'App\Http\Controllers\OTransaksi\Po_selesaiController@browsebkk1')->middleware(['auth'])->name('po_selesai/browsebkk1');
-Route::get('/po_selesai/browsebkk2', 'App\Http\Controllers\OTransaksi\Po_selesaiController@browsebkk2')->middleware(['auth'])->name('po_selesai/browsebkk2');
-Route::get('/po_selesai/browse_kas_pms', 'App\Http\Controllers\OTransaksi\Po_selesaiController@browse_kas_pms')->middleware(['auth'])->name('po_selesai/browse_kas_pms');
-Route::post('/po_selesai/storedatabkk', 'App\Http\Controllers\OTransaksi\Po_selesaiController@storedatabkk')->middleware(['auth'])->name('po_selesai/storedatabkk');
-
 Route::get('po_selesai/index-posting', 'App\Http\Controllers\OTransaksi\Po_selesaiController@index_posting')->middleware(['auth'])->middleware(['checkDivisi:programmer,owner,assistant,penjualan']);
 Route::get('/po_selesai/browsewilayah', 'App\Http\Controllers\OTransaksi\Po_selesaiController@browsewilayah')->middleware(['auth'])->name('po_selesai/browsewilayah');
 
@@ -440,11 +446,6 @@ Route::get('/so_selesai/edit', 'App\Http\Controllers\OTransaksi\So_selesaiContro
 Route::post('/so_selesai/update/{so_selesai}', 'App\Http\Controllers\OTransaksi\So_selesaiController@update')->middleware(['auth'])->middleware(['checkDivisi:programmer,gudang,assistant,pembelian'])->name('so_selesai.update');
 Route::get('/get-so_selesai', 'App\Http\Controllers\OTransaksi\So_selesaiController@getSo_selesai')->middleware(['auth'])->name('get-so_selesai');
 Route::get('/so_selesai/delete/{so_selesai}', 'App\Http\Controllers\OTransaksi\So_selesaiController@destroy')->middleware(['auth'])->name('so_selesai.delete');
-
-Route::get('/so_selesai/browsebkk1', 'App\Http\Controllers\OTransaksi\So_selesaiController@browsebkk1')->middleware(['auth'])->name('so_selesai/browsebkk1');
-Route::get('/so_selesai/browsebkk2', 'App\Http\Controllers\OTransaksi\So_selesaiController@browsebkk2')->middleware(['auth'])->name('so_selesai/browsebkk2');
-Route::get('/so_selesai/browse_kas_pms', 'App\Http\Controllers\OTransaksi\So_selesaiController@browse_kas_pms')->middleware(['auth'])->name('so_selesai/browse_kas_pms');
-Route::post('/so_selesai/storedatabkk', 'App\Http\Controllers\OTransaksi\So_selesaiController@storedatabkk')->middleware(['auth'])->name('so_selesai/storedatabkk');
 
 Route::get('so_selesai/index-posting', 'App\Http\Controllers\OTransaksi\So_selesaiController@index_posting')->middleware(['auth'])->middleware(['checkDivisi:programmer,owner,assistant,penjualan']);
 Route::get('/so_selesai/browsewilayah', 'App\Http\Controllers\OTransaksi\So_selesaiController@browsewilayah')->middleware(['auth'])->name('so_selesai/browsewilayah');
@@ -524,6 +525,37 @@ Route::get('stockb/index-posting', 'App\Http\Controllers\OTransaksi\StockbContro
 // Posting
 Route::get('/posting/index', 'App\Http\Controllers\PostingController@index')->middleware(['auth']);
 Route::post('/posting/proses', 'App\Http\Controllers\PostingController@posting')->middleware(['auth']);
+
+
+
+////////////////// Mutasi
+
+
+Route::get('/mutasi', 'App\Http\Controllers\OTransaksi\MutasiController@index')->middleware(['auth'])->name('mutasi');
+Route::post('/mutasi/store', 'App\Http\Controllers\OTransaksi\MutasiController@store')->middleware(['auth'])->name('mutasi/store');
+Route::get('/rmutasi', 'App\Http\Controllers\OReport\RMutasiController@report')->middleware(['auth'])->name('rmutasi');
+    
+// GET Stockb
+    Route::get('/mutasi/browse', 'App\Http\Controllers\OTransaksi\MutasiController@browse')->middleware(['auth'])->name('mutasi/browse');
+    Route::get('/get-mutasi', 'App\Http\Controllers\OTransaksi\MutasiController@getMutasi')->middleware(['auth'])->name('get-mutasi');
+	
+
+    Route::get('/get-mutasi-report', 'App\Http\Controllers\OReport\RMutasiController@getMutasiReport')->middleware(['auth'])->name('get-mutasi-report');
+    Route::get('/jspoc/{mutasi:NO_ID}', 'App\Http\Controllers\OTransaksi\MutasiController@jspoc')->middleware(['auth']);
+    Route::post('jasper-mutasi-report', 'App\Http\Controllers\OReport\RMutasiController@jasperMutasiReport')->middleware(['auth']);
+
+	
+// Dynamic Stockb
+Route::get('/mutasi/edit', 'App\Http\Controllers\OTransaksi\MutasiController@edit')->middleware(['auth'])->name('mutasi.edit');
+Route::post('/mutasi/update/{mutasi}', 'App\Http\Controllers\OTransaksi\MutasiController@update')->middleware(['auth'])->name('mutasi.update');
+Route::get('/mutasi/delete/{mutasi}', 'App\Http\Controllers\OTransaksi\MutasiController@destroy')->middleware(['auth'])->name('mutasi.delete');
+Route::get('/mutasi/repost/{mutasi}', 'App\Http\Controllers\OTransaksi\MutasiController@repost')->middleware(['auth'])->name('mutasi.repost');
+
+
+
+
+
+
 
 
 

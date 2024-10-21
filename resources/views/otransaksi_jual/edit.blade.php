@@ -159,11 +159,11 @@
                                     <label for="KODEP" class="form-label">Sales#</label>
                                 </div>
                                 <div class="col-md-2">
-                                    <input type="text" class="form-control KODEP" id="KODEP" name="KODPC" placeholder="Kode Customer" value="{{$header->KODEC}}" readonly>
+                                    <input type="text" class="form-control KODEP" id="KODEP" name="KODEP" placeholder="Kode Pegawai" value="{{$header->KODEP}}" readonly>
                                 </div>
 
 								<div class="col-md-4">
-                                    <input type="text" class="form-control NAMAP" id="NAMAP" name="NAMAP" placeholder="-" value="{{$header->NAMAC}}" readonly>
+                                    <input type="text" class="form-control NAMAP" id="NAMAP" name="NAMAP" placeholder="-" value="{{$header->NAMAP}}" readonly>
                                 </div>
                             </div>
                             
@@ -173,6 +173,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <input type="text" class="form-control NOTES" id="NOTES" name="NOTES" placeholder="Masukkan NOTES" value="{{$header->NOTES}}">
+                                    <input type="text"  onclick="select()" onkeyup="hitung()" class="form-control NETT" id="NETT" name="NETT" placeholder="NETT" value="{{$header->NETT}}" style="text-align: right" hidden eadonly>
                                 </div>
         
 
@@ -205,8 +206,6 @@
 											<th style="text-align: center;">Qty</th>
 											<th style="text-align: center;">Harga</th>
 											<th style="text-align: center;">Total</th>								
-											<th style="text-align: center;">DPP</th>								
-											<th style="text-align: center;">PPN</th>								
 											<th style="text-align: center;">Ket</th>
 											<th></th>										
 										</tr>
@@ -253,12 +252,6 @@
 												<input name="TOTAL[]"  onblur="hitung()" value="{{$detail->TOTAL}}" id="TOTAL{{$no}}" type="text" style="text-align: right"  class="form-control TOTAL text-primary" readonly >
 											</td>
 											<td>
-												<input name="DPP[]"  onblur="hitung()" value="{{$detail->DPP}}" id="DPP{{$no}}" type="text" style="text-align: right"  class="form-control DPP text-primary" readonly >
-											</td>
-											<td>
-												<input name="PPNX[]"  onblur="hitung()" value="{{$detail->PPN}}" id="PPNX{{$no}}" type="text" style="text-align: right"  class="form-control PPNX text-primary" readonly >
-											</td>
-											<td>
 												<input name="KET[]" id="KET{{$no}}" type="text" value="{{$detail->KET}}" class="form-control KET" >
 											</td>     
 											
@@ -279,9 +272,12 @@
 										<td></td>		
 										<td><input class="form-control TTOTAL_QTY  text-primary font-weight-bold" style="text-align: right"  id="TTOTAL_QTY" name="TTOTAL_QTY" value="{{$header->TOTAL_QTY}}" readonly></td>
 										<td></td>
-										<!-- <td><input class="form-control TTOTAL  text-primary font-weight-bold" style="text-align: right"  id="TTOTAL" name="TTOTAL" value="{{$header->TOTAL}}" readonly></td> -->
+									   <td><input class="form-control TTOTAL  text-primary font-weight-bold" style="text-align: right"  id="TTOTAL" name="TTOTAL" value="{{$header->TOTAL}}" readonly></td> 
 										<td></td>
 									</tfoot>
+
+
+
 								</table>					
 							</div>
 
@@ -294,36 +290,7 @@
 						
 						<hr style="margin-top: 30px; margin-buttom: 30px">		
                                  
-						<div class="tab-content mt-6">
 
-							<div class="form-group row">
-                                <div class="col-md-8" align="right">
-                                    <label for="TTOTAL" class="form-label">Total</label>
-                                </div>
-                                <div class="col-md-2">
-                                    <input type="text"  onclick="select()" onkeyup="hitung()" class="form-control TTOTAL" id="TTOTAL" name="TTOTAL" placeholder="TTOTAL" value="{{$header->TOTAL}}" style="text-align: right" readonly>
-                                </div>
-							</div>
-
-                            <div class="form-group row">
-                                <div class="col-md-8" align="right">
-                                    <label for="PPN" class="form-label">Ppn</label>
-                                </div>
-                                <div class="col-md-2">
-                                    <input type="text"  onclick="select()" onkeyup="hitung()" class="form-control PPN" id="PPN" name="PPN" placeholder="PPN" value="{{$header->PPN}}" style="text-align: right" readonly>
-                                </div>
-							</div>
-							
-                            <div class="form-group row">
-                                <div class="col-md-8" align="right">
-                                    <label for="NETT" class="form-label">Nett</label>
-                                </div>
-                                <div class="col-md-2">
-                                    <input type="text"  onclick="select()" onkeyup="hitung()" class="form-control NETT" id="NETT" name="NETT" placeholder="NETT" value="{{$header->NETT}}" style="text-align: right" readonly>
-                                </div>
-							</div>
-							
-						</div>
 						
 						<div class="mt-3 col-md-12 form-group row">
 							<div class="col-md-4">
@@ -561,8 +528,7 @@
 			$("#QTY" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 			$("#HARGA" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 			$("#TOTAL" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-			$("#PPNX" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-			$("#DPP" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+
 
 		}
 		
@@ -732,6 +698,7 @@
 				type: 'GET',    
 				url: "{{url('jual/browse_detail')}}",
 				data: {
+
 					nobukti: bukti,
 				},
 				success: function( resp )
@@ -755,13 +722,7 @@
 									<td>
 										<input name='TOTAL[]' onclick='select()' onkeyup='hitung()' id='TOTAL${i}' value="${resp[i].TOTAL}" type='text' style='text-align: right' class='form-control TOTAL text-primary' readonly> 
 									</td>
-									<td>
-										<input name='DPP[]' onclick='select()' onkeyup='hitung()' id='DPP${i}' value="0.00" type='text' style='text-align: right' class='form-control DPP text-primary' readonly> 
-									</td>
-									<td>
-										<input name='PPN[]' onclick='select()' onkeyup='hitung()' id='PPN${i}' value="0.00" type='text' style='text-align: right' class='form-control PPN text-primary' readonly> 
-									</td>
-									
+
                                     <td><input name='KET[]' id='KET${i}' value="${resp[i].KET}" type='text' class='form-control  KET' required></td>
                                     <td><button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button></td>
                                 </tr>`;
@@ -777,11 +738,7 @@
 					$(".TOTAL").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 					$(".TOTAL").autoNumeric('update');
 					
-					$(".DPP").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".DPP").autoNumeric('update');
 
-					$(".PPN").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".PPN").autoNumeric('update');
 					
 					
 					/*
@@ -1014,8 +971,7 @@
 			$("#QTY" + i.toString()).attr("readonly", false);
 			$("#HARGA" + i.toString()).attr("readonly", true);
 			$("#TOTAL" + i.toString()).attr("readonly", false);
-			$("#DPP" + i.toString()).attr("readonly", true);
-			$("#PPN" + i.toString()).attr("readonly", true);
+
 			$("#KET" + i.toString()).attr("readonly", false);
 
 			$("#DELETEX" + i.toString()).attr("hidden", false);
@@ -1080,8 +1036,7 @@
 			$("#QTY" + i.toString()).attr("readonly", true);
 			$("#HARGA" + i.toString()).attr("readonly", true);
 			$("#TOTAL" + i.toString()).attr("readonly", true);
-			$("#DPP" + i.toString()).attr("readonly", true);
-			$("#PPNX" + i.toString()).attr("readonly", true);
+
 			$("#KET" + i.toString()).attr("readonly", true);
 			$("#DELETEX" + i.toString()).attr("hidden", true);
 		}
@@ -1177,13 +1132,6 @@
 		            <input name='TOTAL[]'  onblur='hitung()' value='0' id='TOTAL${idrow}' type='text' style='text-align: right' class='form-control TOTAL text-primary' required >
                 </td>
 				
-				<td>
-		            <input name='DPP[]'  onblur='hitung()' value='0' id='DPP${idrow}' type='text' style='text-align: right' class='form-control DPP text-primary' readonly >
-                </td>
-				
-				<td>
-		            <input name='PPNX[]'  onblur='hitung()' value='0' id='PPNX${idrow}' type='text' style='text-align: right' class='form-control PPNX text-primary' readonly >
-                </td>
 				
                 <td>
 				    <input name='KET[]'   id='KET${idrow}' type='text' class='form-control  KET' required>
@@ -1205,8 +1153,7 @@
 			$("#QTY" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 			$("#HARGA" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
 			$("#TOTAL" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-			$("#PPNX" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-			$("#DPP" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+
 	
 		}
 		

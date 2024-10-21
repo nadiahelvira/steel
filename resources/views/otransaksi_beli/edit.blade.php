@@ -159,7 +159,7 @@
 
 									<thead>
 										<tr>
-										<th width="100px" style="text-align:center">No.</th>
+										<th width="50px" style="text-align:center">No.</th>
 
 											<th {{( $golz =='B') ? '' : 'hidden' }} width="100px">
 												<label style="color:red;font-size:20px">*</label>
@@ -171,10 +171,10 @@
 												<label style="color:red;font-size:20px">*</label>
 												<label for="KD_BRG" class="form-label">Barang</label>
 											</th>
-											<th {{( $golz =='J' || $golz =='N') ? '' : 'hidden' }} width="200px" style="text-align:center">Nama</th>
+											<th {{( $golz =='J' || $golz =='N') ? '' : 'hidden' }} width="250px" style="text-align:center">Nama</th>
 
-											<th width="200px" style="text-align:center">Satuan</th>
-											<th width="100px" style="text-align:center">Qty</th>  
+											<th width="75px" style="text-align:center">Satuan</th>
+											<th width="150px" style="text-align:center">Qty</th>  
 
 											<th width="150px" style="text-align:center">Harga</th>
 											<th width="150px" style="text-align:center">Total</th>
@@ -263,7 +263,7 @@
 										<td><input class="form-control TTOTAL_QTY  text-primary" style="text-align: right"  id="TTOTAL_QTY" name="TTOTAL_QTY" value="{{$header->TOTAL_QTY}}" readonly></td>
 										<td></td>
 										
-										<!-- <td><input class="form-control TTOTAL  text-primary" style="text-align: right"  id="TTOTAL" name="TTOTAL" value="{{$header->TOTAL}}" readonly></td> -->
+									    <td><input class="form-control TTOTAL text-primary" style="text-align: right"  id="TTOTAL" name="TTOTAL" value="{{$header->TOTAL}}" readonly></td> -->
 										<td></td>
 									</tfoot>
 								</table>
@@ -280,30 +280,14 @@
 						
 						<div class="tab-content mt-6">
 						
-							<div class="form-group row">
-                                <div class="col-md-8" align="right">
-                                    <label for="TTOTAL" class="form-label">Total</label>
-                                </div>
-                                <div class="col-md-2">
-                                    <input type="text"  class="form-control TTOTAL" id="TTOTAL" name="TTOTAL" placeholder="" value="{{$header->TOTAL}}" style="text-align: right" readonly>
-                                </div>
-							</div>
 
-                            <!-- <div class="form-group row">
-                                <div class="col-md-8" align="right">
-                                    <label for="PPN" class="form-label">Ppn</label>
-                                </div>
-                                <div class="col-md-2">
-                                    <input type="text"   class="form-control PPN" id="PPN" name="PPN" placeholder="PPN" value="{{$header->PPN}}" style="text-align: right" readonly>
-                                </div>
-							</div> -->
 							
                             <div class="form-group row">
                                 <div class="col-md-8" align="right">
-                                    <label for="NETT" class="form-label">Nett</label>
+                                    <label hidden for="NETT" class="form-label">Nett</label>
                                 </div>
                                 <div class="col-md-2">
-                                    <input type="text"   class="form-control NETT" id="NETT" name="NETT" placeholder="" value="{{$header->NETT}}" style="text-align: right" readonly>
+                                    <input type="text"   class="form-control NETT" id="NETT" name="NETT" placeholder="" value="{{$header->NETT}}" style="text-align: right" hidden readonly>
                                 </div>
 							</div>
 							
@@ -624,7 +608,73 @@
 		}); 
 
 ////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 
+//		CHOOSE Beli
+var dTableBBeli;
+		loadDataBBeli = function(){
+		
+			$.ajax(
+			{
+				type: 'GET', 		
+				url: '{{url('beli/browse')}}',
+				data: {
+					'GOL': "{{$golz}}",
+				},
+
+				success: function( response )
+				{
+					resp = response;
+					if(dTableBBeli){
+						dTableBBeli.clear();
+					}
+					for(i=0; i<resp.length; i++){
+						
+						dTableBBeli.row.add([
+							'<a href="javascript:void(0);" onclick="chooseBeli(\''+resp[i].NO_BUKTI+'\', \''+resp[i].NO_PO+'\' ,\''+resp[i].KODES+'\',  \''+resp[i].NAMAS+'\', \''+resp[i].ALAMAT+'\',  \''+resp[i].KOTA+'\',  \''+resp[i].PKP+'\')">'+resp[i].NO_BUKTI+'</a>',
+							resp[i].KODES,
+							resp[i].NAMAS,
+							resp[i].ALAMAT,
+							resp[i].KOTA,
+						]);
+					}
+					dTableBBeli.draw();
+				}
+			});
+		}
+		
+		dTableBBeli = $("#table-bbeli").DataTable({
+			
+		});
+		
+		browseBeli = function(){
+			loadDataBBeli();
+			$("#browseBeliModal").modal("show");
+		}
+		
+		chooseBeli = function( NO_BUKTI, NO_PO , KODES,NAMAS, ALAMAT, KOTA, PKP){
+
+			$("#NO_BELI").val(NO_BUKTI);
+			$("#NO_PO").val(NO_PO);
+			$("#KODES").val(KODES);
+			$("#NAMAS").val(NAMAS);
+			$("#ALAMAT").val(ALAMAT);
+			$("#KOTA").val(KOTA);			
+			$("#PKP").val(PKP);			
+			$("#browseBeliModal").modal("hide");
+			
+			getPod(NO_PO);
+		}
+		
+		$("#NO_BELI").keypress(function(e){
+
+			if(e.keyCode == 46){
+				 e.preventDefault();
+				 browseBeli();
+			}
+		}); 
+
+////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
 
 	function getPod(bukti)
@@ -639,6 +689,7 @@
 				data: {
 					nobukti: bukti,
 					'GOL': "{{$golz}}",
+					'FLAG': "{{$flagz}}",
 				},
 				success: function( resp )
 				{
@@ -667,7 +718,7 @@
 										<input name='QTY[]'  onblur='hitung()' id='QTY${i}' value="${resp[i].QTY}" type='text' style='text-align: right' class='form-control QTY text-primary' readonly >
 									</td>
 									<td>
-										<input name='HARGA[]'  onblur='hitung()' id='HARGA${i}' value="${resp[i].HARGA}" type='text' style='text-align: right' class='form-control HARGA text-primary' >
+										<input name='HARGA[]'  onblur='hitung()' id='HARGA${i}' value="${resp[i].HARGA}" type='text' style='text-align: right' class='form-control HARGA text-primary' readonly >
 									</td>
 									<td>
 										<input name='TOTAL[]'  onblur='hitung()' id='TOTAL${i}' value="${resp[i].TOTAL}" type='text' style='text-align: right' class='form-control TOTAL text-primary' readonly >
@@ -961,8 +1012,14 @@
 			var HARGAX = parseFloat(z.find('.HARGA').val().replace(/,/g, ''));
 			var QTYX = parseFloat(z.find('.QTY').val().replace(/,/g, ''));
 
-			var FLAGZ = $('#flagz').val();
+			// var FLAGZ = $('#flagz').val();
 
+			// if (FLAGZ == 'RB'){
+				
+			// 	var QTYX  = ( QTYX * -1 ) ;			
+			// 	z.find('.QTY').autoNumeric('update');
+
+			// } 
 
             var TOTALX  = ( QTYX * HARGAX );
 			z.find('.TOTAL').val(TOTALX);

@@ -49,10 +49,10 @@ class Po_selesaiController extends Controller
             $periode = '';
         }
 		
-		$po_selesai = DB::SELECT("SELECT a.no_bukti AS NO_BUKTI, a.tgl AS TGL, a.kodes AS KODES, a.namas AS NAMAS,
+		$po_selesai = DB::SELECT("SELECT a.no_bukti AS NO_BUKTI, a.tgl AS TGL, a.kodes AS KODES, a.namas AS NAMAS, a.POSTED, 
                                     b.kd_brg AS KD_BRG, b.na_brg AS NA_BRG,
-                                    b.qty AS QTY, b.kirim AS KIRIM, b.sisa AS SISA, a.posted AS POSTED, A.NO_ID AS NO_ID from po a, pod b  
-                    where a.no_bukti = b.no_bukti 
+                                    b.qty AS QTY, b.kirim AS KIRIM, b.sisa AS SISA, b.sls AS SLS, B.NO_ID AS NO_ID from po a, pod b  
+                    where a.no_bukti = b.no_bukti and b.sls = 0 
                     ORDER BY NO_BUKTI ");
 	  
        
@@ -106,7 +106,7 @@ class Po_selesaiController extends Controller
             ->addColumn('cek', function ($row) {
                 return
                     '
-                    <input type="checkbox" name="cek[]" class="form-control cek" ' . (($row->POSTED == 1) ? "checked" : "") . '  value="' . $row->NO_ID . '" ' . (($row->POSTED == 1) ? "disabled" : "") . '></input>
+                    <input type="checkbox" name="cek[]" class="form-control cek" ' . (($row->SLS == 1) ? "checked" : "") . '  value="' . $row->NO_ID . '" ' . (($row->SLS == 1) ? "disabled" : "") . '></input>
                     ';
             })
 
@@ -134,11 +134,9 @@ class Po_selesaiController extends Controller
 
         if ($CEK) {
             foreach ($CEK as $key => $value) {
-                
-                    $no_po = $request->NO_BUKTI;
-				
-                    DB::SELECT("UPDATE PO SET POSTED=1 WHERE NO_BUKTI='$no_po'");
-			   
+
+                    DB::SELECT("UPDATE POD SET SLS =1 WHERE NO_ID =" . $CEK[$key] . ";");
+   
 			}
         }
         else
@@ -148,11 +146,11 @@ class Po_selesaiController extends Controller
 
         if($hasil!='')
         {
-            return redirect('/sup')->with('status', 'Proses Posting PO Request..')->with('gagal', $hasil);
+            return redirect('/sup')->with('status', 'Proses Po Selesai ..')->with('gagal', $hasil);
         }
         else
         {
-            return redirect('/sup')->with('status', 'Posting PO selesai..');
+            return redirect('/sup')->with('status', 'Proses PO selesai berhasil..');
         }
 
     }

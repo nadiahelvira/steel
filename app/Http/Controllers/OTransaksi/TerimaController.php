@@ -286,6 +286,9 @@ class TerimaController extends Controller
                 'SOPIR'            => ($request['SOPIR'] == null) ? "" : $request['SOPIR'],
                 'NOPOL'            => ($request['NOPOL'] == null) ? "" : $request['NOPOL'],
                 'SEAL'            => ($request['SEAL'] == null) ? "" : $request['SEAL'],
+                'KAPAL'            => ($request['KAPAL'] == null) ? "" : $request['KAPAL'],
+                'ETA'            => ($request['ETA'] == null) ? "" : $request['ETA'],
+                'TGL_MUAT'               => date('Y-m-d', strtotime($request['TGL_MUAT'])),
                 'FLAG'              => $FLAGZ,					
                 'GOL'               => $GOLZ,		
                 'TOTAL_QTYA'         => (float) str_replace(',', '', $request['TOTAL_QTYA']),
@@ -585,6 +588,9 @@ class TerimaController extends Controller
                 'SOPIR'            => ($request['SOPIR'] == null) ? "" : $request['SOPIR'],
                 'NOPOL'            => ($request['NOPOL'] == null) ? "" : $request['NOPOL'],
                 'SEAL'            => ($request['SEAL'] == null) ? "" : $request['SEAL'],
+                'KAPAL'            => ($request['KAPAL'] == null) ? "" : $request['KAPAL'],
+                'ETA'            => ($request['ETA'] == null) ? "" : $request['ETA'],
+                'TGL_MUAT'               => date('Y-m-d', strtotime($request['TGL_MUAT'])),
                 'FLAG'              => $FLAGZ,					
                 'GOL'               => $GOLZ,			
                 'TOTAL_QTYA'         => (float) str_replace(',', '', $request['TOTAL_QTYA']),
@@ -729,8 +735,8 @@ class TerimaController extends Controller
 
         $query = DB::SELECT("SELECT terima.NO_BUKTI, terima.TGL, terima.NO_MUAT, terima.NO_BELI, terima.NO_PO, terima.KD_BRG, terima.NA_BRG, 
                                     terima.QTY_BELI, terima.QTY_MUAT,
-                                    terimad.NO_CONT, terimad.SOPIR, terimad.NOPOL, terimad.TELP, terimad.SEAL, 
-                                    terimad.T_CONT, terimad.QTYA, terimad.BENDELA, terimad.IKATA, terimad.QTYB,
+                                    terima.NO_CONT, terima.SOPIR, terima.NOPOL, terima.SEAL, 
+                                    terimad.QTYA, terimad.BENDELA, terimad.IKATA, terimad.QTYB,
                                     terimad.BENDELB, terimad.IKATB
                             FROM terima, terimad 
                             WHERE terima.NO_BUKTI = terimad.NO_BUKTI AND terima.NO_BUKTI='$no_terima' 

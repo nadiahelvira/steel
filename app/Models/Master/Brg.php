@@ -21,7 +21,8 @@ class Brg extends Model
     [
         "KD_BRG", "NA_BRG", "JENIS", "SATUAN","GOL", "USRNM", "TG_SMP", "PN", "KODES", "NAMAS",
         "SATUAN_BELI", "KALI", "ACNOA", "NACNOA", "ACNOB","NACNOB", "ROP", "HJUAL", "SMIN", "SMAX",
-        "DIAMETER", "TEBAL", "PANJANG", "LEBAR", "KG", "GRUP", "SUB_GRUP", "H_MINA", "H_MINB", "H_MINC"
+        "DIAMETER", "TEBAL", "PANJANG", "LEBAR", "KG", "GRUP", "SUB_GRUP", "H_MINA", "H_MINB", "H_MINC",
+        "KD_GRUP", "NA_GRUP"
 		
     ];
 }

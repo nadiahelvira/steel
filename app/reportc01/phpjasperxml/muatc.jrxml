@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="belic01" language="groovy" pageWidth="612" pageHeight="396" orientation="Landscape" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5662dcdd-2947-4030-a126-8345a6e9bd94">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="belic01" language="groovy" pageWidth="595" pageHeight="842" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5662dcdd-2947-4030-a126-8345a6e9bd94">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="612"/>
-	<property name="com.jaspersoft.studio.unit." value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<parameter name="TOTAL1" class="java.lang.Double"/>
 	<parameter name="KG1" class="java.lang.Double"/>
 	<parameter name="NO_PO1" class="java.lang.String"/>
@@ -63,7 +54,7 @@
 		<initialValueExpression><![CDATA[]]></initialValueExpression>
 	</variable>
 	<title>
-		<band height="204">
+		<band height="277">
 			<textField>
 				<reportElement x="0" y="130" width="255" height="18" uuid="b2f6cc4c-dfee-46f1-9ab0-eb8185879862"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -217,31 +208,8 @@
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA["di pabrik : "]]></textFieldExpression>
 			</textField>
-		</band>
-	</title>
-	<pageHeader>
-		<band/>
-	</pageHeader>
-	<columnHeader>
-		<band/>
-	</columnHeader>
-	<detail>
-		<band height="20">
-			<textField pattern="#,##0.00">
-				<reportElement x="419" y="0" width="70" height="20" uuid="b7a3fd87-fd45-4b26-8de5-dee0f17806c9"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Tahoma"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{KET}]]></textFieldExpression>
-			</textField>
 			<textField>
-				<reportElement x="39" y="0" width="90" height="20" uuid="a22894a0-10e5-45d4-ab1d-554e3da96ba5"/>
+				<reportElement x="39" y="204" width="90" height="20" uuid="afee4a78-1aae-4ed0-99ed-50add32f0e8c"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -254,18 +222,7 @@
 				<textFieldExpression><![CDATA[$F{NO_PO}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="0" width="39" height="20" uuid="e4ab9103-3eba-43a7-b626-a1b139f1ad8d"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="129" y="0" width="108" height="20" uuid="299db854-5a89-4a37-a6ae-10bafb4b8ba4"/>
+				<reportElement x="129" y="204" width="108" height="20" uuid="fddb8c6f-9b75-4643-945f-29677df29215"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -278,31 +235,86 @@
 				<textFieldExpression><![CDATA[$F{NA_BRG}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="237" y="0" width="93" height="20" uuid="e04fc62d-8ed0-4515-9932-90160b5b4e35"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{SALES}]]></textFieldExpression>
+				<reportElement x="0" y="230" width="510" height="18" uuid="e3b1031e-dc95-45b4-846d-7346738ee496"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Barang - barang tersebut akan kami ambil dengan data kendaraan sebagai berikut :"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="330" y="0" width="89" height="20" uuid="b961eddd-c981-42d5-9c63-8fd0454bc34e"/>
+				<reportElement x="238" y="250" width="93" height="20" uuid="a5fcda6d-be61-4714-b1fd-fe627294667c"/>
 				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["No. HP"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="250" width="90" height="20" uuid="7b4d65af-82e6-4ab1-a9d6-5a367b89e69d"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Nama Sopir"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="250" width="39" height="20" uuid="520763d8-f2fe-49d0-89cc-dace49cdc14e"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["NO."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="250" width="108" height="20" uuid="2e05f135-ca3d-4d0e-bb37-40dc60c1b4b9"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Nopol"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="204" width="39" height="20" uuid="489d2af7-57ea-4e02-9b02-f25ca323512b"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{T_CONT}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 		</band>
+	</title>
+	<pageHeader>
+		<band/>
+	</pageHeader>
+	<columnHeader>
+		<band/>
+	</columnHeader>
+	<detail>
+		<band height="28"/>
 	</detail>
 	<pageFooter>
-		<band height="1"/>
+		<band/>
 	</pageFooter>
 	<summary>
 		<band height="204">
@@ -329,113 +341,6 @@
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["(...................................)"]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="1" y="9" width="510" height="18" uuid="dd363f8b-628b-4f63-9839-ebc88a886748"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA["Barang - barang tersebut akan kami ambil dengan data kendaraan sebagai berikut :"]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="39" y="30" width="90" height="20" uuid="03d7b4da-8290-4fa5-b37e-1b0970b44ab2"/>
-				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA["Nama Sopir"]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="129" y="30" width="108" height="20" uuid="974cb732-7ed1-4a9d-a97b-65c8ad069ae8"/>
-				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA["Nopol"]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="0" y="30" width="39" height="20" uuid="fe1b685a-0485-4af0-bf97-ef53787b8346"/>
-				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA["NO."]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="237" y="30" width="93" height="20" uuid="574a6c29-5844-4499-a7c5-4bb3a3747d03"/>
-				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA["No. HP"]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="0" y="50" width="39" height="20" uuid="36c25c05-a4d8-4f16-b211-49f6021533c3"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="39" y="50" width="90" height="20" uuid="a66b23e1-62f0-4b2a-8d26-0880ef09b564"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Tahoma"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{SOPIR}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="237" y="50" width="93" height="20" uuid="0cec5c0b-eef0-4349-8c3f-8ff1d8495df5"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{TELP}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="129" y="50" width="108" height="20" uuid="17a07abf-22e2-4d87-b779-c7e41769df59"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Tahoma"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{NOPOL}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="0" y="80" width="510" height="18" uuid="4ba03af8-bf7e-46c5-8cbd-22d4d38a2d9e"/>

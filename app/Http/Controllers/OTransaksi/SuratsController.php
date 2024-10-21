@@ -124,7 +124,7 @@ class SuratsController extends Controller
                             $filterbukti ORDER BY NO_BUKTI ");
 	
 
-		return ressuratsnse()->json($suratsd);
+		return response()->json($suratsd);
 	}
     // ganti 4
 
@@ -160,8 +160,8 @@ class SuratsController extends Controller
 				{
                     //CEK POSTED di index dan edit
 
-                    $btnEdit =   ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah disuratssting!\')" href="#" ' : ' href="surats/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->FLAG . '&judul=' . $this->judul  . '&golz=' . $row->GOL  . '"';					
-                    $btnDelete = ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah disuratssting!\')" href="#" ' : ' onclick="return confirm(&quot; Apakah anda yakin ingin hapus? &quot;)" href="surats/delete/' . $row->NO_ID . '/?flagz=' . $row->FLAG . '&golz=' . $row->GOL .'" ';
+                    $btnEdit =   ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' href="surats/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->FLAG . '&judul=' . $this->judul  . '&golz=' . $row->GOL  . '"';					
+                    $btnDelete = ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' onclick="return confirm(&quot; Apakah anda yakin ingin hapus? &quot;)" href="surats/delete/' . $row->NO_ID . '/?flagz=' . $row->FLAG . '&golz=' . $row->GOL .'" ';
 
 
                     $btnPrivilege =
@@ -188,7 +188,7 @@ class SuratsController extends Controller
                 $actionBtn =
                     '
                     <div class="dropdown show" style="text-align: center">
-                        <a class="btn btn-secondary dropdown-toggle btn-sm" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-hassuratspup="true" aria-expanded="false">
+                        <a class="btn btn-secondary dropdown-toggle btn-sm" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-bars"></i>
                         </a>
 
@@ -816,7 +816,7 @@ class SuratsController extends Controller
 	
 	
 	
-	 public function suratssting(Request $request)
+	 public function posting(Request $request)
     {
       
 

@@ -76,7 +76,8 @@ class BeliController extends Controller
 		$CBG = Auth::user()->CBG;
 
         $beli = DB::SELECT("SELECT beli.NO_BUKTI , beli.TGL, beli.KODES, beli.NAMAS, 
-		                  beli.ALAMAT, beli.KOTA, beli.PKP, beli.NO_PO, belid.KD_BRG, belid.NA_BRG, belid.QTY from beli, belid 
+		                  beli.ALAMAT, beli.KOTA, beli.PKP, beli.NO_PO, belid.KD_BRG, belid.NA_BRG, belid.QTY 
+                          from beli, belid 
                           WHERE beli.NO_BUKTI = belid.NO_BUKTI AND beli.FLAG='BL' AND BELID.NO_MUAT ='' 
                           AND beli.GOL ='$golz'
                           AND beli.CBG = '$CBG' order by beli.TGL ");

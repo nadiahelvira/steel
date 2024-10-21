@@ -201,8 +201,6 @@
                                         <th {{($golz == 'J') ? 'hidden' : '' }} style="text-align: center;">Uraian</th>
                                         <th style="text-align: center;">Satuan</th>
                                         <th style="text-align: center;">Qty</th>
-										<th style="text-align: center;">Harga</th>
-										<th style="text-align: center;">Total</th>
 										<th style="text-align: center;">Ket</th>
 										<th style="text-align: center;"></th>
                                         <th></th>
@@ -252,12 +250,10 @@
                                         </td>
 										<td>
 											<input name="QTY[]" onkeyup="hitung()" id="QTY{{$no}}" type="text" style="text-align: right"  class="form-control QTY text-primary" value="{{$detail->QTY}}">
-										</td>                         
-										<td>
-											<input name="HARGA[]" onkeyup="hitung()" id="HARGA{{$no}}" type="text" style="text-align: right"  class="form-control HARGA text-primary" value="{{$detail->HARGA}}">
-										</td>
-										<td>
-											<input name="TOTAL[]" onkeyup="hitung()" id="TOTAL{{$no}}" type="text" style="text-align: right"  class="form-control TOTAL text-primary" value="{{$detail->TOTAL}}" readonly>
+
+											<input name="HARGA[]" onkeyup="hitung()" id="HARGA{{$no}}" type="text" style="text-align: right"  class="form-control HARGA text-primary" value="{{$detail->HARGA}}" hidden >
+
+											<input name="TOTAL[]" onkeyup="hitung()" id="TOTAL{{$no}}" type="text" style="text-align: right"  class="form-control TOTAL text-primary" value="{{$detail->TOTAL}}" hidden readonly>
 										</td>
 										<td>
                                             <input name="KET[]" id="KET{{$no}}" type="text" class="form-control KET" placeholder="Ket" value="{{$detail->KET}}" required>
@@ -278,7 +274,7 @@
                                     <td {{($golz == 'J') ? 'hidden' : '' }}></td>
                                     <td><input class="form-control TQTY  text-primary font-weight-bold" style="text-align: right"  id="TQTY" name="TQTY" value="{{$header->TOTAL_QTY}}" readonly></td>
                                     <td></td>
-                                    <td><input class="form-control TTOTAL  text-primary font-weight-bold" style="text-align: right"  id="TTOTAL" name="TTOTAL" value="{{$header->TOTAL}}" readonly></td>
+                                    <td><input class="form-control TTOTAL  text-primary font-weight-bold" hidden style="text-align: right"  id="TTOTAL" name="TTOTAL" value="{{$header->TOTAL}}" readonly></td>
                                     <td></td>
                                 </tfoot>
                             </table>
@@ -594,12 +590,10 @@
                                     <td><input name='SATUAN[]' data-rowid=${i} id='SATUAN${i}' value="${resp[i].SATUAN}" type='text' class='form-control  SATUAN' placeholder="Satuan"  readonly></td>
                                     <td>
 										<input name='QTY[]' onclick='select()' onkeyup='hitung()' id='QTY${i}' value="${resp[i].QTY}" type='text' style='text-align: right' class='form-control QTY text-primary' readonly >
-									</td>
-									<td>
-										<input name='HARGA[]' onclick='select()' onkeyup='hitung()' id='HARGA${i}' value="${resp[i].HARGA}" type='text' style='text-align: right' class='form-control HARGA text-primary' readonly> 
-									</td>
-									<td>
-										<input name='TOTAL[]' onclick='select()' onkeyup='hitung()' id='TOTAL${i}' value="${resp[i].TOTAL}" type='text' style='text-align: right' class='form-control TOTAL text-primary' readonly> 
+
+										<input name='HARGA[]' onclick='select()' onkeyup='hitung()' id='HARGA${i}' value="${resp[i].HARGA}" type='text' style='text-align: right' class='form-control HARGA text-primary' hidden readonly> 
+
+										<input name='TOTAL[]' onclick='select()' onkeyup='hitung()' id='TOTAL${i}' value="${resp[i].TOTAL}" type='text' style='text-align: right' class='form-control TOTAL text-primary' hidden readonly> 
 									</td>
                                     <td><input name='KET[]' id='KET${i}' value="${resp[i].KET}" type='text' class='form-control  KET' required></td>
                                     <td><button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button></td>

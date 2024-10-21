@@ -89,21 +89,27 @@ class PoController extends Controller
 	public function browse_pod(Request $request)
     {
         $golx = $request->GOL;
+        $flagx = $request->FLAG;
 
-        if( $golx == 'B'){
+        if( $golx == 'B' && $flagx == 'BL'){
 
             $pod = DB::SELECT("SELECT a.REC, a.KD_BHN, a.NA_BHN, a.KD_BRG, a.NA_BRG, a.SATUAN , a.QTY, a.HARGA, a.KIRIM, a.SISA, 
                                     b.SATUAN AS SATUAN_PO, a.QTY AS QTY_PO, '1' AS KALI
                                 from pod a, bhn b 
                                 where a.NO_BUKTI='".$request->nobukti."' AND a.KD_BHN = b.KD_BHN");
 
-        } else {
+        } else if ( $golx == 'J' && $flagx == 'BL'){
 
             $pod = DB::SELECT("SELECT a.REC, a.KD_BRG, a.NA_BRG, a.KD_BRG, a.NA_BRG, a.SATUAN , a.QTY, a.HARGA, a.KIRIM, a.SISA, 
                                 b.SATUAN AS SATUAN_PO, a.QTY AS QTY_PO, '1' AS KALI
                             from pod a, brg b 
                             where a.NO_BUKTI='".$request->nobukti."' AND a.KD_BRG = b.KD_BRG");
 
+        } else if ( $golx == 'J' && $flagx == 'RB'){
+            $pod = DB::SELECT("SELECT a.REC, a.KD_BRG, a.NA_BRG, a.KD_BRG, a.NA_BRG, a.SATUAN , a.QTY * -1 AS QTY, a.HARGA, a.KIRIM, a.SISA, 
+                                b.SATUAN AS SATUAN_PO, a.QTY * -1 AS QTY_PO, '1' AS KALI
+                            from pod a, brg b 
+                            where a.NO_BUKTI='".$request->nobukti."' AND a.KD_BRG = b.KD_BRG");
         }
         
 

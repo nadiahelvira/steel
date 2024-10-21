@@ -54,11 +54,11 @@ class So_selesaiController extends Controller
 			$filterwilayah = " and WILAYAH1 ='".$request->wilayah."' ";
 		}
 
-        $so_selesai = DB::SELECT("SELECT a.no_bukti AS NO_BUKTI, a.tgl AS TGL, a.KODEC AS KODEC, a.NAMAC AS NAMAC,
+        $so_selesai = DB::SELECT("SELECT a.no_bukti AS NO_BUKTI, a.tgl AS TGL, a.KODEC AS KODEC, a.NAMAC AS NAMAC, a.POSTED, 
                                         b.kd_brg AS KD_BRG, b.na_brg AS NA_BRG,
-                                        b.qty AS QTY, b.kirim AS KIRIM, b.sisa AS SISA, a.POSTED AS POSTED, A.NO_ID AS NO_ID 
+                                        b.qty AS QTY, b.kirim AS KIRIM, b.sisa AS SISA, b.sls AS SLS, A.NO_ID AS NO_ID 
                                     from so a, sod b  
-                    where a.no_bukti = b.no_bukti 
+                    where a.no_bukti = b.no_bukti and b.sls = 0 
                     ORDER BY NO_BUKTI ");
 	  
        
@@ -112,7 +112,7 @@ class So_selesaiController extends Controller
             ->addColumn('cek', function ($row) {
                 return
                     '
-                    <input type="checkbox" name="cek[]" class="form-control cek" ' . (($row->POSTED == 1) ? "checked" : "") . '  value="' . $row->NO_ID . '" ' . (($row->POSTED == 1) ? "disabled" : "") . '></input>
+                    <input type="checkbox" name="cek[]" class="form-control cek" ' . (($row->SLS == 1) ? "checked" : "") . '  value="' . $row->NO_ID . '" ' . (($row->SLS == 1) ? "disabled" : "") . '></input>
                     ';
             })
 
@@ -141,15 +141,13 @@ class So_selesaiController extends Controller
         if ($CEK) {
             foreach ($CEK as $key => $value) {
                 
-                    $no_so = $request->NO_BUKTI;
-				
-                    DB::SELECT("UPDATE PO SET POSTED=1 WHERE NO_BUKTI='$no_so'");
+                DB::SELECT("UPDATE SOD SET SLS =1 WHERE NO_ID =" . $CEK[$key] . ";");
 			   
 			}
         }
         else
         {
-            $hasil = $hasil ."Tidak ada PO yang dipilih! ; ";
+            $hasil = $hasil ."Tidak ada SO yang dipilih! ; ";
         }
 
         if($hasil!='')

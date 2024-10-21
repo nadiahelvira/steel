@@ -1,13 +1,117 @@
 <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+
+<style>
+    /* General sidebar styling */
+    .vertical-menu {
+      width: 250px;
+      height: 100vh;
+      background-color: #343a40;
+      position: relative;
+    }
+	
+	.content-box {
+	  flex-grow: 1; /* This makes the child content fill the height */
+	  background-color: lightgray; /* Just for demonstration */
+	  padding: 20px;
+	}
+
+    /* Main menu items */
+    .vertical-menu a {
+      color: white;
+      padding: 16px;
+      text-decoration: none;
+      display: block;
+    }
+
+    /*.vertical-menu a:hover {
+      background-color: #495057;
+      color: white;
+    }*/
+
+    /* Mega menu container */
+    .mega-menu {
+      position: absolute;
+      top: 0;
+      left: 250px;
+      width: 700px;
+     
+      background-color: white;
+      display: none;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 10px;
+      z-index: 9999 !important;
+    }
+
+    /* Display mega menu on hover */
+    .vertical-menu a:hover + .mega-menu,
+    .mega-menu:hover {
+      display: block;
+    }
+
+    /* Sub-menu styling */
+    .mega-menu .row {
+      padding: 5px;
+    }
+
+    .mega-menu h5 {
+      color: #343a40;
+    }
+
+    .mega-menu ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .mega-menu ul li a {
+      text-decoration: none;
+      color: #343a40;
+      padding: 5px 0;
+      display: block;
+    }
+
+    .mega-menu ul li a:hover {
+      color: #007bff;
+    }
+
+    .menu-card {
+	
+      text-align: center;
+      padding: 10px;	 
+      border-radius: 10px;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease;
+    }
+
+    .menu-card:hover {
+      background-color: #f8f9fa;
+    }
+
+    .menu-card h6 {
+      margin-top: 12px;
+	  color:black;
+	  
+    }
+
+    .menu-card i {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    .font-size {
+      font-size: large; /* or you can use a specific size like 16px, 1.5em, etc. */
+    }
+
+  </style>
+
+  <aside class="main-sidebar sidebar-dark-primary elevation-4" style="overflow-y: visible;">
     <!-- Brand Logo -->
     <a href="{{url('/')}}" class="brand-link" style="text-align: center">
       <img src="{{url('/img/company.jpg')}}" alt="LookmanDjaja Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light" >CV. Gunawan</span>
+      <span class="brand-text font-weight-light">Wolfie</span>
     </a>
 
     <!-- Sidebar -->
-    <div class="sidebar">
+    <div class="vertical-menu">
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         {{-- <div class="image">
@@ -44,72 +148,8 @@
               </p>
             </a>
           </li>
-          
 
-        <!-- @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="assistant") )
-          <li class="nav-header">PPIC</li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-plus icon-pink"></i>
-              <p>
-                PPC Menu
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
 
-            <ul class="nav nav-treeview">
-        
-              <li class="nav-item">
-                <a href="{{url('so/multiSo')}}" class="nav-link">
-                  <i class="nav-icon fas fa-crop icon-orange"></i>
-                  <p>Multiple SO ke Order Kerja</p>
-                </a>
-              </li>
-        
-              <li class="nav-item">
-                <a href="{{url('orderk?JNSOK=OK')}}" class="nav-link">
-                  <i class="nav-icon fas fa-crop icon-orange"></i>
-                  <p>Order Kerja </p>
-                </a>
-              </li>
-        
-              <li class="nav-item">
-                <a href="{{url('orderk?JNSOK=OW')}}" class="nav-link">
-                  <i class="nav-icon fas fa-crop icon-orange"></i>
-                  <p>Order Kerja WIP</p>
-                </a>
-              </li>
-        
-              <li class="nav-item">
-                <a href="{{url('pakai?JNSPK=PK')}}" class="nav-link">
-                  <i class="nav-icon fas fa-crop icon-orange"></i>
-                  <p>Pemakaian </p>
-                </a>
-              </li>
-        
-              <li class="nav-item">
-                <a href="{{url('pakai?JNSPK=PW')}}" class="nav-link">
-                  <i class="nav-icon fas fa-crop icon-orange"></i>
-                  <p>Pemakaian WIP</p>
-                </a>
-              </li>
-        
-              <li class="nav-item">
-                <a href="{{url('terima?JNSHP=HP')}}" class="nav-link">
-                  <i class="nav-icon fas fa-crop icon-orange"></i>
-                  <p>Terima </p>
-                </a>
-              </li>
-        
-              <li class="nav-item">
-                <a href="{{url('terima?JNSHP=HW')}}" class="nav-link">
-                  <i class="nav-icon fas fa-crop icon-orange"></i>
-                  <p>Terima WIP</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-        @endif -->
           
           <li class="nav-header">Operational</li>
           <li class="nav-item">
@@ -121,84 +161,68 @@
               </p>
             </a>
 
-            <ul class="nav nav-treeview">
-              <!-- IF check privilege & divisi -->
-
-              @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="purchase"))
-              <li class="nav-item {{ (Request::is('sup*')) ? 'active' : '' }}">
-                <a href="{{url('sup')}}" class="nav-link">
-                   <i class="nav-icon far fa-user icon-purple "></i> 
-                  <p>Vendor</p>
-                </a>
-              </li>
-              @endif
-
-              @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="sales"))
-              <li class="nav-item">
-                <a href="{{url('cust')}}" class="nav-link">
-                  <i class="nav-icon fas fa-users icon-yellow"></i>
-                  <p>Customer</p>
-                </a>
-              </li>
-              @endif
-
-              @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="purchase"))
-              <li class="nav-item">
-                <a href="{{url('pegawai')}}" class="nav-link">
-                  <i class="nav-icon fas fa-layer-group icon-gree"></i>
-                  <p>Pegawai</p>
-                </a>
-              </li>
-              @endif 
-
-              @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="sales"))
-              <li class="nav-item">
-                <a href="{{url('brg')}}" class="nav-link">
-                  <i class="nav-icon fas fa-anchor icon-blue"></i>
-                  <p>Barang</p>
-                </a>
-              </li>
-              @endif
+<!------- penambahan tampilan baru ------->
 
 
-              <!-- @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="production"))
-              <li class="nav-item">
-                <a href="{{url('fo?flagz=FO')}}" class="nav-link">
-                  <i class="nav-icon fas fa-flask icon-orange"></i>
-                  <p>Formula</p>
+      <div class="mega-menu">
+      <div class="row d-flex">
+        <div class="col-md-3">
+           <!-- <div class="menu-card" style="">
+                <a href="{{url('sup')}}">
+                   <i class="nav-icon far fa-user icon-purple" style="width:100px; height:20px;"></i> 
+                  <h6>Vendor</h6>
                 </a>
-              </li>
-              @endif -->
+			      </div> -->
 
-              <!-- @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="production"))
-              <li class="nav-item">
-                <a href="{{url('fo?JNSFO=FW')}}" class="nav-link">
-                  <i class="nav-icon fas fa-archive icon-blue"></i>
-                  <p>Formula Barang 1/2 Jadi</p>
-                </a>
-              </li>
-              @endif -->
-              <!-- @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="production"))
-              <li class="nav-item">
-                <a href="{{url('fourut')}}" class="nav-link">
-                  <i class="nav-icon fas fa-archive icon-blue"></i>
-                  <p>Formula Urut</p>
-                </a>
-              </li>
-              @endif -->
-			  
-			        <!-- @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="production"))
-              <li class="nav-item">
-                <a href="{{url('prs')}}" class="nav-link">
-                  <i class="nav-icon fas fa-list icon-white"></i>
-                  <p>Proses</p>
-                </a>
-              </li>
-              @endif -->
+            <div class="menu-card" style="">
+              <a href="{{url('sup')}}" >
+                  <i class="nav-icon far fa-user fa-2xl icon-purple"></i>
+                  <!-- <i class="fa-regular fa-user fa-2xl"></i> -->
+                  <h6>Vendor</h6>
+              </a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="menu-card" style="">
+              <a href="{{url('cust')}}">
+                <i class="nav-icon fas fa-users icon-yellow" style="text-align: center;"></i>
+                <h6>Customer</h6>
+              </a>
+			      </div>
+        </div>
+		    <div class="col-md-3">
+            <div class="menu-card" style="">
+              <a href="{{url('pegawai')}}">
+                <i class="nav-icon fas fa-layer-group icon-green" style="text-align: center;"></i>
+                <h6>Pegawai</h6>
+              </a>
+			      </div>
+        </div>
+		    <div class="col-md-3">
+            <div class="menu-card" style="">
+              <a href="{{url('brg')}}">
+                <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i>
+                <h6>Barang</h6>
+              </a>
+			      </div>
+        </div>
+      </div>
+	  <div class="row">
+        <div class="col-md-3">
+            <div class="menu-card">
+              <a href="{{url('grup')}}" >
+                <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i>
+                <h6>Grup</h6>
+              </a>
+			      </div>
+        </div>
 
-            </ul>			 
-          </li>			  
-			
+	  
+    </div>
+
+<!-----------------batas ------------------------>
+
+
           <li class="nav-item">
           @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="purchase"))
 			      <a href="#" class="nav-link">
@@ -208,115 +232,100 @@
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
+
+<!------- penambahan tampilan baru ------->
+
+
+<div class="mega-menu">
+      <div class="row d-flex">
+        <div class="col-md-3">
+            <div class="menu-card" style="">
+              <a href="{{url('po?flagz=PO&golz=J')}}">
+                <i class="nav-icon fas fa-cart-plus icon-yellow"></i> 
+                <h6>Purchase Order</h6>
+              </a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="menu-card" style="">
+                <a href="{{url('beli?flagz=BL&golz=J')}}">
+                  <i class="nav-icon fas fa-store icon-white"></i>
+                  <h6>Pembelian</h6>
+                </a>
+			      </div>
+        </div>
+		    <div class="col-md-3">
+            <div class="menu-card" style="">
+                <a href="{{url('beli?flagz=RB&golz=J')}}">
+                  <i class="nav-icon fas fa-store icon-white"></i>
+                  <h6>Retur Pembelian</h6>
+                </a>
+			      </div>
+        </div>
+		    <div class="col-md-3">
+            <div class="menu-card" style="">
+              <a href="{{url('muat?flagz=MT&golz=J')}}">
+                <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i>
+                <h6>Muat</h6>
+              </a>
+			      </div>
+        </div>
+      </div>
+	    <div class="row">
+        <div class="col-md-3">
+            <div class="menu-card" style="">
+              <a href="{{url('terima?flagz=HP&golz=J')}}" >
+                <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i>
+                <h6>Terima-A</h6>
+              </a>
+			      </div>
+        </div>
+        <div class="col-md-3">
+          <div class="menu-card" style="">
+			        <a href="{{url('terimab?flagz=HP&golz=J')}}" >
+                <i class="nav-icon fas fa-crop icon-orange"></i>
+                <h6>Terima-B</h6>
+              </a>
+			      </div>
+        </div>
+        <div class="col-md-3">
+          <div class="menu-card" style="">
+			        <a href="{{url('utbeli?flagz=UM')}}" >
+                <i class="nav-icon fas fa-crop icon-orange"></i>
+                <h6>UM Pembelian</h6>
+              </a>
+			    </div>
+        </div>
+		    <div class="col-md-3">
+          <div class="menu-card" style="">
+			        <a href="{{url('utbeli?flagz=TH')}}" >
+                <i class="nav-icon fas fa-crop icon-orange"></i>
+                <h6>T. Hutang</h6>
+              </a>
+			    </div>
+        </div>
+      </div>
+      
+	    <div class="row">
+        <div class="col-md-3">
+            <div class="menu-card" style="">
+              <a href="{{url('hut?flagz=B')}}" >
+                <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i>
+                <h6>Pembayaran</h6>
+                <h6>Hutang</h6>
+              </a>
+			      </div>
+        </div>
+      </div>
+
+	  
+    </div>
+
+<!----- batas ----->
 			
-			      <ul class="nav nav-treeview">
-
-              <!-- <li class="nav-item {{ (Request::is('po*')) ? 'active' : '' }}">
-                <a href="{{url('pp?flagz=PP&golz=J')}}" class="nav-link">
-                  <p>PP</p>
-                </a>
-              </li> -->
-
-              <li class="nav-item {{ (Request::is('po*')) ? 'active' : '' }}">
-                <a href="{{url('po?flagz=PO&golz=J')}}" class="nav-link">
-                   <!-- <i class="nav-icon fas fa-cart-plus icon-yellow"></i>  -->
-                  <p>Purchase Order</p>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a href="{{url('beli?flagz=BL&golz=J')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-store icon-white"></i> -->
-                  <p>Pembelian</p>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a href="{{url('muat?flagz=MT&golz=J')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-store icon-white"></i> -->
-                  <p>Muat</p>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a href="{{url('terima?flagz=HP&golz=J')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-store icon-white"></i> -->
-                  <p>Terima-A</p>
-                </a>
-              </li>
-              
-              <li class="nav-item">
-                <a href="{{url('terimab?flagz=HP&golz=J')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-store icon-white"></i> -->
-                  <p>Terima-B</p>
-                </a>
-              </li>
-              
-              
-              <li class="nav-item">
-                <a href="{{url('utbeli?flagz=UM')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-comments-dollar icon-green"></i> -->
-                  <p>Uang Muka Pembelian</p>
-                </a>
-              </li>
-              
-
-              <li class="nav-item">
-                <a href="{{url('utbeli?flagz=TH')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-credit-card icon-purple"></i> -->
-                  <p>Transaksi Hutang</p>
-                </a>
-              </li>
-              
-			  
-              <li class="nav-item">
-                <a href="{{url('hut?flagz=B')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-money-bill icon-blue"></i> -->
-                  <p>Pembayaran Hutang</p>
-                </a>
-              </li>
-              
-            </ul>
            @endif			 		
-          </li> 
+          </li>  
 
-<!--          <li class="nav-item">
-          @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="purchase"))
-			      <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-hand-holding-heart icon-ocean"></i>
-              <p>
-                Transaksi Pembelian Non
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-			
-			      <ul class="nav nav-treeview">
-              <li class="nav-item {{ (Request::is('po*')) ? 'active' : '' }}">
-                <a href="{{url('po?flagz=PO&golz=N')}}" class="nav-link">
-                   <!-- <i class="nav-icon fas fa-cart-plus icon-yellow"></i>  
-                  <p>PO Non</p>
-                </a>
-              </li>
-			  
-              <li class="nav-item">
-                <a href="{{url('beli?flagz=BL&golz=N')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-store icon-white"></i> 
-                  <p>Pembelian Non</p>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a href="{{url('beli?flagz=RB&golz=N')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-store icon-white"></i> 
-                  <p>Retur Pembelian Non</p>
-                </a>
-              </li>
-              
-            </ul>
-           @endif			 		
-          </li>
-
--->
           <li class="nav-item">
           @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="sales"))
 			      <a href="#" class="nav-link">
@@ -327,287 +336,332 @@
               </p>
             </a>
 			
-			      <ul class="nav nav-treeview">
-
-              <li class="nav-item">
-                <a href="{{url('so?flagz=SO&golz=J')}}" class="nav-link">
-                  <p>Sales Order</p>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a href="{{url('spm?flagz=SM&golz=J')}}" class="nav-link">
-                  <p>Surat Perintah Muat </p>
-                </a>
-              </li>
-              
-              <li class="nav-item">
-                <a href="{{url('surats?flagz=JL&golz=J')}}" class="nav-link">
-                  <p>Surat Jalan </p>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a href="{{url('jual?flagz=JL&golz=J')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
-                  <p>Invoice</p>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a href="{{url('utjual?flagz=UM')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
-                  <p>Uang Muka Penjualan</p>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a href="{{url('utjual?flagz=TP')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
-                  <p>Transaksi Piutang</p>
-                </a>
-              </li>
+<!------- penambahan tampilan baru ------->
 
 
-              <li class="nav-item">
-                <a href="{{url('piu?flagz=B')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-desktop icon-aqua"></i> -->
-                  <p>Pembayaran Piutang</p>
+    <div class="mega-menu">
+      <div class="row d-flex">
+        <div class="col-md-3">
+            <div class="menu-card" style="">
+              <a href="{{url('so?flagz=SO&golz=J')}}">
+                <i class="nav-icon fas fa-cart-plus icon-yellow"></i> 
+                <h6>Sales Order</h6>
+              </a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="menu-card" style="">
+                <a href="{{url('spm?flagz=SM&golz=J')}}">
+                  <i class="nav-icon fas fa-store icon-white"></i>
+                  <h6>Surat Muat</h6>
                 </a>
-              </li>
-			  
-			  
-              <li class="nav-item">
-                <a href="{{url('stockb?flagz=KZ')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-flag icon-white"></i> -->
-                  <p>Koreksi Stock Barang </p>
+			      </div>
+        </div>
+		    <div class="col-md-3">
+            <div class="menu-card" style="">
+                <a href="{{url('surats?flagz=JL&golz=J')}}">
+                  <i class="nav-icon fas fa-store icon-white"></i>
+                  <h6>Surat Jalan </h6>
                 </a>
-              </li>
-			 
-            </ul>
+			      </div>
+        </div>
+		    <div class="col-md-3">
+            <div class="menu-card" style="">
+              <a href="{{url('suratsb?flagz=JL&golz=J')}}">
+                <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i>
+                <h6>Surat Jalan-B</h6>
+              </a>
+			      </div>
+        </div>
+      </div>
+	    <div class="row">
+        <div class="col-md-3">
+            <div class="menu-card" style="">
+              <a href="{{url('jual?flagz=JL&golz=J')}}" >
+                <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i>
+                <h6>Invoice</h6>
+              </a>
+			      </div>
+        </div>
+        <div class="col-md-3">
+          <div class="menu-card" style="">
+			        <a href="{{url('jual?flagz=AJ&golz=J')}}" >
+                <i class="nav-icon fas fa-crop icon-orange"></i>
+                <h6>Retur Penjualan</h6>
+              </a>
+			      </div>
+        </div>
+        <div class="col-md-3">
+          <div class="menu-card" style="">
+			        <a href="{{url('utjual?flagz=UM')}}" >
+                <i class="nav-icon fas fa-crop icon-orange"></i>
+                <h6>UM Penjualan</h6>
+              </a>
+			    </div>
+        </div>
+		    <div class="col-md-3">
+          <div class="menu-card" style="">
+			        <a href="{{url('utjual?flagz=TP')}}" >
+                <i class="nav-icon fas fa-crop icon-orange"></i>
+                <h6>T. Piutang</h6>
+              </a>
+			    </div>
+        </div>
+      </div>
+      
+	    <div class="row">
+        <div class="col-md-3">
+            <div class="menu-card" style="">
+              <a href="{{url('piu?flagz=B')}}" >
+                <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i>
+                <h6>Pembayaran</h6>
+                <h6>Piutang</h6>
+              </a>
+			      </div>
+        </div>
+        <div class="col-md-3">
+            <div class="menu-card" style="">
+              <a href="{{url('stockb?flagz=KZ')}}" >
+                <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i>
+                <h6>Koreksi Stock</h6>
+                <h6>Barang</h6>
+              </a>
+			      </div>
+        </div>
+        <div class="col-md-3">
+            <div class="menu-card" style="">
+              <a href="{{url('mutasi?flagz=KZ')}}" >
+                <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i>
+                <h6>Mutasi</h6>
+                <h6>Barang</h6>
+              </a>
+			      </div>
+        </div>
+      </div>
+
+	  
+    </div>
+
+<!----- batas ----->
+
           @endif			 		
           </li> 
 
+<!-----------Laporan Master---------->          
+
+          <li class="nav-item">          
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-archive icon-yellow"></i>
+              <p>
+                Laporan Master
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+
+<!------- penambahan tampilan baru ------->
+
+
+          <div class="mega-menu">
+            <div class="row d-flex">
+              <div class="col-md-3">
+                  <div class="menu-card" style="">
+                    <a href="{{url('rbrg')}}">
+                      <i class="nav-icon fas fa-cart-plus icon-yellow"></i> 
+                      <h6>Barang Jadi</h6>
+                    </a>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="menu-card" style="">
+                      <a href="{{url('rsup')}}">
+                        <i class="nav-icon fas fa-store icon-white"></i>
+                        <h6>Suplier</h6>
+                      </a>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="menu-card" style="">
+                      <a href="{{url('rcust')}}">
+                        <i class="nav-icon fas fa-store icon-white"></i>
+                        <h6>Customer</h6>
+                      </a>
+                  </div>
+              </div>
+            </div>
+
           
+          </div>
+
+<!----- batas ----->
+
+          </li> 
+
+<!--------------Laporan Pembelian---------------->          
 
 
           <li class="nav-item">          
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-archive icon-yellow"></i>
               <p>
-                Laporan
+                Laporan Pembelian
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+			
+<!------- penambahan tampilan baru ------->
+
+
+          <div class="mega-menu">
+            <div class="row d-flex">
+              <div class="col-md-3">
+                  <div class="menu-card" style="">
+                    <a href="{{url('rpo')}}">
+                      <i class="nav-icon fas fa-cart-plus icon-yellow"></i> 
+                      <h6>Purchase Order</h6>
+                    </a>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="menu-card" style="">
+                      <a href="{{url('rbeli')}}">
+                        <i class="nav-icon fas fa-store icon-white"></i>
+                        <h6>Pembelian</h6>
+                      </a>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="menu-card" style="">
+                      <a href="{{url('rmuat')}}">
+                        <i class="nav-icon fas fa-store icon-white"></i>
+                        <h6>Muatan </h6>
+                      </a>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="menu-card" style="">
+                    <a href="{{url('rterima')}}">
+                      <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i>
+                      <h6>Terima</h6>
+                    </a>
+                  </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3">
+                  <div class="menu-card" style="">
+                    <a href="{{url('rhut')}}" >
+                      <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i>
+                      <h6>Pembayaran</h6>
+                      <h6>Hutang</h6>
+                    </a>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                <div class="menu-card" style="">
+                    <a href="{{url('rthut')}}" >
+                      <i class="nav-icon fas fa-crop icon-orange"></i>
+                      <h6>Transaksi Hutang</h6>
+                    </a>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                <div class="menu-card" style="">
+                    <a href="{{url('rum')}}" >
+                      <i class="nav-icon fas fa-crop icon-orange"></i>
+                      <h6>UM Pembelian</h6>
+                    </a>
+                </div>
+              </div>
+            </div>
+          
+          </div>
+
+<!----- batas ----->
+
+          </li> 
+
+<!--------------Laporan Penjualan---------------->
+
+          <li class="nav-item">          
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-archive icon-yellow"></i>
+              <p>
+                Laporan Penjualan
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
 
-            <ul class="nav nav-treeview">
-              <!-- IF check privilege & divisi -->
+<!------- penambahan tampilan baru ------->
 
-              @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="sales"))
-              <li class="nav-item">
-                <a href="{{url('rbrg')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-flask icon-red"></i> -->
-                  <p>Barang Jadi</p>
-                </a>
-              </li>
-              @endif 
-			  
-              @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="purchase"))
-              <li class="nav-item">
-                <a href="{{url('rsup')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-flask icon-red"></i> -->
-                  <p>Suplier</p>
-                </a>
-              </li>
-              @endif 
 
-              @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="sales"))
-              <li class="nav-item">
-                <a href="{{url('rcust')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-flask icon-red"></i> -->
-                  <p>Customer</p>
-                </a>
-              </li>
-              @endif 			  
-			  
-	<!--		  @if (Auth::user()->hasRole('superadmin|operational'))
-              <li class="nav-item">
-                <a href="{{url('rpo')}}" class="nav-link">
-                  <i class="nav-icon fas fa-flask icon-red"></i>
-                  <p>Purchase Order</p>
-                </a>
-              </li>
-              @endif 
-	-->		  
-			  
-              @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="purchase"))
-              <li class="nav-item">
-                <a href="{{url('rpo')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-flask icon-red"></i> -->
-                  <p>Purchase Order</p>
-                </a>
-              </li>
-              @endif
-			  
-			  
-              @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="purchase"))
-              <li class="nav-item">
-                <a href="{{url('rbeli')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-folder icon-brown"></i> -->
-                  <p>Pembelian</p>
-                </a>
-              </li>
-              @endif 
-			  
-			  
-              @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="purchase"))
-              <li class="nav-item">
-                <a href="{{url('rmuat')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-folder icon-brown"></i> -->
-                  <p>Muatan</p>
-                </a>
-              </li>
-              @endif 
-			  
-              @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="production"))
-              <li class="nav-item">
-                <a href="{{url('rterima')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-magnet icon-purple"></i> -->
-                  <p>Terima</p>
-                </a>
-              </li>
-              @endif 
+            <div class="mega-menu">
+              <div class="row d-flex">
+                <div class="col-md-3">
+                    <div class="menu-card" style="">
+                      <a href="{{url('rso')}}">
+                        <i class="nav-icon fas fa-cart-plus icon-yellow"></i> 
+                        <h6>Sales Order</h6>
+                      </a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="menu-card" style="">
+                        <a href="{{url('rsurats')}}">
+                          <i class="nav-icon fas fa-store icon-white"></i>
+                          <h6>Surat Jalan</h6>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="menu-card" style="">
+                        <a href="{{url('rjual')}}">
+                          <i class="nav-icon fas fa-store icon-white"></i>
+                          <h6>Penjualan</h6>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="menu-card" style="">
+                      <a href="{{url('rtpiu')}}">
+                        <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i>
+                        <h6>Transaksi Piutang</h6>
+                      </a>
+                    </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3">
+                    <div class="menu-card" style="">
+                      <a href="{{url('ruj')}}" >
+                        <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i>
+                        <h6>UM Penjualan</h6>
+                      </a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="menu-card" style="">
+                      <a href="{{url('rpiu')}}" >
+                        <i class="nav-icon fas fa-crop icon-orange"></i>
+                        <h6>Pembayaran</h6>
+                        <h6>Piutang</h6>
+                      </a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="menu-card" style="">
+                      <a href="{{url('rstockb')}}" >
+                        <i class="nav-icon fas fa-crop icon-orange"></i>
+                        <h6>Koreksi Stock</h6>
+                      </a>
+                  </div>
+                </div>
+              </div>
+            
+            </div>
 
-              @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="purchase"))
-              <li class="nav-item">
-                <a href="{{url('rhut')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-gamepad icon-white"></i> -->
-                  <p>Pembayaran Hutang</p>
-                </a>
-              </li>
-              @endif 			  
-			  
-              @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="purchase"))
-              <li class="nav-item">
-                <a href="{{url('rthut')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-gavel icon-purple"></i> -->
-                  <p>Transaksi Hutang</p>
-                </a>
-              </li>
-              @endif 
+<!----- batas ----->	
 
-              @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="purchase"))
-              <li class="nav-item">
-                <a href="{{url('rum')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-gift icon-green"></i> -->
-                  <p>Uang Muka Pembelian</p>
-                </a>
-              </li>
-              @endif 
-			  
-			  
-              @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="sales"))
-              <li class="nav-item">
-                <a href="{{url('rso')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-bug icon-pink"></i> -->
-                  <p>Sales Order</p>
-                </a>
-              </li>
-              @endif 
-
-              @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="production"))
-              <li class="nav-item">
-                <a href="{{url('rorderk')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-globe icon-yellow"></i> -->
-                  <p>Order Kerja</p>
-                </a>
-              </li>
-              @endif 
-			  
-              @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="production"))
-              <li class="nav-item">
-                <a href="{{url('rkik')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-eye icon-aqua"></i> -->
-                  <p>Kartu Instruksi Kerja</p>
-                </a>
-              </li>
-              @endif 
- 			  
-              @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="production"))
-              <li class="nav-item">
-                <a href="{{url('rpakai')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-headphones icon-orange"></i> -->
-                  <p>Pemakaian Bahan</p>
-                </a>
-              </li>
-              @endif 
-
-              @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="sales"))
-              <li class="nav-item">
-                <a href="{{url('rsurats')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-heart icon-red"></i> -->
-                  <p>Surat Jalan</p>
-                </a>
-              </li>
-              @endif 
-			  
-              @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="sales"))
-              <li class="nav-item">
-                <a href="{{url('rjual')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-heart icon-red"></i> -->
-                  <p>Penjualan</p>
-                </a>
-              </li>
-              @endif 
-
-              @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="sales"))
-              <li class="nav-item">
-                <a href="{{url('rtpiu')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-inbox icon-green"></i> -->
-                  <p>Transaksi Piutang</p>
-                </a>
-              </li>
-              @endif 
-
-              @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="sales"))
-              <li class="nav-item">
-                <a href="{{url('ruj')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-key icon-blue"></i> -->
-                  <p>Uang Muka Penjualan</p>
-                </a>
-              </li>
-              @endif 
-			  
-
-              @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="sales"))
-              <li class="nav-item">
-                <a href="{{url('rpiu')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-laptop icon-pink"></i> -->
-                  <p>Pembayaran Piutang</p>
-                </a>
-              </li>
-              @endif 
-
-              @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="production"))
-              <li class="nav-item">
-                <a href="{{url('rstocka')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-leaf icon-brown"></i> -->
-                  <p>Koreksi Stock Bahan</p>
-                </a>
-              </li>
-              @endif 
-
-              @if ( (Auth::user()->divisi=="programmer") || (Auth::user()->divisi=="owner") || (Auth::user()->divisi=="production"))
-              <li class="nav-item">
-                <a href="{{url('rstockb')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-lock icon-white"></i> -->
-                  <p>Koreksi Stock Barang</p>
-                </a>
-              </li>
-              @endif 
-
-            </ul>
-         </li>
+          </li>
 
 
 <!-- ...................................................................................... -->
@@ -623,17 +677,28 @@
               </p>
             </a>
 
-            <ul class="nav nav-treeview">						  
-              
-              <li class="nav-item">
-                <a href="{{url('account')}}" class="nav-link">
-                  <i class="nav-icon fas fa-map icon-yellow"></i>
-                  <p>Account </p>
-                </a>
-              </li>
-			  
-            </ul>								
-          </li>
+<!------- penambahan tampilan baru ------->
+
+
+          <div class="mega-menu">
+            <div class="row d-flex">
+              <div class="col-md-3">
+                  <div class="menu-card" style="">
+                    <a href="{{url('account')}}">
+                      <i class="nav-icon fas fa-cart-plus icon-yellow"></i> 
+                      <h6>Account</h6>
+                    </a>
+                  </div>
+              </div>
+            </div>
+          
+          </div>
+
+<!----- batas ----->	
+
+
+          @endif			 		
+          </li> 
 
 	  
           <li class="nav-item">
@@ -645,53 +710,67 @@
               </p>
             </a>
 			
-			      <ul class="nav nav-treeview">
-              <!-- IF check privilege & divisi -->
+<!------- penambahan tampilan baru ------->
 
-              <li class="nav-item {{ (Request::is('kas')) ? 'active' : '' }}">
-                <a href="{{url('kas?flagz=BKM')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-lock icon-yellow"></i> -->
-                  <p>Sumber Dana Masuk</p>
-                </a>
-              </li>
 
-              <li class="nav-item {{ (Request::is('kask*')) ? 'active' : '' }}">
-                <a href="{{url('kas?flagz=BKK')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-magic icon-blue"></i> -->
-                  <p>Sumber Dana Keluar</p>
-                </a>
-              </li>
+          <div class="mega-menu">
+            <div class="row d-flex">
+              <div class="col-md-3">
+                  <div class="menu-card" style="">
+                    <a href="{{url('kas?flagz=BKM')}}">
+                      <i class="nav-icon fas fa-cart-plus icon-yellow"></i> 
+                      <h6>Kas Masuk</h6>
+                    </a>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="menu-card" style="">
+                      <a href="{{url('kas?flagz=BKK')}}">
+                        <i class="nav-icon fas fa-store icon-white"></i>
+                        <h6>Kas Keluar</h6>
+                      </a>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="menu-card" style="">
+                      <a href="{{url('bank?flagz=BBM')}}">
+                        <i class="nav-icon fas fa-store icon-white"></i>
+                        <h6>Bank Masuk</h6>
+                      </a>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="menu-card" style="">
+                    <a href="{{url('bank?flagz=BBK')}}">
+                      <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i>
+                      <h6>Bank Keluar</h6>
+                    </a>
+                  </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3">
+                  <div class="menu-card" style="">
+                    <a href="{{url('memo?flagz=M')}}" >
+                      <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i>
+                      <h6>Penyesuaian</h6>
+                    </a>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                <div class="menu-card" style="">
+                    <a href="{{url('cbin')}}" >
+                      <i class="nav-icon fas fa-crop icon-orange"></i>
+                      <h6>Kas - Bank</h6>
+                    </a>
+                  </div>
+              </div>
+            </div>
+          
+          </div>
 
-              <li class="nav-item {{ (Request::is('bank')) ? 'active' : '' }}">
-                <a href="{{url('bank?flagz=BBM')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-magnet icon-red"></i> -->
-                  <p>Bank Masuk</p>
-                </a>
-              </li>
+<!----- batas ----->
 
-              <li class="nav-item {{ (Request::is('bankk*')) ? 'active' : '' }}">
-                <a href="{{url('bank?flagz=BBK')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-male icon-purple"></i> -->
-                  <p>Bank Keluar</p>
-                </a>
-              </li>
-
-              <li class="nav-item {{ (Request::is('memo*')) ? 'active' : '' }}">
-                <a href="{{url('memo?flagz=M')}}" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-bug icon-orange"></i> -->
-                  <p>Penyesuaian</p>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a href="{{url('cbin')}}" class="nav-link">
-                  <i class="nav-icon fas fa-microphone icon-white"></i>
-                  <p>Kas - Bank </p>
-                </a>
-              </li>
-			  
-			  
-            </ul>									
           </li>
 
 
@@ -704,69 +783,75 @@
               </p>
             </a>
 			
-			      <ul class="nav nav-treeview">
-              <!-- IF check privilege & divisi -->
-
-              <li class="nav-item">
-                <a href="{{url('rkas')}}" class="nav-link">
-                  <i class="nav-icon fas fa-car icon-green"></i>
-                  <p>Journal Kas</p>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a href="{{url('rbank')}}" class="nav-link">
-                  <i class="nav-icon fas fa-plus icon-purple"></i>
-                  <p>Journal Bank</p>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a href="{{url('rmemo')}}" class="nav-link">
-                  <i class="nav-icon fas fa-beer icon-red"></i>
-                  <p>Journal Penyesuaian</p>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a href="{{url('rbuku')}}" class="nav-link">
-                  <i class="nav-icon fas fa-eraser icon-blue"></i>
-                  <p>Buku Besar</p>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a href="{{url('raccount')}}" class="nav-link">
-                  <i class="nav-icon fas fa-gift icon-aqua"></i>
-                  <p>Neraca Percobaan</p>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a href="{{url('rrl')}}" class="nav-link">
-                  <i class="nav-icon fas fa-random icon-white"></i>
-                  <p>Laba Rugi</p>
-                </a>
-              </li>
-			  
-              <li class="nav-item">
-                <a href="{{url('rnera')}}" class="nav-link">
-                  <i class="nav-icon fas fa-road icon-pink"></i>
-                  <p>Neraca</p>
-                </a>
-              </li>
-			  
-            </ul>									
-          </li>
-        @endif	
+<!------- penambahan tampilan baru ------->
 
 
+          <div class="mega-menu">
+            <div class="row d-flex">
+              <div class="col-md-3">
+                  <div class="menu-card" style="">
+                    <a href="{{url('rkas')}}">
+                      <i class="nav-icon fas fa-cart-plus icon-yellow"></i> 
+                      <h6>Journal Kas</h6>
+                    </a>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="menu-card" style="">
+                      <a href="{{url('rbank')}}">
+                        <i class="nav-icon fas fa-store icon-white"></i>
+                        <h6>Journal Bank</h6>
+                      </a>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="menu-card" style="">
+                      <a href="{{url('rmemo')}}">
+                        <i class="nav-icon fas fa-store icon-white"></i>
+                        <h6>Journal Penyesuaian</h6>
+                      </a>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="menu-card" style="">
+                    <a href="{{url('rbuku')}}">
+                      <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i>
+                      <h6>Buku Besar</h6>
+                    </a>
+                  </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3">
+                  <div class="menu-card" style="">
+                    <a href="{{url('raccount')}}" >
+                      <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i>
+                      <h6>Neraca Percobaan</h6>
+                    </a>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                <div class="menu-card" style="">
+                    <a href="{{url('rrl')}}" >
+                      <i class="nav-icon fas fa-crop icon-orange"></i>
+                      <h6>Laba Rugi</h6>
+                    </a>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                <div class="menu-card" style="">
+                    <a href="{{url('rnera')}}" >
+                      <i class="nav-icon fas fa-crop icon-orange"></i>
+                      <h6>Neraca</h6>
+                    </a>
+                </div>
+              </div>
+            </div>
 
+<!----- batas ----->
 
-
-
-
-
+          </li> 
+          
 
           <li class="nav-header">Utility</li>
           <li class="nav-item">

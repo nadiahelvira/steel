@@ -167,98 +167,9 @@
 								</div>
                             </div>
 							
-							
-                            <hr style="margin-top: 30px; margin-buttom: 30px">
-							
-							<div style="overflow-y:scroll;" class="col-md-12 scrollable" align="right">
-
-								<table id="datatable" class="table table-striped table-border">
-
-									<thead>
-										<tr>
-										<th width="100px" style="text-align:center">No.</th>
-											<th width="200px" style="text-align:center">Ikat A</th>
-											<th width="200px" style="text-align:center">Bendel A</th>
-											<th width="200px" style="text-align:center">Batang A</th> 
-											<th width="200px" style="text-align:center">Ikat B</th>
-											<th width="200px" style="text-align:center">Bendel B</th>
-											<th width="200px" style="text-align:center">Batang B</th> 
-											
-											<th></th>
-																
-										</tr>
-									<tbody id="detailPod">
-			
-									<tbody>
-									<?php $no=0 ?>
-									@foreach ($detail as $detail)		
-										<tr>
-											<td>
-												<input type="hidden" name="NO_ID[]{{$no}}" id="NO_ID" type="text" value="{{$detail->NO_ID}}" 
-												class="form-control NO_ID" onkeypress="return tabE(this,event)" readonly>
-												
-												<input name="REC[]" id="REC{{$no}}" type="text" value="{{$detail->REC}}" class="form-control REC" onkeypress="return tabE(this,event)" readonly style="text-align:center">
-											</td>
-
-											<td>
-												<input name="IKATA[]" onclick="select()" onblur="hitung()" value="{{$detail->IKATA}}" id="IKATA{{$no}}" type="text" style="text-align: right"  class="form-control IKATA" >
-											</td>
-											
-
-											<td>
-												<input name="BENDELA[]" onclick="select()" onblur="hitung()" value="{{$detail->BENDELA}}" id="BENDELA{{$no}}" type="text" style="text-align: right"  class="form-control BENDELA" >
-											</td>
-
-											<td>
-												<input name="QTYA[]" onclick="select()" onblur="hitung()" value="{{$detail->QTYA}}" id="QTYA{{$no}}" type="text" style="text-align: right"  class="form-control QTYA" >
-											</td> 
-
-											
- 
-											<td>
-												<input name="IKATB[]" onclick="select()" onblur="hitung()" value="{{$detail->IKATB}}" id="IKATB{{$no}}" type="text" style="text-align: right"  class="form-control IKATB" >
-											</td>
-											
-
-											<td>
-												<input name="BENDELB[]" onclick="select()" onblur="hitung()" value="{{$detail->BENDELB}}" id="BENDELB{{$no}}" type="text" style="text-align: right"  class="form-control BENDELB" >
-											</td>
-
-											<td>
-												<input name="QTYB[]" onclick="select()" onblur="hitung()" value="{{$detail->QTYB}}" id="QTYB{{$no}}" type="text" style="text-align: right"  class="form-control QTYB" >
-											</td> 
-											
-										</tr>
-									
-									<?php $no++; ?>
-									@endforeach
-									</tbody>
-
-									<tfoot>
-										<td></td>
-										<td><input class="form-control TOTAL_IKATA  text-primary" style="text-align: right"  id="TOTAL_IKATA" name="TOTAL_IKATA" value="{{$header->TOTAL_IKATA}}" readonly></td>
-                    					<td><input class="form-control TOTAL_BENDELA  text-primary" style="text-align: right"  id="TOTAL_BENDELA" name="TOTAL_BENDELA" value="{{$header->TOTAL_BENDELA}}" readonly></td>
-										<td><input class="form-control TOTAL_QTYA  text-primary" style="text-align: right"  id="TOTAL_QTYA" name="TOTAL_QTYA" value="{{$header->TOTAL_QTYA}}" readonly></td>
-
-										<td><input class="form-control TOTAL_IKATB  text-primary" style="text-align: right"  id="TOTAL_IKATB" name="TOTAL_IKATB" value="{{$header->TOTAL_IKATB}}" readonly></td>
-                    					<td><input class="form-control TOTAL_BENDELB  text-primary" style="text-align: right"  id="TOTAL_BENDELB" name="TOTAL_BENDELB" value="{{$header->TOTAL_BENDELB}}" readonly></td>
-										<td><input class="form-control TOTAL_QTYB  text-primary" style="text-align: right"  id="TOTAL_QTYB" name="TOTAL_QTYB" value="{{$header->TOTAL_QTYB}}" readonly></td>
 
 
-										<td></td>
-									</tfoot>
-								</table>
-							</div>
 
-                            <div class="col-md-2 row">
-                               <a type="button" id='PLUSX' onclick="tambah()" class="fas fa-plus fa-sm md-3" style="font-size: 20px" ></a>
-					
-							</div>	
-							
-                        </div> 
-
-                        <hr style="margin-top: 30px; margin-buttom: 30px">		
-                                 
 						<div class="tab-content mt-6">
 							<div class="form-group row">
 									
@@ -349,6 +260,103 @@
 							</div>
 							
 						</div>
+						
+													
+                            <hr style="margin-top: 30px; margin-buttom: 30px">
+							
+							<div style="overflow-y:scroll;" class="col-md-12 scrollable" align="right">
+
+								<table id="datatable" class="table table-striped table-border">
+
+									<thead>
+										<tr>
+										<th width="100px" style="text-align:center">No.</th>
+											<th width="200px" style="text-align:center">Ikat A</th>
+											<th width="200px" style="text-align:center">Bendel A</th>
+											<th width="200px" style="text-align:center">Batang A</th> 
+											<th width="200px" style="text-align:center">Ikat B</th>
+											<th width="200px" style="text-align:center">Bendel B</th>
+											<th width="200px" style="text-align:center">Batang B</th> 
+											
+											<th></th>
+																
+										</tr>
+									<tbody id="detailPod">
+			
+									<tbody>
+									<?php $no=0 ?>
+									@foreach ($detail as $detail)		
+										<tr>
+											<td>
+												<input type="hidden" name="NO_ID[]{{$no}}" id="NO_ID" type="text" value="{{$detail->NO_ID}}" 
+												class="form-control NO_ID" onkeypress="return tabE(this,event)" readonly>
+												
+												<input name="REC[]" id="REC{{$no}}" type="text" value="{{$detail->REC}}" class="form-control REC" onkeypress="return tabE(this,event)" readonly style="text-align:center">
+											</td>
+
+											<td>
+												<input name="IKATA[]" onclick="select()" onblur="hitung()" value="{{$detail->IKATA}}" id="IKATA{{$no}}" type="text" style="text-align: right"  class="form-control IKATA" >
+											</td>
+											
+
+											<td>
+												<input name="BENDELA[]" onclick="select()" onblur="hitung()" value="{{$detail->BENDELA}}" id="BENDELA{{$no}}" type="text" style="text-align: right"  class="form-control BENDELA" >
+											</td>
+
+											<td>
+												<input name="QTYA[]" onclick="select()" onblur="hitung()" value="{{$detail->QTYA}}" id="QTYA{{$no}}" type="text" style="text-align: right"  class="form-control QTYA" >
+											</td> 
+
+											
+ 
+											<td>
+												<input name="IKATB[]" onclick="select()" onblur="hitung()" value="{{$detail->IKATB}}" id="IKATB{{$no}}" type="text" style="text-align: right"  class="form-control IKATB" >
+											</td>
+											
+
+											<td>
+												<input name="BENDELB[]" onclick="select()" onblur="hitung()" value="{{$detail->BENDELB}}" id="BENDELB{{$no}}" type="text" style="text-align: right"  class="form-control BENDELB" >
+											</td>
+
+											<td>
+												<input name="QTYB[]" onclick="select()" onblur="hitung()" value="{{$detail->QTYB}}" id="QTYB{{$no}}" type="text" style="text-align: right"  class="form-control QTYB" >
+											</td> 
+											
+										</tr>
+									
+									<?php $no++; ?>
+									@endforeach
+									</tbody>
+
+									<tfoot>
+										<td></td>
+										<td><input class="form-control TOTAL_IKATA  text-primary" style="text-align: right"  id="TOTAL_IKATA" name="TOTAL_IKATA" value="{{$header->TOTAL_IKATA}}" readonly></td>
+                    					<td><input class="form-control TOTAL_BENDELA  text-primary" style="text-align: right"  id="TOTAL_BENDELA" name="TOTAL_BENDELA" value="{{$header->TOTAL_BENDELA}}" readonly></td>
+										<td><input class="form-control TOTAL_QTYA  text-primary" style="text-align: right"  id="TOTAL_QTYA" name="TOTAL_QTYA" value="{{$header->TOTAL_QTYA}}" readonly></td>
+
+										<td><input class="form-control TOTAL_IKATB  text-primary" style="text-align: right"  id="TOTAL_IKATB" name="TOTAL_IKATB" value="{{$header->TOTAL_IKATB}}" readonly></td>
+                    					<td><input class="form-control TOTAL_BENDELB  text-primary" style="text-align: right"  id="TOTAL_BENDELB" name="TOTAL_BENDELB" value="{{$header->TOTAL_BENDELB}}" readonly></td>
+										<td><input class="form-control TOTAL_QTYB  text-primary" style="text-align: right"  id="TOTAL_QTYB" name="TOTAL_QTYB" value="{{$header->TOTAL_QTYB}}" readonly></td>
+
+
+										<td></td>
+
+
+
+									</tfoot>
+								</table>
+							</div>
+
+                            <div class="col-md-2 row">
+                               <a type="button" id='PLUSX' onclick="tambah()" class="fas fa-plus fa-sm md-3" style="font-size: 20px" ></a>
+					
+							</div>	
+							
+                        </div> 
+
+                        <hr style="margin-top: 30px; margin-buttom: 30px">		
+                                 
+
 						   
 						<div class="mt-3 col-md-12 form-group row">
 							<div class="col-md-4">
@@ -732,8 +740,7 @@
 			var BENDELBX = parseFloat(z.find('.BENDELB').val().replace(/,/g, ''));
 			var IKATBX = parseFloat(z.find('.IKATB').val().replace(/,/g, ''));
 
-            alert(IKATBX);
-            
+
             QTYBX = IKATBX * BENDELBX;
 
 			z.find('.QTYB').val(QTYBX);	

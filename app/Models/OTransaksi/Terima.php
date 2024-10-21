@@ -23,6 +23,6 @@ class Terima extends Model
 		"USRNM", "TG_SMP", "ALAMAT", "KOTA", "KD_BRG", "NA_BRG", "NO_PO", "QTY_BELI", "GOL", "PKP", "CBG",
         "NO_MUAT", "NO_CONT", "SOPIR", "NOPOL", "SEAL", "QTY_MUAT", "TOTAL_QTYA", "TOTAL_BENDELA", "TOTAL_IKATA",
         "TOTAL_QTYB", "TOTAL_BENDELB", "TOTAL_IKATB", "S01", "S02", "S03", "S04", "S05",
-        "S06", "S07". "S08", "S09", "S10"
+        "S06", "S07". "S08", "S09", "S10", "KAPAL", "ETA", "TGL_MUAT"
     ];
 }

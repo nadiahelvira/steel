@@ -327,6 +327,7 @@
 				async : false,
 				data: {
 						'KD_BRG': $("#KD_BRG"+rowidBarang).val(),
+						GOL : 'J'
 					
 				},
 				success: function( response )
