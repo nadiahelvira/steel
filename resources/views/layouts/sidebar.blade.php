@@ -176,8 +176,7 @@
 
             <div class="menu-card" style="">
               <a href="{{url('sup')}}" >
-                  <i class="nav-icon far fa-user fa-2xl icon-purple"></i>
-                  <!-- <i class="fa-regular fa-user fa-2xl"></i> -->
+                  <i class="nav-icon far fa-user fa-10x icon-purple"></i>
                   <h6>Vendor</h6>
               </a>
             </div>
