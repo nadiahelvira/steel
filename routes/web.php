@@ -32,6 +32,14 @@ Route::get('/chart', 'App\Http\Controllers\DashboardController@chart')->middlewa
 // Periode
 Route::post('/periode', 'App\Http\Controllers\PeriodeController@index')->middleware(['auth'])->name('periode');
 
+//User Edit
+
+Route::get('/profile', 'App\Http\Controllers\ProfileController@index')->middleware(['auth']);
+Route::post('/profile/update', 'App\Http\Controllers\ProfileController@update')->middleware(['auth']);
+Route::post('/profile/setting/update', 'App\Http\Controllers\ProfileController@updateSetting')->middleware(['auth']);
+
+////////
+
 // Master Account
 Route::get('/account', 'App\Http\Controllers\FMaster\AccountController@index')->middleware(['auth'])->name('account');
 
