@@ -98,7 +98,14 @@
                 },
 				
                 {data: 'KODEP', name: 'KODEP'},
-                {data: 'NAMAP', name: 'NAMAP' },
+                {data: 'NAMAP', name: 'NAMAP',
+                
+                render : function ( data, type, row, meta )
+                {
+                  return ' <span class="badge badge-pill badge-info">' + data + '</span>';
+                }
+
+              },
                 {data: 'STA', name: 'STA'},
                 {data: 'ALAMAT', name: 'ALAMAT' },				
                 {data: 'KOTA', name: 'KOTA'},

@@ -96,7 +96,14 @@
 			    },
 				
                 {data: 'KODES', name: 'KODES'},
-                {data: 'NAMAS', name: 'NAMAS'},
+                {data: 'NAMAS', name: 'NAMAS',
+                
+                  render : function ( data, type, row, meta )
+                  {
+                    return ' <span class="badge badge-pill badge-info">' + data + '</span>';
+                  }
+
+                },
                 {data: 'ALAMAT', name: 'ALAMAT'},				
                 {data: 'KOTA', name: 'KOTA'},
                 {data: 'HP', name: 'HP'},

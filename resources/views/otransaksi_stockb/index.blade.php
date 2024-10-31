@@ -118,7 +118,14 @@
                 { data: 'DT_RowIndex', orderable: false, searchable: false },
 			          { data: 'action', name: 'action'},
                 {data: 'NO_BUKTI', name: 'NO_BUKTI'},
-                {data: 'TGL', name: 'TGL'},
+                {data: 'TGL', name: 'TGL',
+                
+                render : function ( data, type, row, meta )
+                {
+                  return ' <span class="badge badge-pill badge-danger">' + data + '</span>';
+                }
+
+              },
                 {
                   data: 'TOTAL_QTY',
                   name: 'TOTAL_QTY',

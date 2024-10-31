@@ -139,7 +139,14 @@
                 {data: 'NO_BUKTI', name: 'NO_BUKTI'},
                 {data: 'TGL', name: 'TGL'},
                 {data: 'BACNO', name: 'BACNO'},				
-                {data: 'BNAMA', name: 'BNAMA'},
+                {data: 'BNAMA', name: 'BNAMA',
+                
+                render : function ( data, type, row, meta )
+                {
+                  return ' <span class="badge badge-pill badge-success">' + data + '</span>';
+                }
+
+              },
                 {
 					data: 'JUMLAH', 
 					name: 'JUMLAH',

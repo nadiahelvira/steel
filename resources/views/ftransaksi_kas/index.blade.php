@@ -24,9 +24,6 @@
         border-left: solid 2px #000;
     }
 
-    .table tbody:nth-child(2) {
-        background-color: #ffe4e1;
-    }
 
     .btn-secondary {
         background-color: #42047e !important;
@@ -132,9 +129,24 @@
 			    },
 				
                 {data: 'NO_BUKTI', name: 'NO_BUKTI'},
-                {data: 'TGL', name: 'TGL'},
+                {data: 'TGL', name: 'TGL', 
+					
+					render : function ( data, type, row, meta )
+				  {
+                    return ' <span class="badge badge-pill badge-success">' + data + '</span>';
+	
+				  }
+				
+				},
                 {data: 'BACNO', name: 'BACNO'},				
-                {data: 'BNAMA', name: 'BNAMA'},	
+                { data: 'BNAMA', name: 'BNAMA',   
+				  
+				  render : function ( data, type, row, meta )
+				  {
+                    return ' <span class="badge badge-pill badge-primary">' + data + '</span>';
+	
+				  }
+				},
 				{data: 'KET', name: 'KET'},
                 {
 					data: 'JUMLAH', 

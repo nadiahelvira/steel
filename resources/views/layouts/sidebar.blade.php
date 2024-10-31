@@ -246,7 +246,7 @@
             <div class="menu-card" style="">
               <a href="{{url('brg')}}">
                   <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
-                  <i style="margin-left:-10px;font-size: 40px;" class="nav-icon fas fa-layer-group icon-blue"></i>
+                  <i style="margin-left:-10px;font-size: 40px;" class="nav-icon fas fa-cube icon-blue"></i>
                 <h6>Barang</h6>
               </a>
 			      </div>
@@ -257,7 +257,7 @@
             <div class="menu-card">
               <a href="{{url('grup')}}" >
                   <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
-                  <i style="margin-left:-25px;font-size: 40px;" class="nav-icon fas fa-anchor icon-red"></i>
+                  <i style="margin-left:-25px;font-size: 40px;" class="nav-icon fas fa-layer-group icon-red"></i>
                 <h6>Grup</h6>
               </a>
 			      </div>
@@ -409,7 +409,7 @@
             <div class="menu-card" style="">
                 <a href="{{url('spm?flagz=SM&golz=J')}}">
                   <!-- <i class="nav-icon fas fa-store icon-white"></i> -->
-                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-white"></i>
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-paste icon-orange"></i>
                   <h6>Surat Muat</h6>
                 </a>
 			      </div>
@@ -418,7 +418,7 @@
             <div class="menu-card" style="">
                 <a href="{{url('surats?flagz=JL&golz=J')}}">
                   <!-- <i class="nav-icon fas fa-store icon-white"></i> -->
-                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-white"></i>
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-copy icon-blue"></i>
                   <h6>Surat Jalan </h6>
                 </a>
 			      </div>
@@ -427,8 +427,9 @@
             <div class="menu-card" style="">
               <a href="{{url('suratsb?flagz=JL&golz=J')}}">
                 <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
-                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-anchor icon-blue"></i>
-                <h6>Surat Jalan-B</h6>
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-file icon-purple"></i>
+                <h6>Surat</h6>
+                <h6>Jalan-B</h6>
               </a>
 			      </div>
         </div>
@@ -438,7 +439,7 @@
             <div class="menu-card" style="">
               <a href="{{url('jual?flagz=JL&golz=J')}}" >
                 <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
-                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-anchor icon-blue"></i>
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-receipt icon-pink"></i>
                 <h6>Invoice</h6>
               </a>
 			      </div>
@@ -447,8 +448,9 @@
           <div class="menu-card" style="">
 			        <a href="{{url('jual?flagz=AJ&golz=J')}}" >
                 <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
-                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-crop icon-orange"></i>
-                <h6>Retur Penjualan</h6>
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
+                <h6>Retur</h6>
+                <h6>Penjualan</h6>
               </a>
 			      </div>
         </div>
@@ -456,7 +458,7 @@
           <div class="menu-card" style="">
 			        <a href="{{url('utjual?flagz=UM')}}" >
                 <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
-                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-crop icon-orange"></i>
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-coins icon-aqua"></i>
                 <h6>UM Penjualan</h6>
               </a>
 			    </div>
@@ -465,7 +467,7 @@
           <div class="menu-card" style="">
 			        <a href="{{url('utjual?flagz=TP')}}" >
                 <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
-                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-crop icon-orange"></i>
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-envelope icon-red"></i>
                 <h6>T. Piutang</h6>
               </a>
 			    </div>
@@ -477,7 +479,7 @@
             <div class="menu-card" style="">
               <a href="{{url('piu?flagz=B')}}" >
                 <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
-                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-white"></i>
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-credit-card icon-blue"></i>
                 <h6>Pembayaran</h6>
                 <h6>Piutang</h6>
               </a>
@@ -487,8 +489,9 @@
             <div class="menu-card" style="">
               <a href="{{url('stockb?flagz=KZ')}}" >
                 <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
-                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-white"></i>
-                <h6>Koreksi Stock</h6>
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-pen icon-red"></i>
+                <h6>Koreksi</h6>
+                <h6>Stock</h6>
                 <h6>Barang</h6>
               </a>
 			      </div>
@@ -497,7 +500,7 @@
             <div class="menu-card" style="">
               <a href="{{url('mutasi?flagz=KZ')}}" >
                 <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
-                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-white"></i>
+                  <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-clipboard-list icon-orange"></i>
                 <h6>Mutasi</h6>
                 <h6>Barang</h6>
               </a>
@@ -533,7 +536,7 @@
                   <div class="menu-card" style="">
                     <a href="{{url('rbrg')}}">
                       <!-- <i class="nav-icon fas fa-cart-plus icon-yellow"></i>  -->
-                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-white"></i>
+                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-cubes icon-orange"></i>
                       <h6>Barang Jadi</h6>
                     </a>
                   </div>
@@ -542,7 +545,7 @@
                   <div class="menu-card" style="">
                       <a href="{{url('rsup')}}">
                         <!-- <i class="nav-icon fas fa-store icon-white"></i> -->
-                          <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-white"></i>
+                          <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-user-tie icon-red"></i>
                         <h6>Suplier</h6>
                       </a>
                   </div>
@@ -551,7 +554,7 @@
                   <div class="menu-card" style="">
                       <a href="{{url('rcust')}}">
                         <!-- <i class="nav-icon fas fa-store icon-white"></i> -->
-                          <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-white"></i>
+                          <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-users icon-blue"></i>
                         <h6>Customer</h6>
                       </a>
                   </div>
@@ -586,8 +589,9 @@
                   <div class="menu-card" style="">
                     <a href="{{url('rpo')}}">
                       <!-- <i class="nav-icon fas fa-cart-plus icon-yellow"></i>  -->
-                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-white"></i>
-                      <h6>Purchase Order</h6>
+                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-cart-plus icon-yellow"></i>
+                      <h6>Purchase</h6>
+                      <h6>Order</h6>
                     </a>
                   </div>
               </div>
@@ -595,7 +599,7 @@
                   <div class="menu-card" style="">
                       <a href="{{url('rbeli')}}">
                         <!-- <i class="nav-icon fas fa-store icon-white"></i> -->
-                          <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-white"></i>
+                          <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-purple"></i>
                         <h6>Pembelian</h6>
                       </a>
                   </div>
@@ -604,8 +608,8 @@
                   <div class="menu-card" style="">
                       <a href="{{url('rmuat')}}">
                         <!-- <i class="nav-icon fas fa-store icon-white"></i> -->
-                          <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-white"></i>
-                        <h6>Muatan </h6>
+                          <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-clipboard-check icon-orange"></i>
+                        <h6>Muatan</h6>
                       </a>
                   </div>
               </div>
@@ -613,7 +617,7 @@
                   <div class="menu-card" style="">
                     <a href="{{url('rterima')}}">
                       <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
-                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-white"></i>
+                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-envelope-open icon-red"></i>
                       <h6>Terima</h6>
                     </a>
                   </div>
@@ -624,7 +628,7 @@
                   <div class="menu-card" style="">
                     <a href="{{url('rhut')}}" >
                       <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
-                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-white"></i>
+                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-industry icon-green"></i>
                       <h6>Pembayaran</h6>
                       <h6>Hutang</h6>
                     </a>
@@ -634,8 +638,9 @@
                 <div class="menu-card" style="">
                     <a href="{{url('rthut')}}" >
                       <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
-                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-white"></i>
-                      <h6>Transaksi Hutang</h6>
+                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-briefcase icon-blue"></i>
+                      <h6>Transaksi</h6>
+                      <h6>Hutang</h6>
                     </a>
                   </div>
               </div>
@@ -643,8 +648,9 @@
                 <div class="menu-card" style="">
                     <a href="{{url('rum')}}" >
                       <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
-                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-white"></i>
-                      <h6>UM Pembelian</h6>
+                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-coins icon-aqua"></i>
+                      <h6>UM</h6>
+                      <h6>Pembelian</h6>
                     </a>
                 </div>
               </div>
@@ -676,7 +682,7 @@
                     <div class="menu-card" style="">
                       <a href="{{url('rso')}}">
                         <!-- <i class="nav-icon fas fa-cart-plus icon-yellow"></i>  -->
-                          <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-white"></i>
+                          <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-user-tie icon-green"></i>
                         <h6>Sales Order</h6>
                       </a>
                     </div>
@@ -685,7 +691,7 @@
                     <div class="menu-card" style="">
                         <a href="{{url('rsurats')}}">
                           <!-- <i class="nav-icon fas fa-store icon-white"></i> -->
-                            <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-white"></i>
+                            <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-file icon-orange"></i>
                           <h6>Surat Jalan</h6>
                         </a>
                     </div>
@@ -694,7 +700,7 @@
                     <div class="menu-card" style="">
                         <a href="{{url('rjual')}}">
                           <!-- <i class="nav-icon fas fa-store icon-white"></i> -->
-                            <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-white"></i>
+                            <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-purple"></i>
                           <h6>Penjualan</h6>
                         </a>
                     </div>
@@ -703,8 +709,9 @@
                     <div class="menu-card" style="">
                       <a href="{{url('rtpiu')}}">
                         <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
-                          <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-white"></i>
-                        <h6>Transaksi Piutang</h6>
+                          <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-cash-register icon-green"></i>
+                        <h6>Transaksi</h6>
+                        <h6>Piutang</h6>
                       </a>
                     </div>
                 </div>
@@ -714,7 +721,7 @@
                     <div class="menu-card" style="">
                       <a href="{{url('ruj')}}" >
                         <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
-                          <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-white"></i>
+                          <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-coins icon-aqua"></i>
                         <h6>UM Penjualan</h6>
                       </a>
                     </div>
@@ -723,7 +730,7 @@
                   <div class="menu-card" style="">
                       <a href="{{url('rpiu')}}" >
                         <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
-                          <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-white"></i>
+                          <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-money-bill icon-pink"></i>
                         <h6>Pembayaran</h6>
                         <h6>Piutang</h6>
                       </a>
@@ -733,7 +740,7 @@
                   <div class="menu-card" style="">
                       <a href="{{url('rstockb')}}" >
                         <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
-                          <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-white"></i>
+                          <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-pen icon-red"></i>
                         <h6>Koreksi Stock</h6>
                       </a>
                   </div>
@@ -769,7 +776,7 @@
                   <div class="menu-card" style="">
                     <a href="{{url('account')}}">
                       <!-- <i class="nav-icon fas fa-cart-plus icon-yellow"></i>  -->
-                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-white"></i>
+                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-user icon-orange"></i>
                       <h6>Account</h6>
                     </a>
                   </div>
@@ -803,7 +810,7 @@
                   <div class="menu-card" style="">
                     <a href="{{url('kas?flagz=BKM')}}">
                       <!-- <i class="nav-icon fas fa-cart-plus icon-yellow"></i>  -->
-                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-white"></i>
+                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-stamp icon-red"></i>
                       <h6>Kas Masuk</h6>
                     </a>
                   </div>
@@ -812,7 +819,7 @@
                   <div class="menu-card" style="">
                       <a href="{{url('kas?flagz=BKK')}}">
                         <!-- <i class="nav-icon fas fa-store icon-white"></i> -->
-                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-white"></i>
+                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-credit-card icon-blue"></i>
                         <h6>Kas Keluar</h6>
                       </a>
                   </div>
@@ -821,7 +828,7 @@
                   <div class="menu-card" style="">
                       <a href="{{url('bank?flagz=BBM')}}">
                         <!-- <i class="nav-icon fas fa-store icon-white"></i> -->
-                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-white"></i>
+                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-money-check icon-green"></i>
                         <h6>Bank Masuk</h6>
                       </a>
                   </div>
@@ -830,7 +837,7 @@
                   <div class="menu-card" style="">
                     <a href="{{url('bank?flagz=BBK')}}">
                       <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
-                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-white"></i>
+                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-money-bill icon-orange"></i>
                       <h6>Bank Keluar</h6>
                     </a>
                   </div>
@@ -841,7 +848,7 @@
                   <div class="menu-card" style="">
                     <a href="{{url('memo?flagz=M')}}" >
                       <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
-                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-white"></i>
+                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-receipt icon-purple"></i>
                       <h6>Penyesuaian</h6>
                     </a>
                   </div>
@@ -850,7 +857,7 @@
                 <div class="menu-card" style="">
                     <a href="{{url('cbin')}}" >
                       <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
-                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-white"></i>
+                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-tags icon-pink"></i>
                       <h6>Kas - Bank</h6>
                     </a>
                   </div>
@@ -882,7 +889,7 @@
                   <div class="menu-card" style="">
                     <a href="{{url('rkas')}}">
                       <!-- <i class="nav-icon fas fa-cart-plus icon-yellow"></i> -->
-                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-user icon-purple"></i>
+                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-newspaper icon-purple"></i>
                       <h6>Journal Kas</h6>
                     </a>
                   </div>
@@ -891,7 +898,7 @@
                   <div class="menu-card" style="">
                       <a href="{{url('rbank')}}">
                         <!-- <i class="nav-icon fas fa-store icon-white"></i> -->
-                          <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-user icon-purple"></i>
+                          <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-bookmark icon-blue"></i>
                         <h6>Journal Bank</h6>
                       </a>
                   </div>
@@ -900,7 +907,7 @@
                   <div class="menu-card" style="">
                       <a href="{{url('rmemo')}}">
                         <!-- <i class="nav-icon fas fa-store icon-white"></i> -->
-                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-white"></i>
+                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-file icon-green"></i>
                         <h6>Journal Memo</h6>
                       </a>
                   </div>
@@ -909,7 +916,7 @@
                   <div class="menu-card" style="">
                     <a href="{{url('rbuku')}}">
                       <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
-                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-white"></i>
+                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-book icon-red"></i>
                       <h6>Buku Besar</h6>
                     </a>
                   </div>
@@ -920,7 +927,7 @@
                   <div class="menu-card" style="">
                     <a href="{{url('raccount')}}" >
                       <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
-                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-white"></i>
+                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-chart-line icon-orange"></i>
                       <h6>Neraca Percobaan</h6>
                     </a>
                   </div>
@@ -929,7 +936,7 @@
                 <div class="menu-card" style="">
                     <a href="{{url('rrl')}}" >
                       <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
-                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-white"></i>
+                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-chart-pie icon-yellow"></i>
                       <h6>Laba Rugi</h6>
                     </a>
                   </div>
@@ -938,7 +945,7 @@
                 <div class="menu-card" style="">
                     <a href="{{url('rnera')}}" >
                       <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
-                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-store icon-white"></i>
+                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-bezier-curve icon-pink"></i>
                       <h6>Neraca</h6>
                     </a>
                 </div>
@@ -970,7 +977,7 @@
                   <div class="menu-card" style="">
                     <a href="{{url('periode')}}">
                       <!-- <i class="nav-icon fas fa-cart-plus icon-yellow"></i> -->
-                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-user icon-purple"></i>
+                        <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-calendar icon-purple"></i>
                       <h6>Ganti Periode</h6>
                     </a>
                   </div>
@@ -979,7 +986,7 @@
                   <div class="menu-card" style="">
                       <a href="{{url('po_selesai/index-posting')}}">
                         <!-- <i class="nav-icon fas fa-store icon-white"></i> -->
-                          <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-user icon-purple"></i>
+                          <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-check-circle icon-green"></i>
                         <h6>PO Selesai</h6>
                       </a>
                   </div>
@@ -988,7 +995,7 @@
                   <div class="menu-card" style="">
                       <a href="{{url('so_selesai/index-posting')}}">
                         <!-- <i class="nav-icon fas fa-store icon-white"></i> -->
-                          <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-user icon-purple"></i>
+                          <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-check-circle icon-blue"></i>
                         <h6>SO Selesai</h6>
                       </a>
                   </div>

@@ -132,7 +132,14 @@
               {data: 'NO_BUKTI', name: 'NO_BUKTI'},
               {data: 'TGL', name: 'TGL'},
               {data: 'KODEC', name: 'KODEC'},
-              {data: 'NAMAC', name: 'NAMAC'},	
+              {data: 'NAMAC', name: 'NAMAC',
+                
+                render : function ( data, type, row, meta )
+                {
+                  return ' <span class="badge badge-pill badge-info">' + data + '</span>';
+                }
+
+              },	
               {data: 'KD_BRG', name: 'KD_BRG'},
               {data: 'NA_BRG', name: 'NA_BRG'},			
               {data: 'QTY', name: 'QTY', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},

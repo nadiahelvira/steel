@@ -127,7 +127,14 @@
                 {data: 'TGL', name: 'TGL'},
                 {data: 'NO_SO', name: 'NO_SO'},
                 {data: 'KODEC', name: 'KODEC'},
-                {data: 'NAMAC', name: 'NAMAC'},
+                {data: 'NAMAC', name: 'NAMAC',
+                
+                render : function ( data, type, row, meta )
+                {
+                  return ' <span class="badge badge-pill badge-danger">' + data + '</span>';
+                }
+
+              },
                 {data: 'TRUCK', name: 'TRUCK'},
                 {data: 'SOPIR', name: 'SOPIR'},
                 {data: 'TOTAL_QTY', name: 'TOTAL_QTY'},

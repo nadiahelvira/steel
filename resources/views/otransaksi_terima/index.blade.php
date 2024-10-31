@@ -129,7 +129,14 @@
                 { data: 'NO_MUAT', name: 'NO_MUAT'},
                 { data: 'NO_BELI', name: 'NO_BELI'},
                 { data: 'NO_PO', name: 'NO_PO'},
-                { data: 'NA_BRG', name: 'NA_BRG'},
+                { data: 'NA_BRG', name: 'NA_BRG',
+                
+                render : function ( data, type, row, meta )
+                {
+                  return ' <span class="badge badge-pill badge-danger">' + data + '</span>';
+                }
+
+              },
                 { data: 'QTY_BELI', name: 'QTY_BELI', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},			
                 { data: 'QTY_MUAT', name: 'QTY_MUAT', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},			
                 { data: 'TOTAL_QTY', name: 'TOTAL_QTY', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},			

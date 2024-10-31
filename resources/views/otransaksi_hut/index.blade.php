@@ -123,7 +123,14 @@
                 {data: 'TGL', name: 'TGL'},
                 //{data: 'NO_PO', name: 'NO_PO'},
                 {data: 'KODES', name: 'KODES'},
-                {data: 'NAMAS', name: 'NAMAS'},
+                {data: 'NAMAS', name: 'NAMAS',
+                
+                render : function ( data, type, row, meta )
+                {
+                  return ' <span class="badge badge-pill badge-danger">' + data + '</span>';
+                }
+
+              },
                 {data: 'KOTA', name: 'KOTA'},
                 {data: 'BAYAR', name: 'BAYAR', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},				
                 {data: 'NOTES', name: 'NOTES'},

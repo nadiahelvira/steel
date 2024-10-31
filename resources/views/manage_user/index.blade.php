@@ -98,7 +98,14 @@
                     name: 'action'
                 },
                 {data: 'username', name: 'username'},
-                {data: 'name', name: 'name'},
+                {data: 'name', name: 'name',
+                
+                render : function ( data, type, row, meta )
+                {
+                  return ' <span class="badge badge-pill badge-info">' + data + '</span>';
+                }
+
+              },
                 {data: 'divisi', name: 'divisi'},
                 {data: 'privilege', name: 'privilege'},
             ],
