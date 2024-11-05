@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.plain')
 
 <style>
     .card {
@@ -42,6 +42,11 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#bankInfo" data-toggle="tab">Bank Info</a>
+                            </li>
+
+							
+                            <li class="nav-item">
+                                <a class="nav-link" href="#standartInfo" data-toggle="tab">Standart Kualitas</a>
                             </li>
                         </ul>
         
@@ -278,6 +283,24 @@
 								</div>
 								
 							</div>
+
+							<div id="standartInfo" class="tab-pane">
+				
+								<div class="form-group row">
+									<div class="col-md-1">
+										<label for="SKH" class="form-label">Standart Qty High</label>
+									</div>
+                                    <div class="col-md-2">
+                                        <select id="SKH" class="form-control"  name="SKH">
+											<option value="1" {{ ($header->SKH == '1') ? 'selected' : '' }}>Aktif</option>
+											<option value="0" {{ ($header->SKH == '0') ? 'selected' : '' }}>Tidak Aktif</option>
+                                        </select>
+                                    </div>                              
+								</div>
+								
+							</div>
+
+
 						</div>
                                 
                         </div>

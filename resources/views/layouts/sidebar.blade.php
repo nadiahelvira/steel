@@ -86,7 +86,7 @@
     /* Display mega menu on hover */
     .vertical-menu a:hover + .mega-menu,
     .mega-menu:hover {
-      display: block;
+     /* display: block;*/
     }
 
     /* Sub-menu styling */
@@ -217,7 +217,7 @@
 			      </div> -->
 
             <div class="menu-card" style="">
-              <a href="{{url('sup')}}" >
+              <a href="javascript:addTab('Supplier', '{{url('sup')}}')" >
                   <!-- <i class="nav-icon far fa-user fa-10x icon-purple"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-user icon-purple"></i>
                   <h6>Vendor</h6>
@@ -226,7 +226,7 @@
         </div>
         <div class="col-md-3">
             <div class="menu-card" style="">
-              <a href="{{url('cust')}}">
+              <a href="javascript:addTab('Customer', '{{url('cust')}}')">
                   <!-- <i class="nav-icon fas fa-users icon-yellow" style="text-align: center;"></i> -->
                   <i style="margin-left:-25px;font-size: 40px;" class="nav-icon fas fa-users icon-yellow"></i>
                 <h6>Customer</h6>
