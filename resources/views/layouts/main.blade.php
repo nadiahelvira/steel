@@ -65,6 +65,9 @@ function addTab(title, url) {
     $("#tabs").tabs("option", "active", tabCount - 1);
 	$('.mega-menu').hide();
   }
+  
+  
+  
 
 function closeTab(tabIndex) {
     // Remove the tab header and content
@@ -149,6 +152,8 @@ $(document).ready(function () {
   // Initialize the jQuery UI Tabs widget
   $("#tabs").tabs();
 
+  // tab saat pertama kali login, akan mengarah ke sini
+  addTab("Home", "{{ Url('/sup') }}");
  
   // Function to add a new tab
   

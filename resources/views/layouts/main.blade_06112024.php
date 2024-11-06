@@ -31,6 +31,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- Date Picker -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+
   @yield('styles')
   <script>
    var tabCount = 0; // To uniquely identify each tab and iframe
@@ -44,10 +45,18 @@ function addTab(title, url) {
     const iframeId = `iframe-${tabCount}`;
 
     // Add the tab header with the link
-    $("#tabs ul").append(`<li><a href="#${tabId}">${title}</a></li>`);
+    $("#tabs ul").append(`
+        <li id="tab-header-${tabCount}">
+            <a href="#${tabId}">${title}</a>
+            <span class="ui-icon ui-icon-close" role="button" onclick="closeTab(${tabCount})"></span>
+        </li>
+    `);
 
     // Add the tab content with an iframe and set src to the specified URL
     $("#tabs").append(`<div id="${tabId}" class="tab-content"><iframe id="${iframeId}" src="${url}" width="100%" height="500px" frameborder="0"></iframe></div>`);
+
+
+ 
 
     // Refresh the tabs to recognize new tab added dynamically
     $("#tabs").tabs("refresh");
@@ -57,7 +66,24 @@ function addTab(title, url) {
 	$('.mega-menu').hide();
   }
 
+function closeTab(tabIndex) {
+    // Remove the tab header and content
+    $(`#tab-header-${tabIndex}`).remove();
+    $(`#tab-${tabIndex}`).remove();
 
+    // Refresh the tabs to reflect the changes
+    $("#tabs").tabs("refresh");
+
+    // Activate the previous tab if any
+     const activeTabs = $("#tabs ul li").length;
+    if (activeTabs > 0) {
+        // Activate the previous tab if any
+        $("#tabs").tabs("option", "active", activeTabs - 1);
+    } else {
+        // If no tabs are left, reload the page
+        location.reload();
+    }
+}
   
   </script>
 </head>

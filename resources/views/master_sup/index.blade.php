@@ -9,7 +9,6 @@
     td { font-size: 13px; }
 </style>
 
-
 @section('content')
 <div class="content-wrapper">
     <div class="content-header">
@@ -74,6 +73,7 @@
 @endsection
 
 @section('javascripts')
+
 <script>
   $(document).ready(function() {
         var dataTable = $('.datatable').DataTable({
@@ -96,12 +96,19 @@
 			    },
 				
                 {data: 'KODES', name: 'KODES'},
-                {data: 'NAMAS', name: 'NAMAS'},
+                {data: 'NAMAS', name: 'NAMAS',
+                
+                  render : function ( data, type, row, meta )
+                  {
+                    return ' <span class="badge badge-pill badge-info">' + data + '</span>';
+                  }
+
+                },
                 {data: 'ALAMAT', name: 'ALAMAT'},				
                 {data: 'KOTA', name: 'KOTA'},
                 {data: 'HP', name: 'HP'},
                 {data: 'TELPON1', name: 'TELPON1'},
-                {data: 'CONTACT', name: 'CONTACT'}
+                {data: 'KONTAK', name: 'KONTAK'}
 
 				
             ],
@@ -112,10 +119,10 @@
                     "targets": 0
                 }
             ],
-           dom: "<'row'<'col-md-6'><'col-md-6'>>" +
+            dom: "<'row'<'col-md-6'><'col-md-6'>>" +
                 "<'row'<'col-md-2'l><'col-md-6 test_btn m-auto'><'col-md-4'f>>" +
                 "<'row'<'col-md-12't>><'row'<'col-md-12'ip>>",
-				stateSave:true,
+				    stateSave:false,
         });
         
         $("div.test_btn").html('<a class="btn btn-lg btn-md btn-success" href="{{url('sup/edit?idx=0&tipx=new')}}"> <i class="fas fa-plus fa-sm md-3" ></i></a');

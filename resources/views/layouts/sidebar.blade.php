@@ -33,8 +33,8 @@
       position: absolute;
       /* top: 800; */
       /* top: 50; */
-      left: 250px;
-      width: 600px;
+      left: 300px;
+      width: 850px;
      
       background-color: white;
       display: none;
@@ -235,7 +235,7 @@
         </div>
 		    <div class="col-md-3">
             <div class="menu-card" style="">
-              <a href="{{url('pegawai')}}">
+              <a href="javascript:addTab('Pegawai', '{{url('pegawai')}}')">
                   <!-- <i class="nav-icon fas fa-layer-group icon-green" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-user-tie icon-green"></i>
                 <h6>Pegawai</h6>
@@ -244,7 +244,7 @@
         </div>
 		    <div class="col-md-3">
             <div class="menu-card" style="">
-              <a href="{{url('brg')}}">
+              <a href="javascript:addTab('Barang', '{{url('brg')}}')">
                   <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-10px;font-size: 40px;" class="nav-icon fas fa-cube icon-blue"></i>
                 <h6>Barang</h6>
@@ -255,7 +255,7 @@
 	  <div class="row">
         <div class="col-md-3">
             <div class="menu-card">
-              <a href="{{url('grup')}}" >
+              <a href="javascript:addTab('Grup', '{{url('grup')}}')">
                   <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-25px;font-size: 40px;" class="nav-icon fas fa-layer-group icon-red"></i>
                 <h6>Grup</h6>
@@ -366,8 +366,7 @@
               <a href="{{url('hut?flagz=B')}}" >
                 <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-cash-register icon-green"></i>
-                <h6>Pembayaran</h6>
-                <h6>Hutang</h6>
+                <h6>Pembayaran Hutang</h6>
               </a>
 			      </div>
         </div>
@@ -428,8 +427,7 @@
               <a href="{{url('suratsb?flagz=JL&golz=J')}}">
                 <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-file icon-purple"></i>
-                <h6>Surat</h6>
-                <h6>Jalan-B</h6>
+                <h6>Surat Jalan-B</h6>
               </a>
 			      </div>
         </div>
@@ -449,8 +447,7 @@
 			        <a href="{{url('jual?flagz=AJ&golz=J')}}" >
                 <!-- <i class="nav-icon fas fa-crop icon-orange"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-retweet icon-orange"></i>
-                <h6>Retur</h6>
-                <h6>Penjualan</h6>
+                <h6>Retur Penjualan</h6>
               </a>
 			      </div>
         </div>
@@ -480,8 +477,7 @@
               <a href="{{url('piu?flagz=B')}}" >
                 <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-credit-card icon-blue"></i>
-                <h6>Pembayaran</h6>
-                <h6>Piutang</h6>
+                <h6>Pembayaran Piutang</h6>
               </a>
 			      </div>
         </div>
@@ -490,9 +486,7 @@
               <a href="{{url('stockb?flagz=KZ')}}" >
                 <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-pen icon-red"></i>
-                <h6>Koreksi</h6>
-                <h6>Stock</h6>
-                <h6>Barang</h6>
+                <h6>Koreksi Stock</h6>
               </a>
 			      </div>
         </div>
@@ -501,8 +495,7 @@
               <a href="{{url('mutasi?flagz=KZ')}}" >
                 <!-- <i class="nav-icon fas fa-anchor icon-blue" style="text-align: center;"></i> -->
                   <i style="margin-left:-5px;font-size: 40px;" class="nav-icon fas fa-clipboard-list icon-orange"></i>
-                <h6>Mutasi</h6>
-                <h6>Barang</h6>
+                <h6>Mutasi Barang</h6>
               </a>
 			      </div>
         </div>

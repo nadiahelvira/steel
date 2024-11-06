@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.plain')
 @section('styles')
 <link rel="stylesheet" href="{{url('AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
 <link rel="stylesheet" href="{{url('http://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css') }}">
@@ -8,6 +8,7 @@
     th { font-size: 13px; }
     td { font-size: 13px; }
 </style>
+
 
 @section('content')
 <div class="content-wrapper">
@@ -73,7 +74,6 @@
 @endsection
 
 @section('javascripts')
-
 <script>
   $(document).ready(function() {
         var dataTable = $('.datatable').DataTable({
@@ -96,19 +96,12 @@
 			    },
 				
                 {data: 'KODES', name: 'KODES'},
-                {data: 'NAMAS', name: 'NAMAS',
-                
-                  render : function ( data, type, row, meta )
-                  {
-                    return ' <span class="badge badge-pill badge-info">' + data + '</span>';
-                  }
-
-                },
+                {data: 'NAMAS', name: 'NAMAS'},
                 {data: 'ALAMAT', name: 'ALAMAT'},				
                 {data: 'KOTA', name: 'KOTA'},
                 {data: 'HP', name: 'HP'},
                 {data: 'TELPON1', name: 'TELPON1'},
-                {data: 'KONTAK', name: 'KONTAK'}
+                {data: 'CONTACT', name: 'CONTACT'}
 
 				
             ],
@@ -119,10 +112,10 @@
                     "targets": 0
                 }
             ],
-            dom: "<'row'<'col-md-6'><'col-md-6'>>" +
+           dom: "<'row'<'col-md-6'><'col-md-6'>>" +
                 "<'row'<'col-md-2'l><'col-md-6 test_btn m-auto'><'col-md-4'f>>" +
                 "<'row'<'col-md-12't>><'row'<'col-md-12'ip>>",
-				    stateSave:false,
+				stateSave:true,
         });
         
         $("div.test_btn").html('<a class="btn btn-lg btn-md btn-success" href="{{url('sup/edit?idx=0&tipx=new')}}"> <i class="fas fa-plus fa-sm md-3" ></i></a');
