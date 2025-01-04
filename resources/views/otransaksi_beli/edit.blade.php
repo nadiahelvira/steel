@@ -1,4 +1,6 @@
-@extends('layouts.main')
+@extends('layouts.plain')
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
 <style>
     .card {
@@ -9,22 +11,57 @@
         background-color: #b5e5f9 !important;
     }
 
-	.table-scrollable {
-		margin: 0;
-		padding: 0;
+	/* query LOADX */
+
+	.loader {
+      position: fixed;
+        top: 50%;
+        left: 50%;
+      width: 100px;
+      aspect-ratio: 1;
+      background:
+        radial-gradient(farthest-side,#ffa516 90%,#0000) center/16px 16px,
+        radial-gradient(farthest-side,green   90%,#0000) bottom/12px 12px;
+      background-repeat: no-repeat;
+      animation: l17 1s infinite linear;
+      position: relative;
+    }
+    .loader::before {    
+      content:"";
+      position: absolute;
+      width: 8px;
+      aspect-ratio: 1;
+      inset: auto 0 16px;
+      margin: auto;
+      background: #ccc;
+      border-radius: 50%;
+      transform-origin: 50% calc(100% + 10px);
+      animation: inherit;
+      animation-duration: 0.5s;
+    }
+    @keyframes l17 { 
+      100%{transform: rotate(1turn)}
+    }
+
+	/* penutup LOADX */
+
+	/* menghilangkan padding */
+	.content-header {
+		padding: 0 !important;
 	}
 
-	table {
-		table-layout: fixed !important;
-	}
-
-	.uppercase {
-		text-transform: uppercase;
-	}
 
 </style>
 
 @section('content')
+<!-- 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dropdown with Select2</title>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+</head> -->
+
 
 <div class="content-wrapper">
     <div class="content-header">
@@ -40,12 +77,59 @@
             <div class="card">
                 <div class="card-body">
 
-                    <form action="{{($tipx=='new')? url('/beli/store?flagz='.$flagz.'&golz='.$golz.'') : url('/beli/update/'.$header->NO_ID.'&flagz='.$flagz.'&golz='.$golz.'' ) }}" method="POST" name ="entri" id="entri" >
+                    <form action="{{($tipx=='new')? url('/beli/store?flagz='.$flagz.'') : url('/beli/update/'.$header->NO_ID.'&flagz='.$flagz.'' ) }}" method="POST" name ="entri" id="entri" >
   
                         @csrf
                         <div class="tab-content mt-3">
+
+							<!-- style text box model baru -->
+
+							<style>
+								/* Ensure specificity with class targeting */
+								.form-group.special-input-label {
+									position: relative;
+									margin-left: 5px ;
+								}
+						
+								/* Ensure only bottom border for input */
+								.form-group.special-input-label input {
+									width: 100%;
+									padding: 10px 0;
+									border: none !important;
+									border-bottom: 2px solid #ccc !important;
+									outline: none !important;
+									font-size: 16px !important;
+									background: transparent !important; /* Remove any background color */
+								}
+						
+								/* Bottom border color change on focus */
+								.form-group.special-input-label input:focus {
+									border-bottom: 2px solid #007BFF !important; /* Change color on focus */
+								}
+						
+								/* Style the label with a higher specificity */
+								.form-group.special-input-label label {
+									position: absolute;
+									top: 12px;
+									color: #888 !important;
+									font-size: 16px !important;
+									transition: 0.3s ease all;
+									pointer-events: none;
+								}
+						
+								/* Move label above input when focused or has content */
+								.form-group.special-input-label input:focus + label,
+								.form-group.special-input-label input:not(:placeholder-shown) + label {
+									top: -10px !important;
+									font-size: 12px !important;
+									color: #007BFF !important;
+								}
+							</style>
+
+							<!-- tutupannya -->
+
                             <div class="form-group row">
-                                <div class="col-md-1" align="right">
+                                <div class="col-md-1" align="left">
                                     <label for="NO_BUKTI" class="form-label">Bukti#</label>
                                 </div>
 								
@@ -55,7 +139,6 @@
 
 									<input name="tipx" class="form-control tipx" id="tipx" value="{{$tipx}}" hidden>
 									<input name="flagz" class="form-control flagz" id="flagz" value="{{$flagz}}" hidden>
-									<input name="golz" class="form-control golz" id="golz" value="{{$golz}}" hidden>
 
 								
 								
@@ -73,243 +156,170 @@
 								
                             </div>
 
-							<div {{( $flagz =='RB') ? '' : 'hidden' }} class="form-group row">
-
-								<div class="col-md-1" align="right">
-									<label style="color:red">*</label>									
-									<label for="NO_BELI" class="form-label">No Beli</label>
-								</div>
-								<div class="col-md-2 input-group" >
-								<input type="text" class="form-control NO_BELI" id="NO_BELI" name="NO_BELI" placeholder="Pilih Beli"value="{{$header->NO_BELI}}" style="text-align: left" readonly >
-								<button type="button" class="btn btn-primary" onclick="browseBeli()"><i class="fa fa-search"></i></button>
-								</div>
-							</div>
-
-                            <div class="form-group row">
-
-								<div class="col-md-1" align="right">
-									<label style="color:red">*</label>									
-                                    <label for="NO_PO" class="form-label">PO#</label>
-                                </div>
-                               	<div class="col-md-2 input-group" >
-                                  <input type="text" class="form-control NO_PO" id="NO_PO" name="NO_PO" placeholder="Pilih PO"value="{{$header->NO_PO}}" style="text-align: left" readonly >
-        						  <button type="button" class="btn btn-primary" onclick="browsePo()"><i class="fa fa-search"></i></button>
-                                </div>
-                            </div>
-							
-                            <div class="form-group row">
-								<div class="col-md-1" align="right">
+							<div class="form-group row">
+                                <div class="col-md-1" align="left">	
                                     <label for="KODES" class="form-label">Suplier#</label>
                                 </div>
-                                <div class="col-md-2">
-                                    <input type="text" class="form-control KODES" id="KODES" name="KODES" placeholder="Masukkan Suplier#" value="{{$header->KODES}}"readonly>
+								
+                                <div class="col-md-3" >
+                                   <select id="KODES"  onchange="ambil_hari()" name="KODES" style="width: 100%" ></select>        							      
+                                    <input type="text" hidden class="form-control NAMAS" id="NAMAS" name="NAMAS" value="{{$header->NAMAS}}" placeholder="Masukkan Nama" >
+                                    <input type="text" hidden class="form-control HARI" id="HARI" name="HARI" value="{{$header->HARI}}" placeholder="Masukkan Hari" >
+
                                 </div>
-                            </div>
-							
+		
+                                <div class="col-md-3" >
+                                  	<input type="checkbox" class="form-check-input" id="PKP" name="PKP" readonly  value="{{$header->PKP}}" {{ ($header->PKP == 1) ? 'checked' : '' }}>
+                                    <label for="PKP" class="form-label">Pkp</label>
+                                </div>
+		
+							</div>
 
 							<div class="form-group row">
+                                <!-- code text box baru -->
+								<div class="col-md-5 form-group row special-input-label">
 
-								<div class="col-md-1" align="left">
-                                    <label for="NAMAS" class="form-label"></label>
-                                </div>
-								<div class="col-md-4">
-                                    <input type="text" class="form-control NAMAS" id="NAMAS" name="NAMAS" placeholder="-" value="{{$header->NAMAS}}" readonly>
-                                </div>
-
-                            </div>
-
-							
-                            <div class="form-group row">
-
-								<div class="col-md-1" align="right">
-                                    <label for="ALAMAT" class="form-label"></label>
-                                </div>
-								<div class="col-md-4">
-                                    <input type="text" class="form-control ALAMAT" id="ALAMAT" name="ALAMAT" value="{{$header->ALAMAT}}"placeholder="Alamat" readonly >
-                                </div>
-                            </div>
-   
-							<div class="form-group row">
-
-								<div class="col-md-1" align="right">
-                                    <label for="KOTA" class="form-label"></label>
-                                </div>
-								<div class="col-md-2">
-                                    <input type="text" class="form-control KOTA" id="KOTA" name="KOTA" value="{{$header->KOTA}}"placeholder="Kota" readonly>
-                                </div>
-                            </div>
-
-							<div class="form-group row">
-                                <div class="col-md-1" align="right">
-									<label style="color:red">*</label>									
-                                    <label for="NOTES" class="form-label">Notes</label>
-                                </div>
-                                <div class="col-md-4">
-                                    <input type="text" class="form-control NOTES" id="NOTES" name="NOTES" value="{{$header->NOTES}}" placeholder="Masukkan Notes" >
-                                </div>
+									<input type="text" class="NOTES" id="NOTES" name="NOTES" 
+										value="{{$header->NOTES}}" placeholder=" " >
+									<label for="NOTES">Notes</label>
+								</div>
+								<!-- tutupannya -->
         
                             </div>
 							
+							<!-- loader tampil di modal  -->
+							<div class="loader" style="z-index: 1055;" id='LOADX' ></div>
+
+
+                        <div class="tab-content mt-3">
 							
-                            <hr style="margin-top: 30px; margin-buttom: 30px">
-							
-							<div style="overflow-y:scroll;" class="col-md-12 scrollable" align="right">
+                            <table id="datatable" class="table table-striped table-border">
+                                <thead>
+                                    <tr>
+										<th style="text-align: center;">No.</th>
+                                        <th style="text-align: center;">
+									       <label style="color:red;font-size:20px">* </label>									
+                                           <label for="KD_BRG" class="form-label">Kode Barang</label></th>
+                                        <th style="text-align: center;">Nama Barang</th>
+                                        <th style="text-align: center;">Stn</th>
+                                        <th style="text-align: center;">Qty</th>
 
-								<table id="datatable" class="table table-striped table-border">
+										<th width="150px" style="text-align:center">Harga</th>
+										<th width="150px" style="text-align:center">Total</th>
+										<th width="150px" style="text-align:center">PPN</th>
+										<th width="150px" style="text-align:center">DPP</th>
+										<th style="text-align: center;">Ket</th>
 
-									<thead>
-										<tr>
-										<th width="50px" style="text-align:center">No.</th>
-
-											<th {{( $golz =='B') ? '' : 'hidden' }} width="100px">
-												<label style="color:red;font-size:20px">*</label>
-												<label for="KD_BHN" class="form-label">Bahan</label>
-											</th>
-											<th {{( $golz =='B') ? '' : 'hidden' }} width="200px" style="text-align:center">Nama</th>
-
-											<th {{( $golz =='J' || $golz =='N') ? '' : 'hidden' }} width="100px">
-												<label style="color:red;font-size:20px">*</label>
-												<label for="KD_BRG" class="form-label">Barang</label>
-											</th>
-											<th {{( $golz =='J' || $golz =='N') ? '' : 'hidden' }} width="250px" style="text-align:center">Nama</th>
-
-											<th width="75px" style="text-align:center">Satuan</th>
-											<th width="150px" style="text-align:center">Qty</th>  
-
-											<th width="150px" style="text-align:center">Harga</th>
-											<th width="150px" style="text-align:center">Total</th>
-											<!-- <th width="200px" style="text-align:center">PPN</th>
-											<th width="200px" style="text-align:center">DPP</th> -->
-											<th width="200px" style="text-align:center">Ket</th>
-
-											<th></th>
-																
-										</tr>
-									<tbody id="detailPod">
-			
-									<tbody>
-									<?php $no=0 ?>
-									@foreach ($detail as $detail)		
-										<tr>
-											<td>
-												<input type="hidden" name="NO_ID[]{{$no}}" id="NO_ID" type="text" value="{{$detail->NO_ID}}" 
-												class="form-control NO_ID" onkeypress="return tabE(this,event)" readonly>
-												
-												<input name="REC[]" id="REC{{$no}}" type="text" value="{{$detail->REC}}" class="form-control REC" onkeypress="return tabE(this,event)" readonly style="text-align:center">
-											</td>
-											<!-- <td>
-												<input name="NO_PO[]" id="NO_PO0" type="text" value="{{$detail->NO_PO}}" class="form-control NO_PO" readonly >
-											</td>										 -->
-
-											<td {{( $golz =='B') ? '' : 'hidden' }}>
-												<input name="KD_BHN[]" id="KD_BHN{{$no}}" type="text" value="{{$detail->KD_BHN}}"
-												class="form-control KD_BHN "  onblur="browseBahan({{$no}})" >
-											</td>
-											<td {{( $golz =='B') ? '' : 'hidden' }}>
-												<input name="NA_BHN[]" id="NA_BHN{{$no}}" type="text" class="form-control KD_BHN" value="{{$detail->NA_BHN}}" readonly required>
-											</td>
-
-											<td {{( $golz =='J' || $golz =='N') ? '' : 'hidden' }}>
-												<input name="KD_BRG[]" id="KD_BRG{{$no}}" type="text" class="form-control KD_BRG " 
-												value="{{$detail->KD_BRG}}" onblur="browseBarang({{$no}})">
-											</td>
-
-											<td {{( $golz =='J' || $golz =='N') ? '' : 'hidden' }}>
-												<input name="NA_BRG[]" id="NA_BRG{{$no}}" type="text" class="form-control NA_BRG " value="{{$detail->NA_BRG}}">
-											</td>
-
+                                        <th></th>
+                                       						
+                                    </tr>
+                                </thead>
+        
+								<tbody>
+								<?php $no=0 ?>
+								@foreach ($detail as $detail)		
+                                    <tr>
+                                        <td>
+                                            <input type="hidden" name="NO_ID[]{{$no}}" id="NO_ID" type="text" value="{{$detail->NO_ID}}" 
+                                            class="form-control NO_ID" onkeypress="return tabE(this,event)" readonly>
 											
-											<td>
-												<input name="SATUAN[]" id="SATUAN{{$no}}" type="text" class="form-control SATUAN" value="{{$detail->SATUAN}}">
-											</td>										
-											<td>
-												<input name="QTY[]" onclick="select()" onblur="hitung()" value="{{$detail->QTY}}" id="QTY{{$no}}" type="text" style="text-align: right"  class="form-control QTY" >
-											</td>
-																																	
-											<td>
-												<input name="HARGA[]" onclick="select()" onblur="hitung()" value="{{$detail->HARGA}}" id="HARGA{{$no}}" type="text" style="text-align: right"  class="form-control HARGA">
-											</td>
-		
-											<td>
-												<input name="TOTAL[]" onblur="hitung()"  value="{{$detail->TOTAL}}" id="TOTAL{{$no}}" type="text" style="text-align: right"  class="form-control TOTAL" readonly>
-											</td>
-											<!-- <td>
-												<input name="PPNX[]" onblur="hitung()"  value="{{$detail->PPN}}" id="PPNX{{$no}}" type="text" style="text-align: right"  class="form-control PPNX" readonly>
-											</td>
-											<td>
-												<input name="DPP[]" onblur="hitung()"  value="{{$detail->DPP}}" id="DPP{{$no}}" type="text" style="text-align: right"  class="form-control DPP" readonly>
-											</td> -->
-											<td>
-												<input name="KET[]" id="KET{{$no}}" type="text" class="form-control KET" value="{{$detail->KET}}"  >
-											</td> 
-											
-											<td>
-												<button type='button' id='DELETEX{{$no}}'  class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>
-											</td> 
-
-										</tr>
+                                            <input name="REC[]" id="REC{{$no}}" type="text" value="{{$detail->REC}}" class="form-control REC" onkeypress="return tabE(this,event)" readonly style="text-align:center">
+                                        </td>
 									
-									<?php $no++; ?>
-									@endforeach
-									</tbody>
 
-									<tfoot>
-										<td></td>
-										<td {{( $golz =='B') ? '' : 'hidden' }}></td>
-										<td {{( $golz =='B') ? '' : 'hidden' }}></td>
-										<td {{( $golz =='J' || $golz =='N') ? '' : 'hidden' }}></td>
-										<td {{( $golz =='J' || $golz =='N') ? '' : 'hidden' }}></td>
-										<td></td>									
-										<td><input class="form-control TTOTAL_QTY  text-primary" style="text-align: right"  id="TTOTAL_QTY" name="TTOTAL_QTY" value="{{$header->TOTAL_QTY}}" readonly></td>
-										<td></td>
+										<td>
+                                            <input name="KD_BRG[]" id="KD_BRG{{$no}}" type="text" class="form-control KD_BRG " 
+											value="{{$detail->KD_BRG}}" onblur="browseBarang({{$no}})">
+                                        </td>
+
+										<td>
+                                            <input name="NA_BRG[]" id="NA_BRG{{$no}}" type="text" class="form-control NA_BRG " value="{{$detail->NA_BRG}}">
+                                        </td>
+                                        <td>
+                                            <input name="SATUAN[]" id="SATUAN{{$no}}" type="text" value="{{$detail->SATUAN}}" class="form-control SATUAN" readonly required>
+                                        </td>
 										
-									    <td><input class="form-control TTOTAL text-primary" style="text-align: right"  id="TTOTAL" name="TTOTAL" value="{{$header->TOTAL}}" readonly></td> -->
-										<td></td>
-									</tfoot>
-								</table>
-							</div>
+										<td>
+											<input name="QTY[]" onclick="select()" onblur="hitung()" value="{{$detail->QTY}}" id="QTY{{$no}}" type="text" style="text-align: right"  class="form-control QTY text-primary">
+										</td>
+																																	
+										<td>
+											<input name="HARGA[]" onclick="select()" onblur="hitung()" value="{{$detail->HARGA}}" id="HARGA{{$no}}" type="text" style="text-align: right"  class="form-control HARGA">
+										</td>
+	
+										<td>
+											<input name="TOTAL[]" onblur="hitung()"  value="{{$detail->TOTAL}}" id="TOTAL{{$no}}" type="text" style="text-align: right"  class="form-control TOTAL" readonly>
+										</td>
+										<td>
+											<input name="PPNX[]" onblur="hitung()"  value="{{$detail->PPN}}" id="PPNX{{$no}}" type="text" style="text-align: right"  class="form-control PPNX" readonly>
+										</td>
+										<td>
+											<input name="DPP[]" onblur="hitung()"  value="{{$detail->DPP}}" id="DPP{{$no}}" type="text" style="text-align: right"  class="form-control DPP" readonly>
+										</td>
+                                        
+										<td>
+                                            <input name="KET[]" id="KET{{$no}}" type="text" class="form-control KET" value="{{$detail->KET}}" required>
+                                        </td>
+				
+										<td>
+											<button type='button' id='DELETEX{{$no}}'  class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>
+										</td> 
 
-                            <!-- <div class="col-md-2 row">
+                                    </tr>
+								
+								<?php $no++; ?>
+								@endforeach
+                                </tbody>
+
+								<tfoot>
+								<td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><input class="form-control TTOTAL_QTY  text-primary font-weight-bold" style="text-align: right"  id="TTOTAL_QTY" name="TTOTAL_QTY" value="{{$header->TOTAL_QTY}}" readonly></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tfoot>
+                            </table>
+							
+                            <div class="col-md-2 row">
                                <a type="button" id='PLUSX' onclick="tambah()" class="fas fa-plus fa-sm md-3" style="font-size: 20px" ></a>
 					
-							</div>	 -->
-							
+							</div>		
+						
+					</div>
                         </div> 
 
                         <hr style="margin-top: 30px; margin-buttom: 30px">
+						<!-- dari sini shelvi-->
 						
-						<div class="tab-content mt-6">
-						
-
-							
-                            <div class="form-group row">
-                                <div class="col-md-8" align="right">
-                                    <label hidden for="NETT" class="form-label">Nett</label>
-                                </div>
-                                <div class="col-md-2">
-                                    <input type="text"   class="form-control NETT" id="NETT" name="NETT" placeholder="" value="{{$header->NETT}}" style="text-align: right" hidden readonly>
-                                </div>
-							</div>
-							
-						</div>
+						<!-- sampai sini shelvi-->
 						   
 						<div class="mt-3 col-md-12 form-group row">
 							<div class="col-md-4">
-								<button type="button" id='TOPX'  onclick="location.href='{{url('/beli/edit/?idx=' .$idx. '&tipx=top&flagz='.$flagz.'&golz='.$golz.'' )}}'" class="btn btn-outline-primary">Top</button>
-								<button type="button" id='PREVX' onclick="location.href='{{url('/beli/edit/?idx='.$header->NO_ID.'&tipx=prev&flagz='.$flagz.'&golz='.$golz.'&buktix='.$header->NO_BUKTI )}}'" class="btn btn-outline-primary">Prev</button>
-								<button type="button" id='NEXTX' onclick="location.href='{{url('/beli/edit/?idx='.$header->NO_ID.'&tipx=next&flagz='.$flagz.'&golz='.$golz.'&buktix='.$header->NO_BUKTI )}}'" class="btn btn-outline-primary">Next</button>
-								<button type="button" id='BOTTOMX' onclick="location.href='{{url('/beli/edit/?idx=' .$idx. '&tipx=bottom&flagz='.$flagz.'&golz='.$golz.'' )}}'" class="btn btn-outline-primary">Bottom</button>
+								<button type="button" id='TOPX'  onclick="location.href='{{url('/beli/edit/?idx=' .$idx. '&tipx=top&flagz='.$flagz.'' )}}'" class="btn btn-outline-primary">Top</button>
+								<button type="button" id='PREVX' onclick="location.href='{{url('/beli/edit/?idx='.$header->NO_ID.'&tipx=prev&flagz='.$flagz.'&buktix='.$header->NO_BUKTI )}}'" class="btn btn-outline-primary">Prev</button>
+								<button type="button" id='NEXTX' onclick="location.href='{{url('/beli/edit/?idx='.$header->NO_ID.'&tipx=next&flagz='.$flagz.'&buktix='.$header->NO_BUKTI )}}'" class="btn btn-outline-primary">Next</button>
+								<button type="button" id='BOTTOMX' onclick="location.href='{{url('/beli/edit/?idx=' .$idx. '&tipx=bottom&flagz='.$flagz.'' )}}'" class="btn btn-outline-primary">Bottom</button>
 							</div>
 							<div class="col-md-5">
-								<button type="button" id='NEWX' onclick="location.href='{{url('/beli/edit/?idx=0&tipx=new&flagz='.$flagz.'&golz='.$golz.'' )}}'" class="btn btn-warning">New</button>
+								<button type="button" id='NEWX' onclick="location.href='{{url('/beli/edit/?idx=0&tipx=new&flagz='.$flagz.'' )}}'" class="btn btn-warning">New</button>
 								<button type="button" id='EDITX' onclick='hidup()' class="btn btn-secondary">Edit</button>                    
-								<button type="button" id='UNDOX' onclick="location.href='{{url('/beli/edit/?idx=' .$idx. '&tipx=undo&flagz='.$flagz.'&golz='.$golz.'' )}}'" class="btn btn-info">Undo</button>  
+								<button type="button" id='UNDOX' onclick="location.href='{{url('/beli/edit/?idx=' .$idx. '&tipx=undo&flagz='.$flagz.'' )}}'" class="btn btn-info">Undo</button>  
 								<button type="button" id='SAVEX' onclick='simpan()'   class="btn btn-success" class="fa fa-save"></i>Save</button>
 
 							</div>
 							<div class="col-md-3">
 								<button type="button" id='HAPUSX'  onclick="hapusTrans()" class="btn btn-outline-danger">Hapus</button>
-								<button type="button" id='CLOSEX'  onclick="location.href='{{url('/beli?flagz='.$flagz.'&golz='.$golz.'' )}}'" class="btn btn-outline-secondary">Close</button>
+								
+								<!-- <button type="button" id='CLOSEX'  onclick="location.href='{{url('/beli?flagz='.$flagz.'' )}}'" class="btn btn-outline-secondary">Close</button> -->
+							
+								<!-- tombol close sweet alert -->
+								<button type="button" id='CLOSEX' onclick="closeTrans()" class="btn btn-outline-secondary">Close</button></div>
 							</div>
 						</div>
 						
@@ -323,71 +333,8 @@
     </div>
 
 
- 	<div class="modal fade" id="browsePoModal" tabindex="-1" role="dialog" aria-labelledby="browsePoModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-xl" role="document">
-		<div class="modal-content">
-		  <div class="modal-header">
-			<h5 class="modal-title" id="browsePoModalLabel">Cari Po</h5>
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			  <span aria-hidden="true">&times;</span>
-			</button>
-		  </div>
-		  <div class="modal-body">
-			<table class="table table-stripped table-bordered" id="table-bpo">
-				<thead>
-					<tr>
-						<th>PO#</th>
-						<th>Suplier</th>
-						<th>Nama</th>
-						<th>Alamat</th>
-						<th>Kota</th>
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
-		  </div>
-		  <div class="modal-footer">
-			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		  </div>
-		</div>
-	  </div>
-	</div>
-
-	<div class="modal fade" id="browseBeliModal" tabindex="-1" role="dialog" aria-labelledby="browseBeliModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-xl" role="document">
-		<div class="modal-content">
-		  <div class="modal-header">
-			<h5 class="modal-title" id="browseBeliModalLabel">Cari Pembelian</h5>
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			  <span aria-hidden="true">&times;</span>
-			</button>
-		  </div>
-		  <div class="modal-body">
-			<table class="table table-stripped table-bordered" id="table-bbeli">
-				<thead>
-					<tr>
-						<th>No Beli</th>
-						<th>Suplier</th>
-						<th>Nama</th>
-						<th>Alamat</th>
-						<th>Kota</th>
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
-		  </div>
-		  <div class="modal-footer">
-			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		  </div>
-		</div>
-	  </div>
-	</div>
-
-
 	<div class="modal fade" id="browseBarangModal" tabindex="-1" role="dialog" aria-labelledby="browseBarangModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-xl" role="document">
+	  <div class="modal-dialog" role="document">
 		<div class="modal-content">
 		  <div class="modal-header">
 			<h5 class="modal-title" id="browseBarangModalLabel">Cari Item</h5>
@@ -402,45 +349,6 @@
 						<th>Item#</th>
 						<th>Nama</th>
 						<th>Satuan</th>
-						<th>Qty</th>
-						<th>Kirim</th>
-						<th>Sisa</th>
-						<th>Harga</th>	
-							
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
-		  </div>
-		  <div class="modal-footer">
-			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		  </div>
-		</div>
-	  </div>
-	</div>
-
-
-	<div class="modal fade" id="browseBahanModal" tabindex="-1" role="dialog" aria-labelledby="browseBahanModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-xl" role="document">
-		<div class="modal-content">
-		  <div class="modal-header">
-			<h5 class="modal-title" id="browseBahanModalLabel">Cari Item</h5>
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			  <span aria-hidden="true">&times;</span>
-			</button>
-		  </div>
-		  <div class="modal-body">
-			<table class="table table-stripped table-bordered" id="table-bbahan">
-				<thead>
-					<tr>
-						<th>Item#</th>
-						<th>Nama</th>
-						<th>Satuan</th>
-						<th>Qty</th>
-						<th>Kirim</th>
-						<th>Sisa</th>
-						<th>Harga</th>	
 						
 					</tr>
 				</thead>
@@ -465,6 +373,13 @@
 <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script> -->
 <script src="{{asset('foxie_js_css/bootstrap.bundle.min.js')}}"></script>
 
+<!-- tambahan untuk sweetalert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- tutupannya -->
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
 <script>
 	var idrow = 1;
 	var baris = 1;
@@ -474,8 +389,43 @@
 	}
 	
     $(document).ready(function () {
+
+		setTimeout(function(){
+
+		$("#LOADX").hide();
+
+		},500);
+
     idrow=<?=$no?>;
     baris=<?=$no?>;
+
+		$('#KODES').select2({
+			
+			placeholder:'Pilih Suplier',
+			allowClear: true,
+			ajax: {
+				url: '{{url('zsup/browse')}}',
+				dataType: 'json',
+				delay: 250,
+				data: function(params) {
+					return {
+						q: params.term // Search term
+					};
+				},
+				processResults: function(data) {
+					return {
+						results: data.map(item => ({
+							id: item.KODES, // The ID of the user
+							text: item.NAMAS // The text to display
+						}))
+					};
+				},
+				cache: true
+			},
+			
+			
+			
+		});
 
 		$('body').on('keydown', 'input, select', function(e) {
 			if (e.key === "Enter") {
@@ -488,8 +438,8 @@
 				} else {
 					tambah();
 					var nomer = idrow-1;
-					console.log("REC"+nomor);
-					document.getElementById("REC"+nomor).focus();
+					console.log("KD_BRG"+nomor);
+					document.getElementById("KD_BRG"+nomor).focus();
 					// form.submit();
 				}
 				return false;
@@ -503,30 +453,35 @@
 		
         if ( $tipx == 'new' )
 		{
-			 baru();
-            //  tambah();				 
+			baru();
+			tambah();				 
 		}
 
         if ( $tipx != 'new' )
 		{
-			 ganti();			
+			 ganti();					
+
+				var initkode1 ="{{ $header->KODES }}";			 
+				var initcombo1 ="{{ $header->NAMAS }}";
+				var defaultOption1 = { id: initkode1, text: initcombo1 }; // Set your default option ID and text
+				var newOption1 = new Option(defaultOption1.text, defaultOption1.id, true, true);
+				$('#KODES').append(newOption1).trigger('change');
 		}    
 		
 		$("#TTOTAL_QTY").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
-		$("#TTOTAL").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
-		// $("#PPN").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
-		$("#NETT").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
-
 
 
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
-			$("#HARGA" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-			$("#TOTAL" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+
 			$("#QTY" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+			$("#TOTAL" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+			$("#HARGA" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+			$("#PPNX" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+			$("#DPP" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+		
 		}	
-
-
+				
 		
         $('body').on('click', '.btn-delete', function() {
 			var val = $(this).parents("tr").remove();
@@ -540,330 +495,138 @@
             dateFormat: 'dd-mm-yy'
 		});
 		
-		
  	
 		
-//		CHOOSE Po
- 		var dTableBPo;
-		loadDataBPo = function(){
+		//		CHOOSE Supplier
+		var dTableBSuplier;
+		loadDataBSuplier = function(){
 		
 			$.ajax(
 			{
 				type: 'GET', 		
-				url: '{{url('po/browse')}}',
-				data: {
-					'GOL': "{{$golz}}",
+				url: '{{url('sup/browse')}}',
+				// data: {
+				// 	'GOL': 'Y',
+				// },
+
+				
+			    beforeSend: function(){
+					$("#LOADX").show();
 				},
+
 
 				success: function( response )
 				{
+					$("#LOADX").hide(); 
+
 					resp = response;
-					if(dTableBPo){
-						dTableBPo.clear();
+					if(dTableBSuplier){
+						dTableBSuplier.clear();
 					}
 					for(i=0; i<resp.length; i++){
 						
-						dTableBPo.row.add([
-							'<a href="javascript:void(0);" onclick="choosePo(\''+resp[i].NO_BUKTI+'\' ,\''+resp[i].KODES+'\',  \''+resp[i].NAMAS+'\', \''+resp[i].ALAMAT+'\',  \''+resp[i].KOTA+'\',  \''+resp[i].PKP+'\')">'+resp[i].NO_BUKTI+'</a>',
-							resp[i].KODES,
+						dTableBSuplier.row.add([
+							'<a href="javascript:void(0);" onclick="chooseSuplier(\''+resp[i].KODES+'\',  \''+resp[i].NAMAS+'\', \''+resp[i].HARI+'\',  \''+resp[i].ALAMAT+'\', \''+resp[i].KOTA+'\', \''+resp[i].PKP+'\')">'+resp[i].KODES+'</a>',
 							resp[i].NAMAS,
 							resp[i].ALAMAT,
 							resp[i].KOTA,
+							resp[i].PKP2,
 						]);
 					}
-					dTableBPo.draw();
+					dTableBSuplier.draw();
 				}
 			});
 		}
 		
-		dTableBPo = $("#table-bpo").DataTable({
+		dTableBSuplier = $("#table-bsuplier").DataTable({
 			
 		});
 		
-		browsePo = function(){
-			loadDataBPo();
-			$("#browsePoModal").modal("show");
-
+		browseSuplier = function(){
+			loadDataBSuplier();
+			$("#browseSuplierModal").modal("show");
 		}
 		
-		choosePo = function( NO_BUKTI,KODES,NAMAS, ALAMAT, KOTA, PKP){
-
-			$("#NO_PO").val(NO_BUKTI);
+		chooseSuplier = function(KODES,NAMAS, HARI, ALAMAT, KOTA, PKP){
 			$("#KODES").val(KODES);
 			$("#NAMAS").val(NAMAS);
+			$("#HARI").val(HARI);
 			$("#ALAMAT").val(ALAMAT);
 			$("#KOTA").val(KOTA);			
 			$("#PKP").val(PKP);			
-			$("#browsePoModal").modal("hide");
-			
-			getPod(NO_BUKTI);
-		}
+			$("#browseSuplierModal").modal("hide");
+	
+            	
+
+                         
 		
-		$("#NO_PO").keypress(function(e){
+		}
+
+	
+		
+		$("#KODES").keypress(function(e){
 
 			if(e.keyCode == 46){
 				 e.preventDefault();
-				 browsePo();
+				 browseSuplier();
 			}
 		}); 
 
-////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////
-
-//		CHOOSE Beli
-var dTableBBeli;
-		loadDataBBeli = function(){
-		
-			$.ajax(
-			{
-				type: 'GET', 		
-				url: '{{url('beli/browse')}}',
-				data: {
-					'GOL': "{{$golz}}",
-				},
-
-				success: function( response )
-				{
-					resp = response;
-					if(dTableBBeli){
-						dTableBBeli.clear();
-					}
-					for(i=0; i<resp.length; i++){
-						
-						dTableBBeli.row.add([
-							'<a href="javascript:void(0);" onclick="chooseBeli(\''+resp[i].NO_BUKTI+'\', \''+resp[i].NO_PO+'\' ,\''+resp[i].KODES+'\',  \''+resp[i].NAMAS+'\', \''+resp[i].ALAMAT+'\',  \''+resp[i].KOTA+'\',  \''+resp[i].PKP+'\')">'+resp[i].NO_BUKTI+'</a>',
-							resp[i].KODES,
-							resp[i].NAMAS,
-							resp[i].ALAMAT,
-							resp[i].KOTA,
-						]);
-					}
-					dTableBBeli.draw();
-				}
-			});
-		}
-		
-		dTableBBeli = $("#table-bbeli").DataTable({
-			
-		});
-		
-		browseBeli = function(){
-			loadDataBBeli();
-			$("#browseBeliModal").modal("show");
-		}
-		
-		chooseBeli = function( NO_BUKTI, NO_PO , KODES,NAMAS, ALAMAT, KOTA, PKP){
-
-			$("#NO_BELI").val(NO_BUKTI);
-			$("#NO_PO").val(NO_PO);
-			$("#KODES").val(KODES);
-			$("#NAMAS").val(NAMAS);
-			$("#ALAMAT").val(ALAMAT);
-			$("#KOTA").val(KOTA);			
-			$("#PKP").val(PKP);			
-			$("#browseBeliModal").modal("hide");
-			
-			getPod(NO_PO);
-		}
-		
-		$("#NO_BELI").keypress(function(e){
-
-			if(e.keyCode == 46){
-				 e.preventDefault();
-				 browseBeli();
-			}
-		}); 
-
-////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////
-
-	function getPod(bukti)
-	{
-		
-		var mulai = (idrow==baris) ? idrow-1 : idrow;
-
-		$.ajax(
-			{
-				type: 'GET',    
-				url: "{{url('po/browse_pod')}}",
-				data: {
-					nobukti: bukti,
-					'GOL': "{{$golz}}",
-					'FLAG': "{{$flagz}}",
-				},
-				success: function( resp )
-				{
-					var html = '';
-					for(i=0; i<resp.length; i++){
-						html+=`<tr>
-                                    <td><input name='REC[]' id='REC${i}' value=${resp[i].REC+1} type='text' class='REC form-control' onkeypress='return tabE(this,event)' readonly></td>
-                                    
-									<td {{( $golz =='B') ? '' : 'hidden' }} >
-					 			    	<input name='KD_BHN[]' id='KD_BHN${i}' value="${resp[i].KD_BHN}" type='text' class='form-control KD_BHN' readonly>
-						            </td>
-						            <td {{( $golz =='B') ? '' : 'hidden' }} >
-						 				<input name='NA_BHN[]' id='NA_BHN${i}' value="${resp[i].NA_BHN}" type='text' class='form-control  NA_BHN' readonly>
-						            </td>
-
-									<td {{( $golz =='J' || $golz =='N') ? '' : 'hidden' }} >
-										<input name='KD_BRG[]' id='KD_BRG${i}' value="${resp[i].KD_BRG}" type='text' class='form-control KD_BRG' readonly>
-						            </td>
-						            <td {{( $golz =='J' || $golz =='N') ? '' : 'hidden' }} >
-						 			    <input name='NA_BRG[]' id='NA_BRG${i}' value="${resp[i].NA_BRG}" type='text' class='form-control  NA_BRG' readonly>
-						            </td>
-									
-
-									<td><input name='SATUAN[]' id='SATUAN${i}' value="${resp[i].SATUAN}" type='text' class='form-control  SATUAN' readonly></td>
-                                    <td>
-										<input name='QTY[]'  onblur='hitung()' id='QTY${i}' value="${resp[i].QTY}" type='text' style='text-align: right' class='form-control QTY text-primary' readonly >
-									</td>
-									<td>
-										<input name='HARGA[]'  onblur='hitung()' id='HARGA${i}' value="${resp[i].HARGA}" type='text' style='text-align: right' class='form-control HARGA text-primary' readonly >
-									</td>
-									<td>
-										<input name='TOTAL[]'  onblur='hitung()' id='TOTAL${i}' value="${resp[i].TOTAL}" type='text' style='text-align: right' class='form-control TOTAL text-primary' readonly >
-									</td>
-									<td><input name='KET[]' id='KET${i}' value="" type='text' class='form-control  KET'></td>
-                                    
-
-									<td><button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button></td>
-                                </tr>`;
-					}
-					$('#detailPod').html(html);
+		//////////////////////////////////////////////////////		
 
 
-					$(".QTY").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".QTY").autoNumeric('update');
-					
-					$(".HARGA").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					$(".HARGA").autoNumeric('update');
-					
+		//////////////////////////////////////////////////////
 
-					$(".TOTAL").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-9999999999.99'});
-					$(".TOTAL").autoNumeric('update');
-					
-					// $(".PPNX").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					// $(".PPNX").autoNumeric('update');
-					
-					// $(".DPP").autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-					// $(".DPP").autoNumeric('update');
-
-
-					idrow=resp.length;
-					baris=resp.length;
-
-					nomor();
-					hitung();
-				}
-			});
-	}
-
-//////////////////////////////////////////////////////////////////
-
-
-////////////////////////////////////////////////////////////////////
-
-		//CHOOSE Bahan
-		var dTableBBahan;
-		var rowidBahan;
-		loadDataBBahan = function(){
-			$.ajax(
-			{
-				type: 'GET',    
-				url: "{{url('po/browse_detail')}}",
-				data: 
-				{
-                    KD_BHN : $("#KD_BHN"+rowidBahan).val(),
-                    NO_PO : $("#NO_PO").val(), 					
-				},
-				success: function( response )
-				{
-					resp = response;
-					if(dTableBBahan){
-						dTableBBahan.clear();
-					}
-					for(i=0; i<resp.length; i++){
-						
-						dTableBBahan.row.add([
-							'<a href="javascript:void(0);" onclick="chooseBahan(\''+resp[i].KD_BHN+'\',\''+resp[i].NA_BHN+'\', \''+resp[i].SATUAN_PO+'\' , \''+resp[i].QTY_PO+'\', \''+resp[i].KIRIM+'\' , \''+resp[i].SISA+'\' , \''+resp[i].HARGA+'\' , \''+resp[i].SATUAN+'\', \''+resp[i].QTY+'\', \''+resp[i].KALI+'\' )">'+resp[i].KD_BHN+'</a>',
-							resp[i].NA_BHN,
-							resp[i].SATUAN_PO,
-							resp[i].QTY_PO,
-							resp[i].KIRIM,
-							resp[i].SISA,
-							resp[i].HARGA,
-							
-						]);
-					}
-					dTableBBahan.draw();
-				}
-			});
-		}
-		
-		dTableBBahan = $("#table-bbahan").DataTable({
-			
-		});
-		
-		browseBahan = function(rid){
-			rowidBahan = rid;
-			loadDataBBahan();
-			$("#browseBahanModal").modal("show");
-		}
-		
-		chooseBahan = function(KD_BHN, NA_BHN, SATUAN_PO, QTY_PO, KIRIM, SISA, HARGA, SATUAN, QTY, KALI ){
-			$("#KD_BHN"+rowidBahan).val(KD_BHN);
-			$("#NA_BHN"+rowidBahan).val(NA_BHN);
-			$("#HARGA"+rowidBahan).val(HARGA);
-			$("#SATUAN"+rowidBahan).val(SATUAN);
-			$("#QTY"+rowidBahan).val(QTY);
-			hitung();
-			
-			
-			$("#browseBahanModal").modal("hide");
-		}
-		
-		
-		$("#KD_BHN0").keypress(function(e){
-			if(e.keyCode == 46){
-				e.preventDefault();
-				browseBahan(0);
-			}
-		}); 
-
-//////////////////////////////////////////////////////////////////////
-		
 		var dTableBBarang;
 		var rowidBarang;
 		loadDataBBarang = function(){
+		
 			$.ajax(
 			{
 				type: 'GET',    
-				url: "{{url('po/browse_detail2')}}",
-				data: 
-				{
-                    KD_BRG : $("#KD_BRG"+rowidBarang).val(),
-                    NO_PO : $("#NO_PO").val(), 					
-				},				
-				
+				url: "{{url('brg/browse_beli')}}",
+
+				beforeSend: function(){
+					$("#LOADX").show();
+				},
+
+				async : false,
+				data: {
+						'KD_BRG': $("#KD_BRG"+rowidBarang).val(),
+					
+				},
+
 				success: function( response )
+
 				{
+
+					$("#LOADX").hide();
+
 					resp = response;
-					if(dTableBBarang){
-						dTableBBarang.clear();
+					
+					
+					if ( resp.length > 1 )
+					{	
+							if(dTableBBarang){
+								dTableBBarang.clear();
+							}
+							for(i=0; i<resp.length; i++){
+								
+								dTableBBarang.row.add([
+									'<a href="javascript:void(0);" onclick="chooseBarang(\''+resp[i].KD_BRG+'\', \''+resp[i].NA_BRG+'\' , \''+resp[i].SATUAN+'\' )">'+resp[i].KD_BRG+'</a>',
+									resp[i].NA_BRG,
+									resp[i].SATUAN,
+								]);
+							}
+							dTableBBarang.draw();
+					
 					}
-					for(i=0; i<resp.length; i++){
-						
-						dTableBBarang.row.add([
-							'<a href="javascript:void(0);" onclick="chooseBarang(\''+resp[i].KD_BRG+'\',\''+resp[i].NA_BRG+'\', \''+resp[i].SATUAN_PO+'\' , \''+resp[i].QTY_PO+'\' , \''+resp[i].KIRIM+'\' , \''+resp[i].SISA+'\' , \''+resp[i].HARGA+'\', \''+resp[i].SATUAN+'\', \''+resp[i].QTY+'\', \''+resp[i].KALI+'\'  )">'+resp[i].KD_BRG+'</a>',
-							resp[i].NA_BRG,
-							resp[i].SATUAN_PO,
-							resp[i].QTY_PO,
-							resp[i].KIRIM,
-							resp[i].SISA,
-							resp[i].HARGA,							
-						]);
+					else
+					{
+						$("#KD_BRG"+rowidBarang).val(resp[0].KD_BRG);
+						$("#NA_BRG"+rowidBarang).val(resp[0].NA_BRG);
+						$("#SATUAN"+rowidBarang).val(resp[0].SATUAN);
 					}
-					dTableBBarang.draw();
 				}
 			});
 		}
@@ -871,32 +634,36 @@ var dTableBBeli;
 		dTableBBarang = $("#table-bbarang").DataTable({
 			
 		});
-		
+
 		browseBarang = function(rid){
 			rowidBarang = rid;
+			$("#NA_BRG"+rowidBarang).val("");			
 			loadDataBBarang();
-			$("#browseBarangModal").modal("show");
+	
+			
+			if ( $("#NA_BRG"+rowidBarang).val() == '' ) {				
+					$("#browseBarangModal").modal("show");
+			}	
 		}
 		
-		chooseBarang = function(KD_BRG, NA_BRG, SATUAN_PO, QTY_PO, KIRIM, SISA, HARGA, SATUAN, QTY, KALI ){
+		chooseBarang = function(KD_BRG,NA_BRG,SATUAN){
 			$("#KD_BRG"+rowidBarang).val(KD_BRG);
-			$("#NA_BRG"+rowidBarang).val(NA_BRG);
-			$("#HARGA"+rowidBarang).val(HARGA);
-			$("#SATUAN"+rowidBarang).val(SATUAN);			
-			$("#QTY"+rowidBarang).val(QTY);					
+			$("#NA_BRG"+rowidBarang).val(NA_BRG);	
+			$("#SATUAN"+rowidBarang).val(SATUAN);
 			$("#browseBarangModal").modal("hide");
-			hitung();
 		}
 		
 		
-		$("#KD_BRG0").keypress(function(e){
+		/* $("#RAK0").onblur(function(e){
 			if(e.keyCode == 46){
 				e.preventDefault();
-				browseBarang(0);
+				browseRak(0);
 			}
-		}); 
+		});  */
 
+		////////////////////////////////////////////////////
 	});
+
 
 
 ///////////////////////////////////////		
@@ -905,20 +672,20 @@ var dTableBBeli;
 
 
 	function cekDetail(){
-		var cekBahan = '';
-		$(".KD_BHN").each(function() {
+		var cekBarang = '';
+		$(".KD_BRG").each(function() {
 			
 			let z = $(this).closest('tr');
-			var KD_BHNX = z.find('.KD_BHN').val();
+			var KD_BRGX = z.find('.KD_BRG').val();
 			
-			if( KD_BHNX =="" )
+			if( KD_BRGX =="" )
 			{
-					cekBahan = '1';
+					cekBarang = '1';
 					
 			}	
 		});
 		
-		return cekBahan;
+		return cekBarang;
 	}
 
 
@@ -930,42 +697,29 @@ var dTableBBeli;
 		var tahunPer = {{session()->get('periode')['tahun']}};
 		
         var check = '0';
-		
-		
-		
-			// if (cekDetail())
-			// {	
-			//     check = '1';
-			// 	alert("#Bahan ada yang kosong. ")
-			// }
 
-			if ( $('#KD_BRG').val()=='' ) 
-            {				
-			    check = '1';
-				alert("Bahan# Harus Diisi.");
-			}
-
-			if ( $('#KD_BHN').val()=='' ) 
-            {				
-			    check = '1';
-				alert("Bahan# Harus Diisi.");
-			}
-			
-			// if ( $('#NO_BUKTI').val()=='' ) 
-            // {				
-			//     check = '1';
-			// 	alert("Bukti# Harus Diisi.");
-			// }
-			
-			if ( $('#KODES').val()=='' ) 
-            {				
-			    check = '1';
-				alert("Suplier# Harus Diisi.");
-			}
-			
-			if ( tgl.substring(3,5) != bulanPer ) 
+			if (baris==0)
 			{
 				check = '1';
+				Swal.fire({
+					icon: 'warning',
+					title: 'Warning',
+					text: 'Data detail kosong (Tambahkan 1 baris kosong jika ingin mengosongi detail)'
+				});
+				return; // Stop function execution
+			}
+		
+		
+			if ( tgl.substring(3,5) != bulanPer ) 
+			{
+				
+				check = '1';
+				Swal.fire({
+					icon: 'warning',
+					title: 'Warning',
+					text: 'Bulan tidak sama dengan Periode'
+				});
+				return; // Stop function execution
 				alert("Bulan tidak sama dengan Periode");
 			}	
 			
@@ -973,21 +727,79 @@ var dTableBBeli;
 			if ( tgl.substring(tgl.length-4) != tahunPer )
 			{
 				check = '1';
-				alert("Tahun tidak sama dengan Periode");
+				Swal.fire({
+					icon: 'warning',
+					title: 'Warning',
+					text: 'Tahun tidak sama dengan Periode'
+				});
+				return; // Stop function execution
+				
 		    }	 
-			
-			if (baris==0)
-			{
-				check = '1';
-				alert("Data detail kosong (Tambahkan 1 baris kosong jika ingin mengosongi detail)");
+
+			if ( $('#KD_BRG').val()=='' ) 
+            {				
+			    check = '1';
+				Swal.fire({
+					icon: 'warning',
+					title: 'Warning',
+					text: 'Barang# Harus Diisi.'
+				});
+				return; // Stop function execution
 			}
 
-			if ( check == '0' )
-			{
-				hitung();	
-		      	document.getElementById("entri").submit();  
+			// if ( $('#KD_BHN').val()=='' ) 
+            // {				
+			//     check = '1';
+			// 	Swal.fire({
+			// 		icon: 'warning',
+			// 		title: 'Warning',
+			// 		text: 'Bahan# Harus Diisi.'
+			// 	});
+			// 	return; // Stop function execution
+			// }
+
+        
+			// if ( $('#NO_BUKTI').val()=='' ) 
+            // {				
+			//     check = '1';
+			// 	Swal.fire({
+			// 		icon: 'warning',
+			// 		title: 'Warning',
+			// 		text: 'Bukti# Harus Diisi.'
+			// 	});
+			// 	return; // Stop function execution
+			// }
+		
+			if (check == '0') {
+				Swal.fire({
+					title: 'Are you sure?',
+					text: 'Are you sure you want to save?',
+					icon: 'question',
+					showCancelButton: true,
+					confirmButtonText: 'Yes, save it!',
+					cancelButtonText: 'No, cancel',
+				}).then((result) => {
+					if (result.isConfirmed) {
+						document.getElementById("entri").submit();
+					} else {
+						Swal.fire({
+							icon: 'info',
+							title: 'Cancelled',
+							text: 'Your data was not saved'
+						});
+					}
+				});
+			} else {
+				Swal.fire({
+					icon: 'error',
+					title: 'Error',
+					text: 'Masih ada kesalahan'
+				});
 			}
-			
+
+		// tutupannya	
+	
+			$("#LOADX").hide();
 	}
 		
     function nomor() {
@@ -1000,67 +812,64 @@ var dTableBBeli;
 	
 	}
 
-   function hitung() {
+	function hitung() {
 		var TTOTAL_QTY = 0;
-		var TTOTAL = 0;
-		var NETT = 0;
 
-		
+
 		$(".QTY").each(function() {
 			
 			let z = $(this).closest('tr');
-			var HARGAX = parseFloat(z.find('.HARGA').val().replace(/,/g, ''));
+			// var QTYRX = parseFloat(z.find('.QTYR').val().replace(/,/g, ''));
+			// var QTYCX = parseFloat(z.find('.QTYC').val().replace(/,/g, ''));
 			var QTYX = parseFloat(z.find('.QTY').val().replace(/,/g, ''));
+			var HARGAX = parseFloat(z.find('.HARGA').val().replace(/,/g, ''));
+			var PPN = parseFloat(z.find('.PPNX').val().replace(/,/g, ''));
 
-			// var FLAGZ = $('#flagz').val();
-
-			// if (FLAGZ == 'RB'){
-				
-			// 	var QTYX  = ( QTYX * -1 ) ;			
-			// 	z.find('.QTY').autoNumeric('update');
-
-			// } 
-
-            var TOTALX  = ( QTYX * HARGAX );
+			var PKPX  = $('#PKP').val();
+		
+			var TOTALX  =  ( QTYX * HARGAX );
+            
 			z.find('.TOTAL').val(TOTALX);
-		    z.find('.TOTAL').autoNumeric('update');	
-		    
-			// var PPNX1 = parseFloat(z.find('.PPNX').val().replace(/,/g, ''));
+
+
+			var DPPX = 0 ;
+			var PPNX = 0;
 			
-            TTOTAL_QTY +=QTYX;		
-            TTOTAL +=TOTALX;	
-            // PPN +=PPNX1;
-  						
+            DPPX = TOTALX;
+	     	z.find('.DPP').val(DPPX);
+
+			if (PKPX == '0' ) {
+			    PPNX = 0;
+			    
+			} 
+
+	     		
+			if (PKPX == '1' ) {
+			    DPPX = TOTALX * 100/111;
+			    PPNX = TOTALX - DPPX;
+	     	    z.find('.DPP').val(DPPX);
+	     	
+			} 
+
+
+            
+			z.find('.PPNX').val(PPNX);	
+
+		    z.find('.HARGA').autoNumeric('update');			
+		    z.find('.QTY').autoNumeric('update');	
+		    z.find('.TOTAL').autoNumeric('update');				
+		    z.find('.DPP').autoNumeric('update');		
+		    z.find('.PPNX').autoNumeric('update');		
+
+            TTOTAL_QTY +=QTYX;	
 		
 		});
 		
-
 		
 		if(isNaN(TTOTAL_QTY)) TTOTAL_QTY = 0;
 
 		$('#TTOTAL_QTY').val(numberWithCommas(TTOTAL_QTY));		
 		$("#TTOTAL_QTY").autoNumeric('update');
-		
-		if(isNaN(TTOTAL)) TTOTAL = 0;
-
-		$('#TTOTAL').val(numberWithCommas(TTOTAL));		
-		$("#TTOTAL").autoNumeric('update');
-
-		
-		// if(isNaN(PPN)) PPN = 0;
-
-		// $('#PPN').val(numberWithCommas(PPN));		
-		// $("#PPN").autoNumeric('update');
-		
-		
-		// NETT = TTOTAL + PPN;
-		NETT = TTOTAL;
-		
-		if(isNaN(NETT)) NETT = 0;
-
-		$('#NETT').val(numberWithCommas(NETT));		
-		$("#NETT").autoNumeric('update');
-		
 		
 	}
 	
@@ -1089,7 +898,46 @@ var dTableBBeli;
 	
 	}
 	
- 
+
+	
+	function ambil_hari() {
+
+		    
+		$.ajax(
+		{
+			type: 'GET',    
+			url: "{{url('sup/browse_hari')}}",
+			data: {
+					'KODES' : $("#KODES").val(),
+			},
+			
+			success: function( response )
+
+			{
+				resp = response;
+				$("#NAMAS").val( resp[0].NAMAS );
+				$("#PKP").val( resp[0].PKP );
+				$("#HARI").val( resp[0].HARI );
+
+				if ( $("#PKP").val() == '1' )
+				{
+
+					document.getElementById("PKP").checked = true;
+						
+				}
+
+				else
+				{
+					document.getElementById("PKP").checked = false;
+					
+				}
+						
+			}
+		});
+
+		
+
+	}
 
 	
 	
@@ -1116,30 +964,25 @@ var dTableBBeli;
 		   
 			$("#NO_BUKTI").attr("readonly", true);		   
 			$("#TGL").attr("readonly", false);
-			$("#KODES").attr("readonly", true);
-			$("#NAMAS").attr("readonly", true);			
-			$("#ALAMAT").attr("readonly", true);
-			$("#KOTA").attr("readonly", true);
-			
-			$("#NO_FAKTUR").attr("readonly", false);
-			$("#TGL_FAKTUR").attr("readonly", false);
-			$("#JTEMPO").attr("readonly", false);
-			
 			$("#NOTES").attr("readonly", false);
-			
-			$("#TTOTAL").attr("readonly", true);	
+			$("#TTOTAL_QTY").attr("readonly", true);
+	    	$("#KODES").attr("disabled", false);
+	        $("#PKP").attr("disabled", true);
+				
 
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
 			$("#REC" + i.toString()).attr("readonly", true);
-			$("#KD_BHN" + i.toString()).attr("readonly", false);
 			$("#KD_BRG" + i.toString()).attr("readonly", false);
-			$("#NA_BHN" + i.toString()).attr("readonly", true);
 			$("#NA_BRG" + i.toString()).attr("readonly", true);
 			$("#SATUAN" + i.toString()).attr("readonly", true);
-			$("#QTY" + i.toString()).attr("readonly", true);
+			$("#QTYC" + i.toString()).attr("readonly", false);
+			$("#QTYR" + i.toString()).attr("readonly", false);
+			$("#QTY" + i.toString()).attr("readonly", false);
 			$("#HARGA" + i.toString()).attr("readonly", false);
 			$("#TOTAL" + i.toString()).attr("readonly", true);
+			$("#DPP" + i.toString()).attr("readonly", true);
+			$("#PPN" + i.toString()).attr("readonly", true);
 			$("#KET" + i.toString()).attr("readonly", false);
 			$("#DELETEX" + i.toString()).attr("hidden", false);
 
@@ -1148,12 +991,9 @@ var dTableBBeli;
 			
 			if ( $tipx != 'new' )
 			{
-				$("#KD_BHN" + i.toString()).attr("readonly", true);	
-				$("#KD_BHN" + i.toString()).removeAttr('onblur');
-				
 				$("#KD_BRG" + i.toString()).attr("readonly", true);	
 				$("#KD_BRG" + i.toString()).removeAttr('onblur');
-			}
+			} 
 		}
 
 		
@@ -1182,36 +1022,29 @@ var dTableBBeli;
 		
 	    $("#PLUSX").attr("hidden", true)
 		
-	    $(".NO_BUKTI").attr("readonly", true);	
-		
+	    $(".NO_BUKTI").attr("readonly", true);
 		$("#TGL").attr("readonly", true);
-		$("#KODES").attr("readonly", true);
-		$("#NAMAS").attr("readonly", true);
-		$("#ALAMAT").attr("readonly", true);
-		$("#KOTA").attr("readonly", true);
-
-			$("#NO_FAKTUR").attr("readonly", true);
-			$("#TGL_FAKTUR").attr("readonly", true);
-			$("#JTEMPO").attr("readonly", true);
-				
-		$("#TTOTAL").attr("readonly", true);		
-		
 		$("#NOTES").attr("readonly", true);
+		$("#KODES").attr("disabled", true);
+		$("#PKP").attr("disabled", true);
+		$("#TTOTAL_QTY").attr("readonly", true);
 
 		
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
 			$("#REC" + i.toString()).attr("readonly", true);
-			$("#KD_BHN" + i.toString()).attr("readonly", true);
-			$("#NA_BHN" + i.toString()).attr("readonly", true);
 			$("#KD_BRG" + i.toString()).attr("readonly", true);
 			$("#NA_BRG" + i.toString()).attr("readonly", true);
 			$("#SATUAN" + i.toString()).attr("readonly", true);
+			$("#QTYC" + i.toString()).attr("readonly", true);
+			$("#QTYR" + i.toString()).attr("readonly", true);
 			$("#QTY" + i.toString()).attr("readonly", true);
 			$("#HARGA" + i.toString()).attr("readonly", true);
 			$("#TOTAL" + i.toString()).attr("readonly", true);
+			$("#DPP" + i.toString()).attr("readonly", true);
+			$("#PPN" + i.toString()).attr("readonly", true);
 			$("#KET" + i.toString()).attr("readonly", true);
-
+			
 			$("#DELETEX" + i.toString()).attr("hidden", true);
 		}
 
@@ -1222,47 +1055,201 @@ var dTableBBeli;
 
 	function kosong() {
 				
-		 $('#NO_BUKTI').val("+");		
-		 $('#KODES').val("");	
-		 $('#NAMAS').val("");	
-		 $('#ALAMAT').val("");	
-		 $('#KOTA').val("");	
+		 $('#NO_BUKTI').val("+");	
 		 $('#NOTES').val("");	
-		 $('#NO_PO').val("");
-		 $('#TTOTAL_QTY').val("0.00");
-		 $('#TTOTAL').val("0.00");		 
-		 
+		 $('#TTOTAL_QTY').val("0.00");	
 		 
 		var html = '';
 		$('#detailx').html(html);	
 		
 	}
 	
+	// function hapusTrans() {
+	// 	let text = "Hapus Transaksi "+$('#NO_BUKTI').val()+"?";
+	// 	if (confirm(text) == true) 
+	// 	{
+	// 		window.location ="{{url('/beli/delete/'.$header->NO_ID .'/?flagz='.$flagz.'' )}}";
+	// 		//return true;
+	// 	} 
+	// 	return false;
+	// }
+
+	// sweetalert untuk tombol hapus dan close
+	
 	function hapusTrans() {
 		let text = "Hapus Transaksi "+$('#NO_BUKTI').val()+"?";
-		if (confirm(text) == true) 
-		{
-			window.location ="{{url('/beli/delete/'.$header->NO_ID .'/?flagz='.$flagz.'&golz=' .$golz.'' )}}";
-			//return true;
-		} 
-		return false;
+
+		var loc ='';
+		var flagz = "{{ $flagz }}";
+		
+		Swal.fire({
+			title: 'Are you sure?',
+			text: text,
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes, delete it!',
+			cancelButtonText: 'Cancel'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				// Show a success message before redirecting to delete the data
+				Swal.fire({
+					title: 'Deleted!',
+					text: 'Data has been deleted.',
+					icon: 'success',
+					confirmButtonText: 'OK'
+				}).then(() => {
+					// Redirect to delete the data after user confirms the success message
+	            	loc = "{{ url('/beli/delete/'.$header->NO_ID) }}" + '?flagz=' + encodeURIComponent(flagz) ;
+
+		            // alert(loc);
+	            	window.location = loc;
+		
+				});
+			}
+		});
 	}
+	
+	function closeTrans() {
+		console.log("masuk");
+		var loc ='';
+		var flagz = "{{ $flagz }}";
+		
+		Swal.fire({
+			title: 'Are you sure?',
+			text: 'Do you really want to close this page? Unsaved changes will be lost.',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Yes, close it',
+			cancelButtonText: 'No, stay here'
+		}).then((result) => {
+			if (result.isConfirmed) {
+	        	loc = "{{ url('/beli/') }}" + '?flagz=' + encodeURIComponent(flagz) ;
+				window.location = loc ;
+			} else {
+				Swal.fire({
+					icon: 'info',
+					title: 'Cancelled',
+					text: 'You stayed on the page'
+				});
+			}
+		});
+	}
+
+	// tutupannya
 	
 
 	function CariBukti() {
 		
 		var flagz = "{{ $flagz }}";
-		var golz = "{{ $golz }}";
 		var cari = $("#CARI").val();
-		var loc = "{{ url('/beli/edit/') }}" + '?idx={{ $header->NO_ID}}&tipx=search&flagz=' + encodeURIComponent(flagz) + '&golz=' + encodeURIComponent(golz) + '&buktix=' +encodeURIComponent(cari);
+		var loc = "{{ url('/beli/edit/') }}" + '?idx={{ $header->NO_ID}}&tipx=search&flagz=' + encodeURIComponent(flagz) + '&buktix=' +encodeURIComponent(cari);
 		window.location = loc;
 		
 	}
 
 
-</script>
+    function tambah() {
 
+        var x = document.getElementById('datatable').insertRow(baris + 1);
+ 
+		html=`<tr>
+
+                <td>
+ 					<input name='NO_ID[]' id='NO_ID${idrow}' type='hidden' class='form-control NO_ID' value='new' readonly> 
+					<input name='REC[]' id='REC${idrow}' type='text' class='REC form-control' onkeypress='return tabE(this,event)' readonly>
+	            </td>
+				
+                <td>
+				    <input name='KD_BRG[]' data-rowid=${idrow} onblur='browseBarang(${idrow})' id='KD_BRG${idrow}' type='text' class='form-control  KD_BRG' >
+                </td>
+                <td>
+				    <input name='NA_BRG[]'   id='NA_BRG${idrow}' type='text' class='form-control  NA_BRG' required readonly>
+                </td>
+
+                <td>
+				    <input name='SATUAN[]'   id='SATUAN${idrow}' type='text' class='form-control  SATUAN' readonly required>
+                </td>
+
+				<td>
+		            <input name='QTY[]' onclick='select()' onblur='hitung()' value='0' id='QTY${idrow}' type='text' style='text-align: right' class='form-control QTY text-primary' >
+                </td>	
+ 				<td>
+ 	            	<input name='HARGA[]' onclick ='select()' onblur='hitung()' value='0' id='HARGA${idrow}' type='text' style='text-align: right' class='form-control HARGA text-primary' required >
+             	</td>
+
+				<td>
+					<input name='TOTAL[]'  onblur='hitung()' value='0' id='TOTAL${idrow}' type='text' style='text-align: right' class='form-control TOTAL text-primary' readonly required >
+				</td>
+
+				<td>
+					<input name='PPNX[]'  onblur='hitung()' value='0' id='PPNX${idrow}' type='text' style='text-align: right' class='form-control PPNX text-primary' readonly required >
+				</td>	
+
+				<td>
+	 				<input name='DPP[]'  onblur='hitung()' value='0' id='DPP${idrow}' type='text' style='text-align: right' class='form-control DPP text-primary' readonly required >
+	 			</td>
+					
+                <td>
+				    <input name='KET[]'   id='KET${idrow}' type='text' class='form-control  KET' required>
+                </td>
+				
+                <td>
+					<button type='button' id='DELETEX${idrow}'  class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>
+                </td>				
+         </tr>`;
+				
+        x.innerHTML = html;
+        var html='';
+		
+		
+		
+		jumlahdata = 100;
+		for (i = 0; i <= jumlahdata; i++) {
+
+			$("#QTY" + i.toString()).autoNumeric('init', {
+				aSign: '<?php echo ''; ?>',
+				vMin: '-999999999.99'
+			});		
+
+			$("#HARGA" + i.toString()).autoNumeric('init', {
+				aSign: '<?php echo ''; ?>',
+				vMin: '-999999999.99'
+			});
+
+			
+			$("#TOTAL" + i.toString()).autoNumeric('init', {
+				aSign: '<?php echo ''; ?>',
+				vMin: '-999999999.99'
+			});	 
+
+			$("#PPNX" + i.toString()).autoNumeric('init', {
+	 			aSign: '<?php echo ''; ?>',
+	 			vMin: '-999999999.99'
+	 		});
+			
+			$("#DPP" + i.toString()).autoNumeric('init', {
+				aSign: '<?php echo ''; ?>',
+				vMin: '-999999999.99'
+			});
+
+					
+		}
+
+
+        idrow++;
+        baris++;
+        nomor();
+		
+		$(".ronly").on('keydown paste', function(e) {
+             e.preventDefault();
+             e.currentTarget.blur();
+         });
+     }
+</script>
+<!-- 
 <script src="autonumeric.min.js" type="text/javascript"></script>
 <script src="https://cdn.jsdelivr.net/npm/autonumeric@4.5.4"></script>
-<script src="https://unpkg.com/autonumeric"></script>
+<script src="https://unpkg.com/autonumeric"></script> -->
 @endsection

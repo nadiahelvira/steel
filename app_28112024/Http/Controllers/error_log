@@ -1,0 +1,40 @@
+[05-Oct-2024 08:46:12 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'App\Http\Controllers\Controller' not found in /home/januar13/public_html/steel/app/Http/Controllers/DashboardController.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/DashboardController.php on line 10
+[05-Oct-2024 08:54:01 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'App\Http\Controllers\Controller' not found in /home/januar13/public_html/steel/app/Http/Controllers/ProfileController.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/ProfileController.php on line 13
+[05-Oct-2024 09:19:09 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Routing\Controller' not found in /home/januar13/public_html/steel/app/Http/Controllers/Controller.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/Controller.php on line 10
+[05-Oct-2024 10:21:17 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'App\Http\Controllers\Controller' not found in /home/januar13/public_html/steel/app/Http/Controllers/PostingController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/PostingController.php on line 15
+[05-Oct-2024 11:05:08 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'App\Http\Controllers\Controller' not found in /home/januar13/public_html/steel/app/Http/Controllers/PeriodeController.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/PeriodeController.php on line 9
+[05-Oct-2024 11:27:01 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'App\Http\Controllers\Controller' not found in /home/januar13/public_html/steel/app/Http/Controllers/BaruController.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/BaruController.php on line 7
+[05-Oct-2024 15:48:16 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'App\Http\Controllers\Controller' not found in /home/januar13/public_html/steel/app/Http/Controllers/CheatsheetController.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/CheatsheetController.php on line 13
+[05-Oct-2024 19:56:25 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'App\Http\Controllers\Controller' not found in /home/januar13/public_html/steel/app/Http/Controllers/HomeController.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/HomeController.php on line 8
+[05-Oct-2024 21:14:11 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'App\Http\Controllers\Controller' not found in /home/januar13/public_html/steel/app/Http/Controllers/UserController.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/UserController.php on line 13
+[05-Oct-2024 21:29:10 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'App\Http\Controllers\Controller' not found in /home/januar13/public_html/steel/app/Http/Controllers/ChartController.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/ChartController.php on line 13

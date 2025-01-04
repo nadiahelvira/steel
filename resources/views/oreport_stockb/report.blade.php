@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.plain')
 
 @section('content')
 <div class="content-wrapper">
@@ -52,6 +52,16 @@
 								<option value="S" {{ session()->get('filter_type')=='S' ? 'selected': ''}}>Surat Jalan</option>
 							</select>
 						</div>
+
+						<div class="col-md-1">
+							<label><strong>Cabang :</strong></label>
+							<select name="cbg" id="cbg" class="form-control cbg" style="width: 200px">
+								<option value="">--Pilih Cabang--</option>
+								@foreach($cbg as $cbgD)
+									<option value="{{$cbgD->CBG}}"  {{ (session()->get('filter_cbg') == $cbgD->CBG) ? 'selected' : '' }}>{{$cbgD->CBG}}</option>
+								@endforeach
+							</select>
+						</div>
 					</div>
 					
                     <button class="btn btn-primary" type="submit" id="filter" class="filter" name="filter">Filter</button>
@@ -78,7 +88,7 @@
 					
                     <!-- PASTE DIBAWAH INI -->
                     <!-- DISINI BATAS AWAL KOOLREPORT-->
-                    <div class="report-content" col-md-12>
+                    <div class="report-content" col-md-12 style="max-width: 100%; overflow-x: scroll;">
                         <?php
                         use \koolreport\datagrid\DataTables;
 

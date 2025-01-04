@@ -27,6 +27,18 @@ class AccountController extends Controller
         return view('master_account.index');
     }
 
+
+    public function browse_nacno(Request $request)
+    {
+        $acno = $request->BACNO;
+
+         $account = DB::SELECT("SELECT NO_ID, ACNO, NAMA
+                            FROM account WHERE ACNO = '$acno' "); 
+	
+
+        return response()->json($account);
+    }
+    
     public function browseKel(Request $request)
     {
         $tipe = $request->tipe;
@@ -45,30 +57,69 @@ class AccountController extends Controller
         }
 		return response()->json($kel);
     }
-    public function browsecash()
+    public function browsecash(Request $request)
     {
 
-        $account = Account::where('BNK', '=', '1')->get();
+
+		if (!empty(request('q'))) {
+			$account = Account::where('BNK', '=', '1')->where('NAMA', 'LIKE', '%'.request('q').'%')->get();
+        } else {
+			$account = Account::where('BNK', '=', '1')->get();			
+		}
+
         return response()->json($account);
+ 
     }
 
-    public function browsebank()
+    public function browsebank(Request $request)
     {
-        $account = Account::where('BNK', '=', '2')->get();
-        return response()->json($account);
+
+		if (!empty(request('q'))) {
+			$account = Account::where('BNK', '=', '2')->where('NAMA', 'LIKE', '%'.request('q').'%')->get();
+        } else {
+			$account = Account::where('BNK', '=', '2')->get();			
+		}
+
+         return response()->json($account);
+         
     }
     
     
-    public function browsecashbank()
+    public function browsecashbank(Request $request)
     {
 
-        $account = Account::where('BNK', '<>', '')->get();
+        if (!empty(request('q'))) {
+
+
+            $account = DB::SELECT("SELECT ACNO, NAMA, CONCAT(ACNO, '-', NAMA) AS NAMAX 
+                            FROM account WHERE BNK <>'' AND NAMA LIKE ('%$request->q%') ORDER BY NAMA "); 
+	
+    	    
+        } else {
+            
+			$account = DB::SELECT("SELECT ACNO, NAMA, CONCAT(ACNO, '-', NAMA) AS NAMAX 
+                            FROM account WHERE BNK <>'' 
+                            ORDER BY NAMA ");			
+		}
         return response()->json($account);
     }
 
-    public function browse()
+    public function browse(Request $request)
     {
-        $account = Account::where('BNK', '=', '')->get();
+
+    	if (!empty(request('q'))) {
+
+
+            $account = DB::SELECT("SELECT ACNO, NAMA, CONCAT(ACNO, '-', NAMA) AS NAMAX 
+                            FROM account WHERE NAMA LIKE ('%$request->q%') ORDER BY NAMA "); 
+	
+    	    
+        } else {
+            
+			$account = DB::SELECT("SELECT ACNO, NAMA, CONCAT(ACNO, '-', NAMA) AS NAMAX 
+                            FROM account
+                            ORDER BY NAMA ");			
+		}
         return response()->json($account);
     }
 
@@ -91,7 +142,13 @@ class AccountController extends Controller
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
                 if (Auth::user()->divisi=="programmer" || Auth::user()->divisi=="owner" || Auth::user()->divisi=="assistant" || Auth::user()->divisi=="accounting") 
-                {
+                {   
+                    // url untuk delete di index
+                    $url = "'".url("account/delete/" . $row->NO_ID )."'";
+                    // batas
+
+                    $btnDelete = ' onclick="deleteRow('.$url.')"';
+
                     $btnPrivilege =
                         '
                                 <a class="dropdown-item" href="account/edit/?idx=' . $row->NO_ID . '&tipx=edit";
@@ -99,7 +156,7 @@ class AccountController extends Controller
                                     Edit
                                 </a>
                                 <hr></hr>
-                                <a class="dropdown-item btn btn-danger" onclick="return confirm(&quot; Apakah anda yakin ingin hapus? &quot;)" href="account/delete/' . $row->NO_ID . '">
+                                <a class="dropdown-item btn btn-danger" ' . $btnDelete . '">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                     Delete
                                 </a> 

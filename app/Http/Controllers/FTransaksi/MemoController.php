@@ -78,9 +78,14 @@ class MemoController extends Controller
             ->addColumn('action', function ($row) {
                 if (Auth::user()->divisi=="programmer" || Auth::user()->divisi=="owner" || Auth::user()->divisi=="assistant" || Auth::user()->divisi=="accounting") 
                 {
+                    
+                    // url untuk delete di index
+                    $url = "'".url("memo/delete/" . $row->NO_ID . "/?flagz=" . $row->FLAG)."'";
+                    // batas
 
                     $btnEdit =   ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' href="memo/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->FLAG . '&judul=' . $this->judul . '"';					
-                    $btnDelete = ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' onclick="return confirm(&quot; Apakah anda yakin ingin hapus? &quot;)" href="memo/delete/' . $row->NO_ID . '/?flagz=' . $row->FLAG . '" ';
+                    $btnDelete = ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' onclick="deleteRow('.$url.')" ';
+                    // $btnDelete = ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' onclick="return confirm(&quot; Apakah anda yakin ingin hapus? &quot;)" href="memo/delete/' . $row->NO_ID . '/?flagz=' . $row->FLAG . '" ';
 
                     $btnPrivilege =
                         '
@@ -88,7 +93,7 @@ class MemoController extends Controller
                                 <i class="fas fa-edit"></i>
                                     Edit
                                 </a>
-                                <a class="dropdown-item btn btn-danger" href="memo/jasper-memo-trans/' . $row->NO_ID . '">
+                                <a class="dropdown-item btn btn-danger" href="memo/cetak/' . $row->NO_ID . '">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                     Print
                                 </a> 									
@@ -393,7 +398,7 @@ class MemoController extends Controller
  
          
          return view('ftransaksi_memo.edit', $data)
-		 ->with(['tipx' => $tipx, 'idx' => $idx, 'flagz' =>$this->FLAGZ, 'judul' => $this->judul ]);
+		 ->with(['tipx' => $tipx, 'idx' => $idx, 'flagz' =>$this->FLAGZ, 'judul'=> $this->judul ]);
 	
 
     }
@@ -566,7 +571,7 @@ class MemoController extends Controller
 
     }
 
-    public function jasperMemoTrans(Memo $memo)
+    public function cetak (Memo $memo)
     {
         $no_bukti = $memo->NO_BUKTI;
 
@@ -575,11 +580,16 @@ class MemoController extends Controller
         $PHPJasperXML->load_xml_file(base_path() . ('/app/reportc01/phpjasperxml/' . $file . '.jrxml'));
 
         $query = DB::SELECT("
-			SELECT memo.NO_BUKTI,memo.TGL,memo.KET,memo.BNAMA,
-            memod.REC,memod.ACNO,memod.NACNO,memod.URAIAN,if(memod.DEBET>=0,memod.DEBET,memod.KREDIT) as JUMLAH 
+			SELECT memo.NO_BUKTI,memo.TGL,memo.KET,
+            memod.REC,memod.ACNO,memod.NACNO,memod.URAIAN,
+            memod.JUMLAH as DEBET, memod.JUMLAH as KREDIT
 			FROM memo, memod 
 			WHERE memo.NO_BUKTI=memod.NO_BUKTI and memo.NO_BUKTI='$no_bukti' 
 			ORDER BY memo.NO_BUKTI;
+		");
+		
+		$query2 = DB::SELECT("
+			SELECT NAMA from compan ;
 		");
 
         $data = [];
@@ -593,11 +603,23 @@ class MemoController extends Controller
                 'ACNO' => $query[$key]->ACNO,
                 'NACNO' => $query[$key]->NACNO,
                 'URAIAN' => $query[$key]->URAIAN,
-                'JUMLAH' => $query[$key]->JUMLAH,
+                'DEBET' => $query[$key]->DEBET,
+                'KREDIT' => $query[$key]->KREDIT,
+				'NAMA' => $query2[0]->NAMA
             ));
         }
         $PHPJasperXML->setData($data);
         ob_end_clean();
         $PHPJasperXML->outpage("I");
     }
+
+    public function getDetailMemo(){
+
+        $no_bukti = $_GET['no_bukti'];
+        $result = DB::table('memod')->where('NO_BUKTI', $no_bukti)->get();
+        
+        return response()->json($result);;
+    }
+
+
 }

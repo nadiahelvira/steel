@@ -15,8 +15,7 @@ class BeliDetail extends Model
 
     protected $fillable =
     [
-        "REC", "NO_BUKTI", "ID", "KD_BHN", "NA_BHN", "KD_BHN", "NA_BHN", "QTY", "HARGA", "TOTAL", 
-        "KET", "TTOTAL_QTY", "TTOTAL", "GOL", "PER", "FLAG", "KD_BRG", "NA_BRG", "KALI", "SATUAN_PO", "QTY_PO",
-        "DPP", "PPN"
+        "REC", "NO_BUKTI", "ID", "KD_BRG", "NA_BRG", "SATUAN", "QTY", 
+        "QTYC", "QTYR", "KET", "PER", "FLAG", "HARGA", "TOTAL", "DPP", "PPN"
     ];
 }

@@ -65,26 +65,15 @@ class RPoController extends Controller
 			session()->put('filter_brg1', $request->brg1);
 			session()->put('filter_nabrg1', $request->nabrg1);
 		
-		if( $filtergol == 'J' ){
-			
+		
 			$query = DB::SELECT("SELECT po.NO_BUKTI, po.TGL, po.KODES, po.NAMAS, 
 				pod.KD_BRG, pod.NA_BRG, pod.QTY, pod.HARGA, pod.TOTAL, 
 				po.NOTES, pod.SATUAN,
 				po.GOL, 
 				pod.KIRIM, po.SISA from po, pod
-				$filtertgl $filtergol $filterkodes
+				$filtertgl $filterkodes
 				ORDER BY NO_BUKTI;
 			");	
-		} else {
-			$query = DB::SELECT("SELECT po.NO_BUKTI, po.TGL, po.KODES, po.NAMAS, 
-				pod.KD_BHN AS KD_BRG, pod.NA_BHN AS NA_BRG, pod.QTY, pod.HARGA, pod.TOTAL, 
-				po.NOTES, pod.SATUAN,
-				po.GOL, 
-				pod.KIRIM, po.SISA from po, pod
-				$filtertgl $filtergol $filterkodes
-				ORDER BY NO_BUKTI;
-			");	
-		}
 
 
 		// $query = DB::SELECT("SELECT po.NO_BUKTI, po.TGL, po.KODES, po.NAMAS, 
@@ -110,8 +99,9 @@ class RPoController extends Controller
 				'KODES' => $query[$key]->KODES,
 				'NAMAS' => $query[$key]->NAMAS,
 				'KD_BRG' => $query[$key]->KD_BRG,
+                // 'KD_BRG'    => "`".strval($query[$key]->KD_BRG),
 				'NA_BRG' => $query[$key]->NA_BRG,
-				'KG' => $query[$key]->QTY,
+				'QTY' => $query[$key]->QTY,
 				'HARGA' => $query[$key]->HARGA,
 				'TOTAL' => $query[$key]->TOTAL,
 				'KET' => $query[$key]->KET,

@@ -1,0 +1,160 @@
+[29-Sep-2024 08:34:29 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/StockbDetail.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/StockbDetail.php on line 8
+[01-Oct-2024 11:50:00 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/StockbDetail.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/StockbDetail.php on line 8
+[02-Oct-2024 05:04:32 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/StockaDetail.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/StockaDetail.php on line 8
+[03-Oct-2024 17:41:23 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/StockbDetail.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/StockbDetail.php on line 8
+[05-Oct-2024 06:37:16 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/Piu.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/Piu.php on line 10
+[05-Oct-2024 08:13:33 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/SpmDetail.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/SpmDetail.php on line 8
+[05-Oct-2024 08:38:35 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/Gaji.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/Gaji.php on line 8
+[05-Oct-2024 08:40:47 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/So.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/So.php on line 10
+[05-Oct-2024 09:39:45 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/Stocka.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/Stocka.php on line 10
+[05-Oct-2024 10:06:44 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/PpDetail.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/PpDetail.php on line 8
+[05-Oct-2024 10:29:32 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/PoDetail.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/PoDetail.php on line 8
+[05-Oct-2024 10:32:14 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/OrderkDetail.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/OrderkDetail.php on line 8
+[05-Oct-2024 11:55:14 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/Stock.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/Stock.php on line 8
+[05-Oct-2024 12:12:57 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/Pakai.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/Pakai.php on line 10
+[05-Oct-2024 12:17:28 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/Beli.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/Beli.php on line 10
+[05-Oct-2024 12:28:49 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/PiuDetail.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/PiuDetail.php on line 8
+[05-Oct-2024 12:45:24 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/Surats.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/Surats.php on line 10
+[05-Oct-2024 13:31:13 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/Beliz.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/Beliz.php on line 10
+[05-Oct-2024 13:49:27 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/BeliDetail.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/BeliDetail.php on line 8
+[05-Oct-2024 14:13:34 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/JualDetail.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/JualDetail.php on line 8
+[05-Oct-2024 14:17:57 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/Hut.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/Hut.php on line 10
+[05-Oct-2024 14:32:56 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/Po.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/Po.php on line 10
+[05-Oct-2024 15:14:03 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/Spm.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/Spm.php on line 10
+[05-Oct-2024 15:49:29 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/PakaiDetail.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/PakaiDetail.php on line 8
+[05-Oct-2024 16:54:38 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/Kik.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/Kik.php on line 10
+[05-Oct-2024 16:57:00 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/SoDetail.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/SoDetail.php on line 8
+[05-Oct-2024 17:29:29 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/GajiDetail.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/GajiDetail.php on line 8
+[05-Oct-2024 18:50:16 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/Pp.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/Pp.php on line 10
+[05-Oct-2024 18:57:34 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/MuatDetail.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/MuatDetail.php on line 8
+[05-Oct-2024 19:21:53 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/StockaDetail.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/StockaDetail.php on line 8
+[05-Oct-2024 20:37:51 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/Orderk.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/Orderk.php on line 10
+[05-Oct-2024 21:47:40 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/BelizDetail.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/BelizDetail.php on line 8
+[05-Oct-2024 21:54:32 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/HutDetail.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/HutDetail.php on line 8
+[05-Oct-2024 22:11:39 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/StockbDetail.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/StockbDetail.php on line 8
+[05-Oct-2024 22:43:55 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/SuratsDetail.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/SuratsDetail.php on line 8
+[05-Oct-2024 23:11:26 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/Muat.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/Muat.php on line 10
+[05-Oct-2024 23:15:24 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/Terima.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/Terima.php on line 10
+[06-Oct-2024 00:04:36 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/Stockb.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/Stockb.php on line 10
+[06-Oct-2024 00:20:24 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/TerimaDetail.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/TerimaDetail.php on line 8
+[06-Oct-2024 03:33:05 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/OTransaksi/Jual.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/OTransaksi/Jual.php on line 10

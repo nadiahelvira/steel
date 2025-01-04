@@ -25,7 +25,10 @@
                 </x-slot>
 
                 <x-slot name="content">
-                    <x-dropdown-link :href="url('profile')">
+
+                  <!-- di ganti pake onclick untuk ganti profile -->
+                  
+                    <x-dropdown-link onclick="addTab('Profile', '{{url('profile')}}')" >
                         {{ __('Profil') }}
                     </x-dropdown-link>
                     <form method="POST" action="{{ route('logout') }}">

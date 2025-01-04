@@ -54,7 +54,7 @@
     }
 
     .name {
-        font-size: 32pt;
+        font-size: 25pt;
         font-weight: bolder !important;
         color: #FFFFFF;
         text-shadow: 0 -1px 4px #FFF, 0 -2px 10px #ff0, 0 -10px 20px #ff8000, 0 -18px 40px #F00;
@@ -84,7 +84,7 @@
                 <div class="centered">
 
                     <div class="text-center name">
-                        PT. WOLFIE
+                        TIARA DEWATA
                     </div>
                     <form method="POST" action="{{ route('login') }}" class="m-0">
                         @csrf
@@ -137,7 +137,7 @@
                 <img src="https://logodownload.org/wp-content/uploads/2019/10/adobe-photoshop-logo-0.png">
             </div>
             <div class="text-center mt-4 mb-4 name">
-                PT. PALING SEHAT
+                TIARA DEWATA
             </div>
             <x-auth-session-status class="mb-3" :status="session('status')" />
 

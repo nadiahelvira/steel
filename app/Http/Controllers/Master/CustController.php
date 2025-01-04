@@ -31,24 +31,64 @@ class CustController extends Controller
     // ganti 4
     public function browse(Request $request)
     {
-        // $gol = 'Y';
-        // if($request->GOL){
-        //     $gol = $request->GOL;
-        // }
-        // $cust = DB::table('cust')->select('KODEC', 'NAMAC', 'ALAMAT', 'KOTA')->where('GOL', $gol)->orderBy('KODEC', 'ASC')->get();
-        // $cust = DB::table('cust')->select('KODEC', 'NAMAC', 'ALAMAT', 'KOTA')->orderBy('KODEC', 'ASC')->get();
-        $cust = DB::SELECT("SELECT a.NO_ID, a.KODEC, a.NAMAC, a.ALAMAT, a.KOTA,  a.AKTIF, 
-                                    CASE WHEN a.PKP = '1' THEN '(PKP)' ELSE '(NON PKP)' END AS PKP2, 
-                                    a.PKP, a.KODEP, a.NAMAP, b.KOM
-                            FROM cust a, pegawai b
-                            WHERE a.KODEP = b.KODEP
-                            ORDER BY a.KODEC");
 
+
+	    // if (!empty(request('q'))) {
+
+
+        //      $cust = DB::SELECT("SELECT a.NO_ID, a.KODEC, a.NAMAC, a.ALAMAT, a.KOTA,  a.AKTIF, 
+        //                             CASE WHEN a.PKP = '1' THEN '(PKP)' ELSE '(NON PKP)' END AS PKP2, 
+        //                             a.PKP, a.KODEP, a.NAMAP, a.RING, b.KOM, a.HARI
+        //                     FROM cust a, pegawai b
+        //                     WHERE a.KODEP = b.KODEP and A.NAMAC LIKE ('%$request->q%') ORDER BY NAMAC "); 
+	
+    	    
+        // } else {
+
+        //      $cust = DB::SELECT("SELECT a.NO_ID, a.KODEC, a.NAMAC, a.ALAMAT, a.KOTA,  a.AKTIF, 
+        //                             CASE WHEN a.PKP = '1' THEN '(PKP)' ELSE '(NON PKP)' END AS PKP2, 
+        //                             a.PKP, a.KODEP, a.NAMAP, a.RING, b.KOM, a.HARI
+        //                     FROM cust a, pegawai b
+        //                     WHERE a.KODEP = b.KODEP  ORDER BY NAMAC "); 
+                            
+		// }
+
+        if (!empty(request('q'))) {
+
+
+            $cust = DB::SELECT("SELECT NO_ID, KODEC, NAMAC, ALAMAT, KOTA, 
+                       KONTAK, AKTIF, CASE WHEN PKP = '1' THEN '(PKP)' ELSE '(NON PKP)' END AS PKP2,
+                       PKP, HARI
+                       FROM cust WHERE NAMAC LIKE ('%$request->q%') ORDER BY NAMAC "); 
+
+       
+        } else {
+            $cust = DB::SELECT("SELECT NO_ID, KODEC, NAMAC, ALAMAT, KOTA, 
+                                KONTAK, AKTIF, CASE WHEN PKP = '1' THEN '(PKP)' ELSE '(NON PKP)' END AS PKP2,
+                                PKP, HARI
+                            FROM cust
+                            ORDER BY NAMAC ");			
+        }
+        
         return response()->json($cust);
     }
 
 
+    public function browse_hari(Request $request)
+    {
+        $kodec = $request->KODEC;
 
+        $cust = DB::SELECT("SELECT a.NO_ID, a.KODEC, a.NAMAC, a.ALAMAT, a.KOTA,  a.AKTIF, 
+                                    CASE WHEN a.PKP = '1' THEN '(PKP)' ELSE '(NON PKP)' END AS PKP2, 
+                                    a.PKP, a.KODEP, a.NAMAP, a.RING, b.KOM, a.HARI
+                            FROM cust a, pegawai b
+                            WHERE a.KODEP = b.KODEP  AND a.KODEC = '$kodec' "); 
+                            
+	
+
+        return response()->json($cust);
+    }
+    
 
     public function getCust()
     {
@@ -62,7 +102,13 @@ class CustController extends Controller
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
                 if (Auth::user()->divisi=="programmer" || Auth::user()->divisi=="owner" || Auth::user()->divisi=="sales") 
-                {
+                {   
+                    // url untuk delete di index
+                    $url = "'".url("cust/delete/" . $row->NO_ID )."'";
+                    // batas
+
+                    $btnDelete = ' onclick="deleteRow('.$url.')"';
+
                     $btnPrivilege =
                         '
                                 <a class="dropdown-item" href="cust/edit/?idx=' . $row->NO_ID . '&tipx=edit";
@@ -70,7 +116,8 @@ class CustController extends Controller
                                     Edit
                                 </a>
                                 <hr></hr>
-                                <a class="dropdown-item btn btn-danger" onclick="return confirm(&quot; Apakah anda yakin ingin hapus? &quot;)" href="cust/delete/' . $row->NO_ID . '">
+                                <a hidden class="dropdown-item btn btn-danger" ' . $btnDelete . '>
+
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                     Delete
                                 </a> 
@@ -145,8 +192,9 @@ class CustController extends Controller
                 'GOL'           => 'Y',
                 'TELPON1'       => ($request['TELPON1'] == null) ? "" : $request['TELPON1'],
                 'FAX'            => ($request['FAX'] == null) ? "" : $request['FAX'],
-                'AKT'            => ($request['AKT'] == null) ? "" : $request['AKT'],
-                // 'PKP'           => (float) str_replace(',', '', $request['PKP']),				
+                // 'AKT'            => ($request['AKT'] == null) ? "" : $request['AKT'],
+                'AKT'            => 1,
+                'PKP'           => (float) str_replace(',', '', $request['PKP']),				
                 'GOL'            => ($request['GOL'] == null) ? "" : $request['GOL'],				
                 'HP'            => ($request['HP'] == null) ? "" : $request['HP'],
                 'KONTAK'        => ($request['KONTAK'] == null) ? "" : $request['KONTAK'],
@@ -162,6 +210,7 @@ class CustController extends Controller
                 'HARI'            => ($request['HARI'] == null) ? "" : $request['HARI'],
                 'KODEP'            => ($request['KODEP'] == null) ? "" : $request['KODEP'],
                 'NAMAP'            => ($request['NAMAP'] == null) ? "" : $request['NAMAP'],
+                // 'RING'            => ($request['RING'] == null) ? "" : $request['RING'],
                 'USRNM'          => Auth::user()->username,
                 'TG_SMP'         => Carbon::now()
             ]
@@ -383,7 +432,7 @@ class CustController extends Controller
                 'FAX'            => ($request['FAX'] == null) ? "" : $request['FAX'],
                 'HP'            => ($request['HP'] == null) ? "" : $request['HP'],
                 'AKT'            => ($request['AKT'] == null) ? "" : $request['AKT'],
-                // 'PKP'           => (float) str_replace(',', '', $request['PKP']),
+                'PKP'           => (float) str_replace(',', '', $request['PKP']),
                 'GOL'            => ($request['GOL'] == null) ? "" : $request['GOL'],
                 'KONTAK'        => ($request['KONTAK'] == null) ? "" : $request['KONTAK'],
                 'EMAIL'           => ($request['EMAIL'] == null) ? "" : $request['EMAIL'],
@@ -394,10 +443,11 @@ class CustController extends Controller
                 'BANK_KOTA'     => ($request['BANK_KOTA'] == null) ? "" : $request['BANK_KOTA'],
                 'BANK_NAMA'     => ($request['BANK_NAMA'] == null) ? "" : $request['BANK_NAMA'],
                 'BANK_REK'      => ($request['BANK_REK'] == null) ? "" : $request['BANK_REK'],
-                'LIM'            => (float) str_replace(',', '', $request['LIM']),
-                'HARI'            => (float) str_replace(',', '', $request['HARI']),
                 'KODEP'      => ($request['KODEP'] == null) ? "" : $request['KODEP'],
                 'NAMAP'      => ($request['NAMAP'] == null) ? "" : $request['NAMAP'],
+                // 'RING'      => ($request['RING'] == null) ? "" : $request['RING'],
+                'LIM'            => (float) str_replace(',', '', $request['LIM']),
+                'HARI'            => (float) str_replace(',', '', $request['HARI']),
                 'USRNM'          => Auth::user()->username,
                 'TG_SMP'         => Carbon::now()
             ]

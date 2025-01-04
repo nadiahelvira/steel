@@ -22,6 +22,7 @@ class RCustController extends Controller
 {
    public function report()
     {
+
 		$kodec = Cust::query()->get();
 		$per = Perid::query()->get();
 		session()->put('filter_per', '');
@@ -37,8 +38,8 @@ class RCustController extends Controller
 		$PHPJasperXML = new PHPJasperXML();
 		$PHPJasperXML->load_xml_file(base_path().('/app/reportc01/phpjasperxml/'.$file.'.jrxml'));
 		
-		
-        	if ($request->session()->has('periode')) 
+
+        if ($request->session()->has('periode')) 
 		{
 			$periode = $request->session()->get('periode')['bulan']. '/' . $request->session()->get('periode')['tahun'];
 		} else
@@ -50,7 +51,9 @@ class RCustController extends Controller
 		{
 			$periode = $request['perio'];
 		}
-		
+
+			
+
 		$bulan = substr($periode,0,2);
 		$tahun = substr($periode,3,4);
 		/*     
@@ -80,14 +83,16 @@ class RCustController extends Controller
 		    GROUP BY KODEC
 		) as xxx on custd.KODEC=xxx.KODEC
 		where cust.KODEC = custd.KODEC #and cust.KODEC >=@KODEC1 and cust.KODEC<=@KODEC2 
-		and custd.YER='$tahun' and ( custd.AW$bulan<>0 or custd.MA$bulan<>0 or custd.KE$bulan<>0 or custd.LN$bulan<>0 or custd.AK$bulan<>0 )
+		and custd.YER='$tahun' and ( custd.AW$bulan<>0 or custd.MA$bulan<>0 or custd.KE$bulan<>0 
+		or custd.LN$bulan<>0 or custd.AK$bulan<>0 )
 		order by cust.KODEC;
 		");
 
-		$per = Perid::query()->get();
 		session()->put('filter_per', $periode);
+
 		if($request->has('filter'))
 		{
+			$per = Perid::query()->get();
 			return view('oreport_cust.report')->with(['per' => $per])->with(['hasil' => $query]);
 		}
 

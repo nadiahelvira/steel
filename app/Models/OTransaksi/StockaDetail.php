@@ -15,6 +15,6 @@ class StockaDetail extends Model
 
     protected $fillable =
     [
-        "REC", "NO_BUKTI", "ID", "KD_BHN", "NA_BHN", "SATUAN" , "QTY", "QTYC", "QTYR", "KET"
+        "REC", "NO_BUKTI", "ID", "KD_BRG", "NA_BRG", "SATUAN" , "QTY", "QTYC", "QTYR", "KET"
     ];
 }

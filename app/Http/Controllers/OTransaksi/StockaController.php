@@ -90,9 +90,9 @@ class StockaController extends Controller
 		if($request->NO_PO)
 		{
 	
-			$filterbukti = " WHERE a.NO_BUKTI='".$request->NO_PO."' AND a.KD_BHN = b.KD_BHN ";
+			$filterbukti = " WHERE a.NO_BUKTI='".$request->NO_PO."' AND a.KD_BRG = b.KD_BRG ";
 		}
-		$stockad = DB::SELECT("SELECT a.REC, a.KD_BHN, a.NA_BHN, a.SATUAN , a.QTY, a.HARGA, a.KIRIM, a.SISA, 
+		$stockad = DB::SELECT("SELECT a.REC, a.KD_BRG, a.NA_BRG, a.SATUAN , a.QTY, a.HARGA, a.KIRIM, a.SISA, 
                                 b.SATUAN AS SATUAN_PO, a.QTY AS QTY_PO, '1' AS X
                             from stockad a, bhn b 
                             $filterbukti ORDER BY NO_BUKTI ");
@@ -270,8 +270,8 @@ class StockaController extends Controller
 
 
 		$REC        = $request->input('REC');
-		$KD_BHN	= $request->input('KD_BHN');
-		$NA_BHN	= $request->input('NA_BHN');
+		$KD_BRG	= $request->input('KD_BRG');
+		$NA_BRG	= $request->input('NA_BRG');
 		$SATUAN	= $request->input('SATUAN');
 		$QTYC	= $request->input('QTYC');
 		$QTYR	= $request->input('QTYR');
@@ -289,8 +289,8 @@ class StockaController extends Controller
                 $detail->REC         = $REC[$key];
                 $detail->PER         = $periode;
                 $detail->FLAG        = $FLAGZ;	
-				$detail->KD_BHN	     = ($KD_BHN[$key]==null) ? "" :  $KD_BHN[$key];
-				$detail->NA_BHN	     = ($NA_BHN[$key]==null) ? "" :  $NA_BHN[$key];
+				$detail->KD_BRG	     = ($KD_BRG[$key]==null) ? "" :  $KD_BRG[$key];
+				$detail->NA_BRG	     = ($NA_BRG[$key]==null) ? "" :  $NA_BRG[$key];
 				$detail->SATUAN	     = ($SATUAN[$key]==null) ? "" :  $SATUAN[$key];
 				$detail->QTYC	     = (float) str_replace(',', '', $QTYC[$key]);
 				$detail->QTYR	     = (float) str_replace(',', '', $QTYR[$key]);
@@ -552,8 +552,8 @@ class StockaController extends Controller
 
         $REC    = $request->input('REC');
 
-        $KD_BHN	= $request->input('KD_BHN');
-		$NA_BHN	= $request->input('NA_BHN');
+        $KD_BRG	= $request->input('KD_BRG');
+		$NA_BRG	= $request->input('NA_BRG');
 		$SATUAN	= $request->input('SATUAN');
 		$QTYC	= $request->input('QTYC');
 		$QTYR	= $request->input('QTYR');
@@ -572,8 +572,8 @@ class StockaController extends Controller
                         'REC'        => $REC[$i],
                         'PER'        => $periode,
                         'FLAG'       => $this->FLAGZ,
-                        'KD_BHN'     => ($KD_BHN[$i]==null) ? "" :  $KD_BHN[$i],
-                        'NA_BHN'     => ($NA_BHN[$i]==null) ? "" : $NA_BHN[$i],	
+                        'KD_BRG'     => ($KD_BRG[$i]==null) ? "" :  $KD_BRG[$i],
+                        'NA_BRG'     => ($NA_BRG[$i]==null) ? "" : $NA_BRG[$i],	
                         'SATUAN'     => ($SATUAN[$i]==null) ? "" : $SATUAN[$i],
 						'KET'     	 => ($KET[$i]==null) ? "" : $KET[$i],
                         'QTYC'      => (float) str_replace(',', '', $QTYC[$i]),
@@ -593,8 +593,8 @@ class StockaController extends Controller
                     [
                         'REC'        => $REC[$i],
 
-                        'KD_BHN'     => ($KD_BHN[$i]==null) ? "" :  $KD_BHN[$i],
-                        'NA_BHN'     => ($NA_BHN[$i]==null) ? "" : $NA_BHN[$i],	
+                        'KD_BRG'     => ($KD_BRG[$i]==null) ? "" :  $KD_BRG[$i],
+                        'NA_BRG'     => ($NA_BRG[$i]==null) ? "" : $NA_BRG[$i],	
                         'SATUAN'     => ($SATUAN[$i]==null) ? "" : $SATUAN[$i],
 						'KET'     	 => ($KET[$i]==null) ? "" : $KET[$i],
                         'QTYC'      => (float) str_replace(',', '', $QTYC[$i]),

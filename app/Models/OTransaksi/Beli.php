@@ -19,8 +19,7 @@ class Beli extends Model
 //ganti 3
     protected $fillable = 
     [
-        "NO_BUKTI","TGL", "NO_PO", "FLAG", "GOL", "PER","KODES", "NAMAS", "TOTAL_QTY", "TOTAL", "NOTES",
-		"USRNM", "TG_SMP", "ALAMAT", "KOTA", "ACNOA", "NACNOA", "NO_BANK", "BACNO", "BNAMA", "TOTAL", "PPN", 
-        "NETT", "SISA", "GOL", "NO_BELI", "TYPE", "PKP", "CBG"
+        "NO_BUKTI", "TGL", "PER", "FLAG", "NOTES", "TOTAL_QTY", 
+		"USRNM", "TG_SMP", "CBG", "KODES", "NAMAS", "ALAMAT", "KOTA", "HARI"
     ];
 }

@@ -15,7 +15,6 @@ class PpDetail extends Model
 
     protected $fillable =
     [
-        "REC", "NO_BUKTI", "ID", "KD_BHN", "NA_BHN", "KD_BHN", "NA_BHN","SATUAN","QTY", "HARGA", 
-        "TOTAL", "KET", "GOL", "FLAG", "KD_BRG", "NA_BRG", "PER"
+        "REC", "NO_BUKTI", "ID", "KD_BHN", "NA_BHN", "QTY", "SATUAN", "GOL", "PER", "FLAG"
     ];
 }

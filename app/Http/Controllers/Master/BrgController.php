@@ -34,44 +34,114 @@ class BrgController extends Controller
     // ganti 4
 
     // ganti 4
-    // public function browse(Request $request)
+
+    public function browse_koreksi(Request $request)
 	
-    // {
+    {
 
-    //     $brg = DB::table('brg')->select('KD_BRG', 'NA_BRG', 'SATUAN')->where('GOL', $request['GOL'])->orderBy('KD_BRG', 'ASC')->get();
-    //     return response()->json($brg); 
+        $brg = DB::table('brg')->select('KD_BRG', 'NA_BRG', 'SATUAN')->orderBy('KD_BRG', 'ASC')->get();
+        return response()->json($brg); 
     
-	// }
+	}
 
-    public function browse(Request $request)
+    public function browse_beli(Request $request)
     {   
 		$kd_brgx = $request->KD_BRG;
+		$pkpx = $request->PKP;
         $golz = $request->GOL;
 
 		$filter_kd_brg='';
 
-
-
             if (!empty($request->KD_BRG)) {
-			
-                $filter_kd_brg = " AND KD_BRG ='".$request->KD_BRG."' ";
+                
+                $filter_kd_brg = " KD_BRG ='".$request->KD_BRG."' ";
             } 
                 
-                $brg = DB::SELECT("SELECT KD_BRG, TRIM(REPLACE(REPLACE(REPLACE(brg.NA_BRG, '\n', ' '), '\r', ' '), '\t', ' ')) as NA_BRG,
-                                brg.SATUAN
-                                FROM brg WHERE GOL='$golz'
-                                $filter_kd_brg
-                             
-                                ORDER BY KD_BRG  ");
+                $brg = DB::SELECT("SELECT brg.KD_BRG, TRIM(REPLACE(REPLACE(REPLACE(brg.NA_BRG, '\n', ' '), '\r', ' '), '\t', ' ')) as NA_BRG,
+                                brg.SATUAN AS SATUAN 
+                                FROM brg 
+                                WHERE 
+                                $filter_kd_brg 
+                                ORDER BY brg.KD_BRG  ");
                             
             if	( empty($brg) ) {
                 
-                $brg = DB::SELECT("SELECT KD_BRG, TRIM(REPLACE(REPLACE(REPLACE(brg.NA_BRG, '\n', ' '), '\r', ' '), '\t', ' ')) as NA_BRG,
-                                    brg.SATUAN
+                $brg = DB::SELECT("SELECT brg.KD_BRG, TRIM(REPLACE(REPLACE(REPLACE(brg.NA_BRG, '\n', ' '), '\r', ' '), '\t', ' ')) as NA_BRG,
+                                        brg.SATUAN AS SATUAN
                                 FROM brg
-                                WHERE GOL='$golz'
-                                ORDER BY KD_BRG ");			
+                                ORDER BY brg.KD_BRG ");			
             }
+        
+        return response()->json($brg);
+    }
+
+    public function browse(Request $request)
+    {   
+		$kd_brgx = $request->KD_BRG;
+		$pkpx = $request->PKP;
+		$ringx = $request->RING;
+        $golz = $request->GOL;
+
+		$filter_kd_brg='';
+
+        if( $pkpx == '0' ){
+
+            if (!empty($request->KD_BRG)) {
+			
+                $filter_kd_brg = " WHERE brg.KD_BRG ='".$request->KD_BRG."' ";
+            } 
+                
+                $brg = DB::SELECT("SELECT brg.KD_BRG, TRIM(REPLACE(REPLACE(REPLACE(brg.NA_BRG, '\n', ' '), '\r', ' '), '\t', ' ')) as NA_BRG,
+                                    brg.SATUAN, brgdx.HARGA AS HARGA1, brgdx.HARGA2, brgdx.HARGA3, brgdx.HARGA4, brgdx.HARGA5,
+                                    brgdx.HARGA6, brgdx.HARGA7, brg.GROUP, brg.TYPE_KOM, brg.KOM
+                                FROM brg, brgdx
+                                $filter_kd_brg and brg.KD_BRG = brgdx.KD_BRG
+                                AND brg.PN='0' AND brgdx.RING = '$ringx'
+                                -- AND brg. GOL='$golz'
+                                ORDER BY brg.KD_BRG  ");
+                            
+            if	( empty($brg) ) {
+                
+                $brg = DB::SELECT("SELECT brg.KD_BRG, TRIM(REPLACE(REPLACE(REPLACE(brg.NA_BRG, '\n', ' '), '\r', ' '), '\t', ' ')) as NA_BRG,
+                                    brg.SATUAN, brgdx.HARGA AS HARGA1, brgdx.HARGA2, brgdx.HARGA3, brgdx.HARGA4, brgdx.HARGA5,
+                                    brgdx.HARGA6, brgdx.HARGA7, brg.GROUP, brg.TYPE_KOM, brg.KOM
+                                FROM brg, brgdx
+                                WHERE brg.KD_BRG = brgdx.KD_BRG
+                                AND brg.PN='0' AND brgdx.RING = '$ringx'
+                                -- AND brg. GOL='$golz'
+                                ORDER BY brg.KD_BRG ");			
+            }
+
+        } elseif ($pkpx =! '0')  {
+
+            if (!empty($request->KD_BRG)) {
+			
+                $filter_kd_brg = " WHERE brg.KD_BRG ='".$request->KD_BRG."' ";
+            } 
+                
+                $brg = DB::SELECT("SELECT brg.KD_BRG, TRIM(REPLACE(REPLACE(REPLACE(brg.NA_BRG, '\n', ' '), '\r', ' '), '\t', ' ')) as NA_BRG,
+                                        brg.SATUAN, brgdx.HARGA AS HARGA1, brgdx.HARGA2, brgdx.HARGA3, brgdx.HARGA4, brgdx.HARGA5,
+                                brgdx.HARGA6, brgdx.HARGA7, brg.GROUP, brg.TYPE_KOM, brg.KOM
+                                FROM brg, brgdx
+                                $filter_kd_brg AND brg.KD_BRG = brgdx.KD_BRG
+                                AND brg.PN<>'0' AND brgdx.RING = '$ringx'
+                                -- AND brg.GOL='$golz'
+                                ORDER BY brg.KD_BRG  ");
+                            
+            if	( empty($brg) ) {
+                
+                $brg = DB::SELECT("SELECT brg.KD_BRG, TRIM(REPLACE(REPLACE(REPLACE(brg.NA_BRG, '\n', ' '), '\r', ' '), '\t', ' ')) as NA_BRG,
+                                        brg.SATUAN, brgdx.HARGA AS HARGA1, brgdx.HARGA2, brgdx.HARGA3, brgdx.HARGA4, brgdx.HARGA5,
+                                brgdx.HARGA6, brgdx.HARGA7, brg.GROUP, brg.TYPE_KOM, brg.KOM
+                                FROM brg, brgdx
+                                WHERE brg.PN<>'0' AND brg.KD_BRG = brgdx.KD_BRG
+                                -- AND brg.GOL='$golz' 
+                                AND brgdx.RING = '$ringx'
+                                ORDER BY brg.KD_BRG ");			
+            }
+
+        }
+
 
 
         return response()->json($brg);
@@ -90,7 +160,13 @@ class BrgController extends Controller
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
                 if (Auth::user()->divisi=="programmer" || Auth::user()->divisi=="owner" || Auth::user()->divisi=="sales") 
-                {
+                {   
+                    // url untuk delete di index
+                    $url = "'".url("brg/delete/" . $row->NO_ID )."'";
+                    // batas
+
+                    $btnDelete = ' onclick="deleteRow('.$url.')"';
+
                     $btnPrivilege =
                         '
                                 <a class="dropdown-item" href="brg/edit/?idx=' . $row->NO_ID . '&tipx=edit";
@@ -98,7 +174,7 @@ class BrgController extends Controller
                                     Edit
                                 </a>
                                 <hr></hr>
-                                <a class="dropdown-item btn btn-danger" onclick="return confirm(&quot; Apakah anda yakin ingin hapus? &quot;)" href="brg/delete/' . $row->NO_ID . '">
+                                <a hidden class="dropdown-item btn btn-danger" ' . $btnDelete . '>
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                     Delete
                                 </a> 
@@ -115,7 +191,7 @@ class BrgController extends Controller
                         </a>
 
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="brg/show/' . $row->NO_ID . '">
+                            <a hidden class="dropdown-item" href="brg/show/' . $row->NO_ID . '">
                             <i class="fas fa-eye"></i>
                                 Lihat
                             </a>
@@ -143,7 +219,7 @@ class BrgController extends Controller
             // GANTI 9
 
             [
-                'KD_BRG'       => 'required|unique:brg,KD_BRG',
+                'KD_BRG'       => 'required'
 
             ]
 
@@ -157,17 +233,15 @@ class BrgController extends Controller
             [
                 'KD_BRG'         => ($request['KD_BRG'] == null) ? "" : $request['KD_BRG'],
                 'NA_BRG'         => ($request['NA_BRG'] == null) ? "" : $request['NA_BRG'],
-                'GOL'            => ($request['GOL'] == null) ? "" : $request['GOL'],
+                // 'GOL'            => ($request['GOL'] == null) ? "" : $request['GOL'],
                 'SATUAN'         => ($request['SATUAN'] == null) ? "" : $request['SATUAN'],
                 // 'SATUAN_BELI'    => ($request['SATUAN_BELI'] == null) ? "" : $request['SATUAN_BELI'],
-                // 'KODES'       => ($request['KODES'] == null) ? "" : $request['KODES'],
-                // 'NAMAS'       => ($request['NAMAS'] == null) ? "" : $request['NAMAS'],
+                'KODES'       => ($request['KODES'] == null) ? "" : $request['KODES'],
+                'NAMAS'       => ($request['NAMAS'] == null) ? "" : $request['NAMAS'],
                 // 'ACNOA'          => ($request['ACNOA'] == null) ? "" : $request['ACNOA'],
                 // 'NACNOA'         => ($request['NACNOA'] == null) ? "" : $request['NACNOA'],
                 // 'ACNOB'          => ($request['ACNOB'] == null) ? "" : $request['ACNOB'],
                 // 'NACNOB'         => ($request['NACNOB'] == null) ? "" : $request['NACNOB'],
-                'KD_GRUP'            => ($request['KD_GRUP'] == null) ? "" : $request['KD_GRUP'],
-                'NA_GRUP'            => ($request['NA_GRUP'] == null) ? "" : $request['NA_GRUP'],
                 'DIAMETER'       => (float) str_replace(',', '', $request['DIAMETER']),
                 'TEBAL'          => (float) str_replace(',', '', $request['TEBAL']),
                 'PANJANG'        => (float) str_replace(',', '', $request['PANJANG']),
@@ -178,8 +252,8 @@ class BrgController extends Controller
                 'H_MINC'         => (float) str_replace(',', '', $request['H_MINC']),
                 'LEBAR'          => (float) str_replace(',', '', $request['LEBAR']),
                 'PN'             => ($request['PN'] == null) ? "" : $request['PN'],
-                'GRUP'          => ($request['GRUP'] == null) ? "" : $request['GRUP'],
-                'SUB_GRUP'      => ($request['SUB_GRUP'] == null) ? "" : $request['SUB_GRUP'],
+                'GROUP'          => ($request['GROUP'] == null) ? "" : $request['GROUP'],
+                'SUB_GROUP'      => ($request['SUB_GROUP'] == null) ? "" : $request['SUB_GROUP'],
                 'USRNM'          => Auth::user()->username,
                 'TG_SMP'         => Carbon::now()
             ]
@@ -190,6 +264,10 @@ class BrgController extends Controller
 	    $kd_brgx = $request['KD_BRG'];
 		
 		$brg = Brg::where('KD_BRG', $kd_brgx )->first();
+
+        // DB::SELECT("UPDATE brg,  brgdx
+        //                     SET  brgdx.ID =  brg.NO_ID  WHERE  brg.KD_BRG =  brgdx.KD_BRG 
+		// 					AND  brg.KD_BRG='$kd_brgx';");
 					       
         //return redirect('/brg/edit/?idx=' . $brg->NO_ID . '&tipx=edit')->with('statusInsert', 'Data baru berhasil ditambahkan');
 		return redirect('/brg')->with('statusInsert', 'Data baru berhasil ditambahkan');	
@@ -342,10 +420,15 @@ class BrgController extends Controller
              $brg = new Brg;			 
 		 }
 
+        $kd_brg = $brg->KD_BRG;
+        // $brgDetail = DB::table('brgdx')->where('KD_BRG', $kd_brg)->get();
+
+
 		 $data = [
-						'header' => $brg,
-			        ];				
-			return view('master_brg.edit', $data)->with(['tipx' => $tipx, 'idx' => $idx ]);
+                    'header'        => $brg,
+                    // 'detail'        => $brgDetail,
+                ];				
+        return view('master_brg.edit', $data)->with(['tipx' => $tipx, 'idx' => $idx ]);
 		 
  
        
@@ -386,17 +469,15 @@ class BrgController extends Controller
             [
 
                 'NA_BRG'       => ($request['NA_BRG'] == null) ? "" : $request['NA_BRG'],
-                'GOL'            => ($request['GOL'] == null) ? "" : $request['GOL'],
+                // 'GOL'            => ($request['GOL'] == null) ? "" : $request['GOL'],
                 'SATUAN'         => ($request['SATUAN'] == null) ? "" : $request['SATUAN'],
                 // 'SATUAN_BELI'    => ($request['SATUAN_BELI'] == null) ? "" : $request['SATUAN_BELI'],
-                // 'KODES'       => ($request['KODES'] == null) ? "" : $request['KODES'],
-                // 'NAMAS'       => ($request['NAMAS'] == null) ? "" : $request['NAMAS'],
+                'KODES'       => ($request['KODES'] == null) ? "" : $request['KODES'],
+                'NAMAS'       => ($request['NAMAS'] == null) ? "" : $request['NAMAS'],
                 // 'ACNOA'          => ($request['ACNOA'] == null) ? "" : $request['ACNOA'],
                 // 'NACNOA'         => ($request['NACNOA'] == null) ? "" : $request['NACNOA'],
                 // 'ACNOB'          => ($request['ACNOB'] == null) ? "" : $request['ACNOB'],
                 // 'NACNOB'         => ($request['NACNOB'] == null) ? "" : $request['NACNOB'],
-                'KD_GRUP'            => ($request['KD_GRUP'] == null) ? "" : $request['KD_GRUP'],
-                'NA_GRUP'            => ($request['NA_GRUP'] == null) ? "" : $request['NA_GRUP'],
                 'DIAMETER'       => (float) str_replace(',', '', $request['DIAMETER']),
                 'TEBAL'          => (float) str_replace(',', '', $request['TEBAL']),
                 'PANJANG'        => (float) str_replace(',', '', $request['PANJANG']),
@@ -407,20 +488,22 @@ class BrgController extends Controller
                 'H_MINC'         => (float) str_replace(',', '', $request['H_MINC']),
                 'LEBAR'          => (float) str_replace(',', '', $request['LEBAR']),
                 'PN'             => ($request['PN'] == null) ? "" : $request['PN'],
-                'GRUP'          => ($request['GRUP'] == null) ? "" : $request['GRUP'],
-                'SUB_GRUP'      => ($request['SUB_GRUP'] == null) ? "" : $request['SUB_GRUP'],		 
+                'GROUP'          => ($request['GROUP'] == null) ? "" : $request['GROUP'],
+                'SUB_GROUP'      => ($request['SUB_GROUP'] == null) ? "" : $request['SUB_GROUP'],		 
 				'USRNM'          => Auth::user()->username,
                 'TG_SMP'         => Carbon::now()
-
 
             ]
         );
 
+        // $brg = Brg::where('KD_BRG', $kd_brgx )->first();
 
         //  ganti 21
 
         //return redirect('/brg/edit/?idx=' . $brg->NO_ID . '&tipx=edit');
-		return redirect('/brg')->with('status', 'Data berhasil diupdate');
+		// return redirect('/brg')->with('status', 'Data berhasil diupdate');
+        return redirect('/brg/edit/?idx=' . $brg->NO_ID . '&tipx=edit');	
+
 		
     }
 
@@ -450,7 +533,7 @@ class BrgController extends Controller
 
     public function cekbarang(Request $request)
     {
-        $getItem = DB::SELECT('select count(*) as ADA from brg where KD_BRG ="' . $request->KDBRG . '"');
+        $getItem = DB::SELECT('select count(*) as ADA from brg where KD_BRG ="' . $request->KD_BRG . '"');
 
         return $getItem;
     }

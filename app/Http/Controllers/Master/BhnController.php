@@ -92,6 +92,28 @@ class BhnController extends Controller
                                 ORDER BY KD_BHN ");			
             }
 
+        } else {
+
+            if (!empty($request->KD_BHN)) {
+			
+                $filter_kd_bhn = " WHERE KD_BHN ='".$request->KD_BHN."' ";
+            } 
+                
+                $bhn = DB::SELECT("SELECT KD_BHN, TRIM(REPLACE(REPLACE(REPLACE(bhn.NA_BHN, '\n', ' '), '\r', ' '), '\t', ' ')) as NA_BHN,
+                                bhn.SATUAN
+                                FROM bhn
+                                $filter_kd_bhn
+                                AND GOL='$golz'
+                                ORDER BY KD_BHN  ");
+                            
+            if	( empty($bhn) ) {
+                
+                $bhn = DB::SELECT("SELECT KD_BHN, TRIM(REPLACE(REPLACE(REPLACE(bhn.NA_BHN, '\n', ' '), '\r', ' '), '\t', ' ')) as NA_BHN,
+                                    bhn.SATUAN
+                                FROM bhn
+                                AND GOL='$golz'
+                                ORDER BY KD_BHN ");			
+            }
         }
         
         return response()->json($bhn);

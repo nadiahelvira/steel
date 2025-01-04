@@ -1,0 +1,36 @@
+[08-Oct-2024 07:58:59 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'App\Http\Controllers\Controller' not found in /home/januar13/public_html/steel/app/Http/Controllers/Master/PegawaiController.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/Master/PegawaiController.php on line 16
+[08-Oct-2024 08:45:37 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'App\Http\Controllers\Controller' not found in /home/januar13/public_html/steel/app/Http/Controllers/Master/CustController.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/Master/CustController.php on line 17
+[08-Oct-2024 09:22:27 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'App\Http\Controllers\Controller' not found in /home/januar13/public_html/steel/app/Http/Controllers/Master/BrgController.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/Master/BrgController.php on line 16
+[08-Oct-2024 10:22:41 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\Master\base_path() in /home/januar13/public_html/steel/app/Http/Controllers/Master/FoController.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/Master/FoController.php on line 18
+[08-Oct-2024 15:13:30 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'App\Http\Controllers\Controller' not found in /home/januar13/public_html/steel/app/Http/Controllers/Master/BhnController.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/Master/BhnController.php on line 16
+[08-Oct-2024 16:29:13 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'App\Http\Controllers\Controller' not found in /home/januar13/public_html/steel/app/Http/Controllers/Master/FoUrutController.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/Master/FoUrutController.php on line 15
+[08-Oct-2024 20:10:07 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'App\Http\Controllers\Controller' not found in /home/januar13/public_html/steel/app/Http/Controllers/Master/SupController.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/Master/SupController.php on line 14
+[09-Oct-2024 01:25:10 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'App\Http\Controllers\Controller' not found in /home/januar13/public_html/steel/app/Http/Controllers/Master/PrsController.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/Master/PrsController.php on line 16
+[09-Oct-2024 01:59:59 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'App\Http\Controllers\Controller' not found in /home/januar13/public_html/steel/app/Http/Controllers/Master/GdgController.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/Master/GdgController.php on line 16

@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.plain')
 @section('styles')
 <!-- DataTables -->
 <link rel="stylesheet" href="{{url('AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
@@ -99,13 +99,11 @@
                 },
                 {data: 'username', name: 'username'},
                 {data: 'name', name: 'name',
-                
-                render : function ( data, type, row, meta )
-                {
-                  return ' <span class="badge badge-pill badge-info">' + data + '</span>';
-                }
-
-              },
+                  render : function ( data, type, row, meta )
+                  {
+                    return ' <span class="badge badge-pill badge-warning">' + data + '</span>';
+                  }
+                },
                 {data: 'divisi', name: 'divisi'},
                 {data: 'privilege', name: 'privilege'},
             ],

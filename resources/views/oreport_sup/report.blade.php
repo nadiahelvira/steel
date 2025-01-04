@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.plain')
 
 @section('content')
 <div class="content-wrapper">
@@ -26,14 +26,14 @@
 					<form method="POST" action="{{url('jasper-sup-report')}}">
 					@csrf
 					<div class="form-group row">
-						<div class="col-md-1">
+						<!-- <div class="col-md-1">
 							<label><strong>Gol :</strong></label>
 							
 							<select name="gol" id="gol" class="form-control gol">
 								<option value="Y" {{ session()->get('filter_gol')=='Y' ? 'selected': ''}}>Y</option>
 								<option value="Z" {{ session()->get('filter_gol')=='Z' ? 'selected': ''}}>Z</option>
 							</select>
-						</div>
+						</div> -->
 						<div class="col-md-2">
 							<label><strong>Periode :</strong></label>
 							<select name="perio" id="perio" class="form-control perio" style="width: 200px">
@@ -50,6 +50,7 @@
 							<option value="1100">Bank</option>
 						</select>
 						-->
+
 					</div>
 					<button class="btn btn-primary" type="submit" id="filter" class="filter" name="filter">Filter</button>
 					<button class="btn btn-danger" type="button" id="resetfilter" class="resetfilter" onclick="window.location='{{url("rsup")}}'">Reset</button>
@@ -88,7 +89,7 @@
 					
 				<!-- PASTE DIBAWAH INI -->
 				<!-- DISINI BATAS AWAL KOOLREPORT-->
-				<div class="report-content" col-md-12>
+				<div class="report-content" col-md-12 style="max-width: 100%; overflow-x: scroll;">
 					<?php
 					use \koolreport\datagrid\DataTables;
 

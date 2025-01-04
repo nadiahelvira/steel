@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Master\Cust;
+use App\Models\Master\Cbg;
 use DataTables;
 use Auth;
 use DB;
@@ -21,9 +22,13 @@ class RJualController extends Controller
 
   	public function report()
     {
+		$cbg = Cbg::groupBy('CBG')->get();
+		session()->put('filter_cbg', '');
+
 		$kodec = Cust::orderBy('KODEC')->get();
 		session()->put('filter_gol', '');
 		session()->put('filter_kodec1', '');
+		session()->put('filter_kodec2', '');
 		session()->put('filter_namac1', '');
 		session()->put('filter_tglDari', date("d-m-Y"));
 		session()->put('filter_tglSampai', date("d-m-Y"));
@@ -31,7 +36,7 @@ class RJualController extends Controller
 		session()->put('filter_nabrg1', '');
 		session()->put('filter_kdgd1', '');
 	
-        return view('oreport_jual.report')->with(['kodec' => $kodec])->with(['hasil' => []]);
+        return view('oreport_jual.report')->with(['kodec' => $kodec])->with(['cbg' => $cbg])->with(['hasil' => []]);
     }
 	  
 
@@ -43,32 +48,51 @@ class RJualController extends Controller
 		
 			// Check Filter
 
-			if (!empty($request->kodec))
+			if($request['cbg'])
 			{
-				$filterkodec = " and KODEC='".$request->kodec."' ";
+				$cbg = $request['cbg'];
 			}
 			
+			// if (!empty($request->kodec))
+			// {
+			// 	$filterkodec = " and so.KODEC='".$request->kodec."' ";
+			// } 
+		
+			if (!empty($request->kodec) && !empty($request->kodec2))
+			{
+				$filterkodec = " WHERE a.KODEC between '".$kodec."' and '".$kodec2."' ";
+			}
 			
 			if (!empty($request->tglDr) && !empty($request->tglSmp))
 			{
 				$tglDrD = date("Y-m-d", strtotime($request->tglDr));
 				$tglSmpD = date("Y-m-d", strtotime($request->tglSmp));
-				$filtertgl = " and TGL between '".$tglDrD."' and '".$tglSmpD."' ";
+				$filtertgl = " and a.TGL between '".$tglDrD."' and '".$tglSmpD."' ";
 			}
 
 			if (!empty($request->brg1))
 			{
-				$filterbrg = " and KD_BRG='".$request->brg1."' ";
+				$filterbrg = " and b.KD_BRG='".$request->brg1."' ";
 			}
 
 			if (!empty($request->kdgd1))
 			{
-				$filtergudang = " and GUDANG='".$request->kdgd1."' ";
+				$filtergudang = " and a.GUDANG='".$request->kdgd1."' ";
 			}
-
+			
+			if (!empty($request->cbg))
+			{
+				$filtercbg = " and a.CBG='".$request->cbg."' ";
+			}
+			
+			
+			$tgl_1 = date("Y-m-d", strtotime($request->tglDr));
+			$tgl_2 = date("Y-m-d", strtotime($request->tglSmp));
+			
 
 			session()->put('filter_gol', $request->gol);
 			session()->put('filter_kodec1', $request->kodec);
+			session()->put('filter_kodec2', $request->kodec2);
 			session()->put('filter_namac1', $request->NAMAC);
 			session()->put('filter_tglDari', $request->tglDr);
 			session()->put('filter_tglSampai', $request->tglSmp);
@@ -76,15 +100,25 @@ class RJualController extends Controller
 			session()->put('filter_nabrg1', $request->nabrg1);
 			session()->put('filter_kdgd1', $request->kdgd1);
 			session()->put('filter_no_so1', $request->no_so1);
+			session()->put('filter_cbg', $request->cbg);
 			
 		$query = DB::SELECT("
-			SELECT NO_BUKTI,TGL,NO_SO,TRUCK, KODEC,NAMAC,KD_BRG,NA_BRG,KG, QTY, HARGA,TOTAL, 
-			DPP, PPN, GUDANG, NOTES from jual WHERE FLAG='JL' $filtertgl  $filterkodec  $filterbrg $filtergudang;
+			
+			SELECT a.NO_BUKTI, a.TGL, b.NO_SO, a.TRUCK, a.KODEC, a.NAMAC, b.KD_BRG,b.NA_BRG,
+					b.QTY, b.HARGA, b.TOTAL, 
+					b.DPP, b.PPN, b.DISK
+			from jual a, juald b 
+			WHERE a.NO_BUKTI = b.NO_BUKTI and a.FLAG='JL' 
+			$filtertgl  $filterkodec $filterbrg $filtergudang $filtercbg
+			ORDER BY a.NO_BUKTI;
+
 		");
       
 		if($request->has('filter'))
 		{
-			return view('oreport_jual.report')->with(['hasil' => $query]);
+			$cbg = Cbg::groupBy('CBG')->get();
+
+			return view('oreport_jual.report')->with(['cbg' => $cbg])->with(['hasil' => $query]);
 		}
 
 		$data=[];
@@ -93,6 +127,8 @@ class RJualController extends Controller
 			array_push($data, array(
 				'NO_BUKTI' => $query[$key]->NO_BUKTI,
 				'TGL' => $query[$key]->TGL,
+				'TGL_1' => $tgl_1,
+				'TGL_2' => $tgl_2,
 				'NO_SO' => $query[$key]->NO_SO,
 				'KODEC' => $query[$key]->KODEC,
 				'NAMAC' => $query[$key]->NAMAC,

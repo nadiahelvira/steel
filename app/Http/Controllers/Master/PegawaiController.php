@@ -62,6 +62,13 @@ class PegawaiController extends Controller
             ->addColumn('action', function ($row) {
                 if (Auth::user()->divisi=="programmer" || Auth::user()->divisi=="owner" || Auth::user()->divisi=="sales") 
                 {
+
+                    // url untuk delete di index
+                    $url = "'".url("pegawai/delete/" . $row->NO_ID )."'";
+                    // batas
+
+                    $btnDelete = ' onclick="deleteRow('.$url.')"';
+
                     $btnPrivilege =
                         '
                                 <a class="dropdown-item" href="pegawai/edit/?idx=' . $row->NO_ID . '&tipx=edit";
@@ -69,7 +76,8 @@ class PegawaiController extends Controller
                                     Edit
                                 </a>
                                 <hr></hr>
-                                <a class="dropdown-item btn btn-danger" onclick="return confirm(&quot; Apakah anda yakin ingin hapus? &quot;)" href="pegawai/delete/' . $row->NO_ID . '">
+                                <a class="dropdown-item btn btn-danger" ' . $btnDelete . '>
+                                
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                     Delete
                                 </a> 
@@ -160,6 +168,7 @@ class PegawaiController extends Controller
                 'HARI'            => ($request['HARI'] == null) ? "" : $request['HARI'],
                 'UMAKAN'            => (float) str_replace(',', '', $request['UMAKAN']),
                 'KOM'            => (float) str_replace(',', '', $request['KOM']),
+                'PINJAM'            => (float) str_replace(',', '', $request['PINJAM']),
                 'USRNM'          => Auth::user()->username,
                 'TG_SMP'         => Carbon::now()
             ]
@@ -396,6 +405,7 @@ class PegawaiController extends Controller
                 'LIM'            => (float) str_replace(',', '', $request['LIM']),
                 'HARI'            => (float) str_replace(',', '', $request['HARI']),
                 'KOM'            => (float) str_replace(',', '', $request['KOM']),
+                'PINJAM'            => (float) str_replace(',', '', $request['PINJAM']),
                 'UMAKAN'            => (float) str_replace(',', '', $request['UMAKAN']),
                 'USRNM'          => Auth::user()->username,
                 'TG_SMP'         => Carbon::now()

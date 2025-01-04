@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.plain')
 
 <style>
     .card {
@@ -8,6 +8,47 @@
     .form-control:focus {
         background-color: #E0FFFF !important;
     }
+
+	/* perubahan tab warna di form edit  */
+	.nav-item .nav-link.active {
+		background-color: red !important; /* Use !important to ensure it overrides */
+		color: white !important;
+	}
+
+	/* query LOADX */
+
+	.loader {
+      position: fixed;
+        top: 50%;
+        left: 50%;
+      width: 100px;
+      aspect-ratio: 1;
+      background:
+        radial-gradient(farthest-side,#ffa516 90%,#0000) center/16px 16px,
+        radial-gradient(farthest-side,green   90%,#0000) bottom/12px 12px;
+      background-repeat: no-repeat;
+      animation: l17 1s infinite linear;
+      position: relative;
+    }
+    .loader::before {    
+      content:"";
+      position: absolute;
+      width: 8px;
+      aspect-ratio: 1;
+      inset: auto 0 16px;
+      margin: auto;
+      background: #ccc;
+      border-radius: 50%;
+      transform-origin: 50% calc(100% + 10px);
+      animation: inherit;
+      animation-duration: 0.5s;
+    }
+    @keyframes l17 { 
+      100%{transform: rotate(1turn)}
+    }
+
+	/* penutup LOADX */
+	
 </style>
 
 @section('content')
@@ -17,7 +58,7 @@
         <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-            <h1 class="m-0">Data Pegawai</h1>
+            <h1 class="m-0">Data Pegawai </h1>
             </div>
             <!-- /.col -->
         </div><!-- /.row -->
@@ -46,32 +87,82 @@
                         </ul>
         
                         <div class="tab-content mt-3">
+						<style>
+								/* Ensure specificity with class targeting */
+								.form-group.special-input-label {
+									position: relative;
+									margin-left: 5px ;
+								}
+						
+								/* Ensure only bottom border for input */
+								.form-group.special-input-label input {
+									width: 100%;
+									padding: 10px 0;
+									border: none !important;
+									border-bottom: 2px solid #ccc !important;
+									outline: none !important;
+									font-size: 16px !important;
+									background: transparent !important; /* Remove any background color */
+								}
+						
+								/* Bottom border color change on focus */
+								.form-group.special-input-label input:focus {
+									border-bottom: 2px solid #007BFF !important; /* Change color on focus */
+								}
+						
+								/* Style the label with a higher specificity */
+								.form-group.special-input-label label {
+									position: absolute;
+									top: 12px;
+									color: #888 !important;
+									font-size: 16px !important;
+									transition: 0.3s ease all;
+									pointer-events: none;
+								}
+						
+								/* Move label above input when focused or has content */
+								.form-group.special-input-label input:focus + label,
+								.form-group.special-input-label input:not(:placeholder-shown) + label {
+									top: -10px !important;
+									font-size: 12px !important;
+									color: #007BFF !important;
+								}
+							</style>
+
+							<!-- tutupannya -->
+
 							<div id="pegawaiInfo" class="tab-pane active">
-        
                              <div class="form-group row">
-                                <div class="col-md-1">
-                                    <label for="KODEP" class="form-label">Kode</label>
-                                </div>
  
                                     <input type="text" class="form-control NO_ID" id="NO_ID" name="NO_ID"
                                     placeholder="Masukkan NO_ID" value="{{$header->NO_ID ?? ''}}" hidden readonly>
 
 									<input name="tipx" class="form-control flagz" id="tipx" value="{{$tipx}}" hidden>
-		 
 
-								<div class="col-md-2">
-                                    <input type="text" class="form-control KODEP" id="KODEP" name="KODEP"
-                                    placeholder="Masukkan Kode Customer" value="{{$header->KODEP}}" readonly>
-                                </div>   
+								<!-- code text box baru -->
+								<div class="col-md-3 form-group row special-input-label">
+
+									<input type="text" class="KODEP" id="KODEP" name="KODEP" 
+										value="{{$header->KODEP}}" placeholder=" " >
+									<label for="KODEP">Kode</label>
+								</div>
+								<!-- tutupannya -->
 								
-                                <div class="col-md-1">
-                                    <label for="NAMAP" class="form-label">Nama</label>
-                                </div>
-                                <div class="col-md-2">
-                                    <input type="text" class="form-control NAMAP" id="NAMAP" name="NAMAP"
-                                    placeholder="Masukkan Nama Customer" value="{{$header->NAMAP}}">
-                                </div>        
+								<div class="col-md-1">
+								</div>
+
+								<!-- code text box baru -->
+								<div class="col-md-3 form-group row special-input-label">
+
+									<input type="text" class="NAMAP" id="NAMAP" name="NAMAP" 
+										value="{{$header->NAMAP}}" placeholder=" " >
+									<label for="NAMAP">Nama</label>
+								</div>
+								<!-- tutupannya -->
 								
+								<div class="col-md-1">
+								</div>
+
 								<div class="col-md-1">
 									<label for="STA" class="form-label">Status</label>
 								</div>
@@ -85,79 +176,141 @@
                             </div>
         
                             <div class="form-group row">
+								<!-- code text box baru -->
+								<div class="col-md-3 form-group row special-input-label">
 
-                                <div class="col-md-1">
-                                    <label for="NO_KTP" class="form-label">No KTP</label>
-                                </div>
-                                <div class="col-md-2">
-                                    <input type="text" class="form-control NO_KTP" id="NO_KTP"name="NO_KTP"
-                                    placeholder="Masukkan KTP" value="{{$header->NO_KTP}}">
-                                </div>
+									<input type="text" class="NO_KTP" id="NO_KTP" name="NO_KTP" 
+										value="{{$header->NO_KTP}}" placeholder=" " >
+									<label for="NO_KTP">No. KTP</label>
+								</div>
+								<!-- tutupannya -->
 
-                                <div class="col-md-1">
-                                    <label for="ALAMAT" class="form-label">Alamat</label>
-                                </div>
-                                <div class="col-md-2">
-                                    <input type="text" class="form-control ALAMAT" id="ALAMAT" name="ALAMAT"
-                                    placeholder="Masukkan Alamat" value="{{$header->ALAMAT}}">
-                                </div>
+								<div class="col-md-1">
+								</div>
+								
+								<!-- code text box baru -->
+								<div class="col-md-3 form-group row special-input-label">
 
-                                <div class="col-md-1">
-                                    <label for="KOTA" class="form-label">Kota</label>
-                                </div>
-                                <div class="col-md-2">
-                                    <input type="text" class="form-control KOTA" id="KOTA" name="KOTA"
-                                    placeholder="Masukkan Kota" value="{{$header->KOTA}}">
-                                </div>
+									<input type="text" class="ALAMAT" id="ALAMAT" name="ALAMAT" 
+										value="{{$header->ALAMAT}}" placeholder=" " >
+									<label for="ALAMAT">Alamat</label>
+								</div>
+								<!-- tutupannya -->
+
+								<div class="col-md-1">
+								</div>
+
+                               <!-- code text box baru -->
+								<div class="col-md-3 form-group row special-input-label">
+
+									<input type="text" class="KOTA" id="KOTA" name="KOTA" 
+										value="{{$header->KOTA}}" placeholder=" " >
+									<label for="KOTA">Kota</label>
+								</div>
+								<!-- tutupannya -->
 							</div>
  
 							<div class="form-group row">
-                                <div class="col-md-1">
-                                    <label for="TELPON" class="form-label">Telpon</label>
-                                </div>
-                                <div class="col-md-2">
-                                    <input type="text" class="form-control TELPON" id="TELPON"name="TELPON"
-                                    placeholder="Masukkan Telpon" value="{{$header->TELPON}}">
-                                </div>
+								<!-- code text box baru -->
+								<div class="col-md-3 form-group row special-input-label">
+
+									<input type="text" class="TELPON" id="TELPON" name="TELPON" 
+										value="{{$header->TELPON}}" placeholder=" " >
+									<label for="TELPON">Telpon</label>
+								</div>
+								<!-- tutupannya -->
 
 								<div class="col-md-1">
-                                    <label for="KONTAK" class="form-label">Kontak</label>
-                                </div>
-                                <div class="col-md-2">
-                                    <input type="text" class="form-control KONTAK" id="KONTAK"name="KONTAK"
-                                    placeholder="Masukkan Kontak" value="{{$header->KONTAK}}">
-                                </div>
+								</div>
 
-                                <div class="col-md-1">
-                                    <label for="HP" class="form-label">HP</label>
-                                </div>
-                                <div class="col-md-2">
-                                    <input type="text" class="form-control HP" id="HP"name="HP"
-                                    placeholder="Masukkan HP" value="{{$header->HP}}">
-                                </div>
+								<!-- code text box baru -->
+								<div class="col-md-3 form-group row special-input-label">
+
+									<input type="text" class="KONTAK" id="KONTAK" name="KONTAK" 
+										value="{{$header->KONTAK}}" placeholder=" " >
+									<label for="KONTAK">Kontak</label>
+								</div>
+								<!-- tutupannya -->
+
+								<div class="col-md-1">
+								</div>
+
+								<!-- code text box baru -->
+								<div class="col-md-3 form-group row special-input-label">
+
+									<input type="text" class="HP" id="HP" name="HP" 
+										value="{{$header->HP}}" placeholder=" " >
+									<label for="HP">HP</label>
+								</div>
+								<!-- tutupannya -->
                             </div>
+
+							<!-- loader tampil di modal  -->
+							<div class="loader" style="z-index: 1055;" id='LOADX' ></div>
  
 							<div class="form-group row">
-                                <div class="col-md-1">
+                                <!-- <div class="col-md-1">
                                     <label for="UMAKAN" class="form-label">Uang Makan / hari</label>
                                 </div>
 								<div class="col-md-2">
 									<input type="text" class="form-control UMAKAN" onclick="select()"  id="UMAKAN" name="UMAKAN" placeholder="" value="{{ number_format($header->UMAKAN, 2, '.', ',') }}" style="text-align: right; width:140px" readonly>
-								</div> 
+								</div>  -->
 
-                                <div class="col-md-1">
+								<!-- code text box baru -->
+								<div class="col-md-3 form-group row special-input-label">
+
+									<input type="text" class="UMAKAN" id="UMAKAN" name="UMAKAN" 
+										value="{{$header->UMAKAN}}" placeholder=" " >
+									<label for="UMAKAN">Uang Makan / Hari</label>
+								</div>
+								<!-- tutupannya -->
+
+								<div class="col-md-1">
+								</div>
+
+                                <!-- <div class="col-md-1">
                                     <label for="KOM" class="form-label">Komisi (%)</label>
                                 </div>
 								<div class="col-md-2">
 									<input type="text" class="form-control KOM" onclick="select()"  id="KOM" name="KOM" placeholder="" value="{{ number_format($header->KOM, 2, '.', ',') }}" style="text-align: right; width:140px" readonly>
-								</div> 
+								</div>  -->
+
+								<!-- code text box baru -->
+								<div class="col-md-3 form-group row special-input-label" hidden>
+
+									<input type="text" class="KOM" id="KOM" name="KOM" 
+										value="{{$header->KOM}}" placeholder=" " >
+									<label for="KOM">Komisi (%)</label>
+								</div>
+								<!-- tutupannya -->
+
+								<!-- code text box baru -->
+								<div class="col-md-3 form-group row special-input-label">
+
+									<input type="text" class="PINJAM" id="PINJAM" name="PINJAM" 
+										value="{{$header->PINJAM}}" placeholder=" " >
+									<label for="PINJAM">Kas Bon</label>
+								</div>
+								<!-- tutupannya -->
 
 								<div class="col-md-1">
+								</div>
+
+								<!-- <div class="col-md-1">
 									<label for="GAJI" class="form-label">Gaji / hari</label>
 								</div>
 								<div class="col-md-2">
 									<input type="text" class="form-control GAJI" onclick="select()"  id="GAJI" name="GAJI" placeholder="" value="{{ number_format($header->GAJI, 2, '.', ',') }}" style="text-align: right; width:140px" readonly>
+								</div> -->
+
+								<!-- code text box baru -->
+								<div class="col-md-3 form-group row special-input-label">
+
+									<input type="text" class="GAJI" id="GAJI" name="GAJI" 
+										value="{{$header->GAJI}}" placeholder=" " >
+									<label for="GAJI">Gaji / Hari</label>
 								</div>
+								<!-- tutupannya -->
                             </div> 
 							
 							
@@ -181,9 +334,11 @@
 							</div>
 							<div class="col-md-3">
 								<button type="button" id='HAPUSX'  onclick="hapusTrans()" class="btn btn-outline-danger">Hapus</button>
-								<button type="button" id='CLOSEX'  onclick="location.href='{{url('/pegawai' )}}'" class="btn btn-outline-secondary">Close</button>
+								
+								<!-- <button type="button" id='CLOSEX'  onclick="location.href='{{url('/pegawai' )}}'" class="btn btn-outline-secondary">Close</button> -->
 
-
+								<!-- tombol close sweet alert -->
+								<button type="button" id='CLOSEX' onclick="closeTrans()" class="btn btn-outline-secondary">Close</button></div>
 							</div>
 						</div>
 
@@ -206,7 +361,9 @@
 <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script> -->
 <script src="{{asset('foxie_js_css/bootstrap.bundle.min.js')}}"></script>
 
-
+<!-- tambahan untuk sweetalert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- tutupannya -->
 <script>
     var target;
 	var idrow = 1;
@@ -216,6 +373,12 @@
 	}
 
     $(document).ready(function () {
+
+		setTimeout(function(){
+
+		$("#LOADX").hide();
+
+		},500);
 
 		$('body').on('keydown', 'input, select', function(e) {
 			if (e.key === "Enter") {
@@ -265,8 +428,8 @@
 	
 	function ganti() {
 		
-		// mati();
-		hidup();
+		mati();
+		// hidup();
 	
 	}
 	
@@ -402,21 +565,84 @@
 		 $('#BANK_NAMA').val("");		
 		 $('#BANK_REK').val("");
 		 $('#UMAKAN').val("0");
-		 $('#KOM').val("3");	
+		 $('#KOM').val("0");	
 		 $('#GAJI').val("0");	
 
 		 
 	}
 	
+	// function hapusTrans() {
+	// 	let text = "Hapus Master "+$('#KODEP').val()+"?";
+	// 	if (confirm(text) == true) 
+	// 	{
+	// 		window.location ="{{url('/pegawai/delete/'.$header->NO_ID )}}'";
+	// 		//return true;
+	// 	} 
+	// 	return false;
+	// }
+
+	// sweetalert untuk tombol hapus dan close
+	
 	function hapusTrans() {
-		let text = "Hapus Master "+$('#KODEP').val()+"?";
-		if (confirm(text) == true) 
-		{
-			window.location ="{{url('/pegawai/delete/'.$header->NO_ID )}}'";
-			//return true;
-		} 
-		return false;
+		let text = "Hapus Transaksi "+$('#NO_BUKTI').val()+"?";
+
+		var loc ='';
+		
+		Swal.fire({
+			title: 'Are you sure?',
+			text: text,
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes, delete it!',
+			cancelButtonText: 'Cancel'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				// Show a success message before redirecting to delete the data
+				Swal.fire({
+					title: 'Deleted!',
+					text: 'Data has been deleted.',
+					icon: 'success',
+					confirmButtonText: 'OK'
+				}).then(() => {
+					// Redirect to delete the data after user confirms the success message
+	            	loc = "{{ url('/pegawai/delete/'.$header->NO_ID) }}"  ;
+
+		            // alert(loc);
+	            	window.location = loc;
+		
+				});
+			}
+		});
 	}
+	
+	function closeTrans() {
+		console.log("masuk");
+		var loc ='';
+		
+		Swal.fire({
+			title: 'Are you sure?',
+			text: 'Do you really want to close this page? Unsaved changes will be lost.',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Yes, close it',
+			cancelButtonText: 'No, stay here'
+		}).then((result) => {
+			if (result.isConfirmed) {
+	        	loc = "{{ url('/pegawai/') }}" ;
+				window.location = loc ;
+			} else {
+				Swal.fire({
+					icon: 'info',
+					title: 'Cancelled',
+					text: 'You stayed on the page'
+				});
+			}
+		});
+	}
+
+	// tutupannya
 
 	function CariBukti() {
 		
@@ -459,6 +685,8 @@
 		
 
         (hasilCek==0) ? document.getElementById("entri").submit() : alert('Pegawai '+$('#KODEP').val()+' sudah ada!');
+	
+		$("#LOADX").hide();
 	}
 </script>
 @endsection

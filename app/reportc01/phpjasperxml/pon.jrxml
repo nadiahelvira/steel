@@ -56,10 +56,10 @@
 	<field name="KD_BRG" class="java.lang.String"/>
 	<field name="NA_BRG" class="java.lang.String"/>
 	<field name="NOTES" class="java.lang.String"/>
-	<field name="KG" class="java.lang.Float"/>
+	<field name="QTY" class="java.lang.Float"/>
 	<field name="HARGA" class="java.lang.Float"/>
 	<variable name="VAR_KG" class="java.lang.Double" resetType="Group" resetGroup="KODES" calculation="Sum">
-		<variableExpression><![CDATA[$F{KG}]]></variableExpression>
+		<variableExpression><![CDATA[$F{QTY}]]></variableExpression>
 	</variable>
 	<variable name="VAR_TOTAL" class="java.lang.Double" resetType="Group" resetGroup="KODES" calculation="Sum">
 		<variableExpression><![CDATA[$F{TOTAL}]]></variableExpression>
@@ -78,8 +78,10 @@
 		<groupHeader>
 			<band height="51">
 				<textField>
-					<reportElement style="table_CH" x="60" y="0" width="189" height="20" printWhenGroupChanges="KODES" uuid="a071848a-bf62-47a8-ace0-20c12859b03c"/>
-					<textElement verticalAlignment="Middle"/>
+					<reportElement style="table_CH" x="83" y="4" width="189" height="20" printWhenGroupChanges="KODES" uuid="a071848a-bf62-47a8-ace0-20c12859b03c"/>
+					<textElement verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{KODES}+'-'+$F{NAMAS}]]></textFieldExpression>
 				</textField>
 				<textField>
@@ -158,7 +160,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA["KG"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["QTY"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="615" y="30" width="96" height="21" uuid="9000a448-607d-465a-b5e2-510659203380"/>
@@ -187,15 +189,17 @@
 					<textFieldExpression><![CDATA["TOTAL"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="0" y="0" width="60" height="21" uuid="a5ef049d-dcae-4768-b165-f351e41f4efe"/>
-					<textElement verticalAlignment="Middle"/>
+					<reportElement x="0" y="4" width="83" height="20" uuid="a5ef049d-dcae-4768-b165-f351e41f4efe"/>
+					<textElement verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
 					<textFieldExpression><![CDATA["SUPPLIER : "]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
 		<groupFooter>
 			<band height="23">
-				<textField pattern="#,##0">
+				<textField pattern="#,##0.00">
 					<reportElement x="711" y="1" width="89" height="20" uuid="7211c57e-dfeb-42bc-a871-8d6ed111e44e"/>
 					<box>
 						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -206,7 +210,7 @@
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA[$V{VAR_TOTAL}]]></textFieldExpression>
 				</textField>
-				<textField pattern="#,##0">
+				<textField pattern="#,##0.00">
 					<reportElement x="515" y="1" width="100" height="20" uuid="eb12c9a4-b7cc-4fec-9b53-58ebdfcd3af7"/>
 					<box>
 						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -282,6 +286,7 @@
 					<leftPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{NO_PO}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
@@ -290,24 +295,25 @@
 					<leftPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{TGL}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0.00">
 				<reportElement x="515" y="0" width="100" height="17" uuid="78c6c50f-28cb-45d5-b014-f27909ce0693"/>
 				<box>
 					<leftPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[$F{KG}]]></textFieldExpression>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{QTY}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0.00">
 				<reportElement x="615" y="0" width="96" height="17" uuid="2b972f1b-c0d0-40f1-9fb2-f661e1384d3b"/>
 				<box>
 					<leftPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Right"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{HARGA}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
@@ -316,18 +322,18 @@
 					<leftPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Left">
+				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Tahoma"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{NA_BRG}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0.00">
 				<reportElement x="711" y="0" width="89" height="17" uuid="6771af26-b4b7-4b22-bb40-b5ee54642e06"/>
 				<box>
 					<leftPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Right"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{TOTAL}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
@@ -336,7 +342,7 @@
 					<leftPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Left">
+				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Tahoma"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{KODES}]]></textFieldExpression>
@@ -347,16 +353,16 @@
 					<leftPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Left">
+				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Tahoma"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{NAMAS}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band splitType="Stretch"/>
-	</columnFooter>
+	<pageFooter>
+		<band height="5"/>
+	</pageFooter>
 	<summary>
 		<band height="96" splitType="Stretch">
 			<rectangle>

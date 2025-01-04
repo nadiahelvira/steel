@@ -1,0 +1,40 @@
+[02-Oct-2024 16:28:18 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/FTransaksi/Bank.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/FTransaksi/Bank.php on line 10
+[02-Oct-2024 16:28:18 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/FTransaksi/Bank.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/FTransaksi/Bank.php on line 10
+[02-Oct-2024 16:28:20 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/FTransaksi/Bank.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/FTransaksi/Bank.php on line 10
+[02-Oct-2024 16:28:21 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/FTransaksi/Bank.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/FTransaksi/Bank.php on line 10
+[05-Oct-2024 12:29:22 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/FTransaksi/Kas.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/FTransaksi/Kas.php on line 10
+[05-Oct-2024 12:33:27 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/FTransaksi/MemoDetail.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/FTransaksi/MemoDetail.php on line 8
+[05-Oct-2024 16:16:59 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/FTransaksi/KasDetail.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/FTransaksi/KasDetail.php on line 8
+[05-Oct-2024 19:15:34 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/FTransaksi/Bank.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/FTransaksi/Bank.php on line 10
+[05-Oct-2024 19:27:03 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/FTransaksi/Memo.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/FTransaksi/Memo.php on line 10
+[05-Oct-2024 22:27:15 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/FTransaksi/BankDetail.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/FTransaksi/BankDetail.php on line 8

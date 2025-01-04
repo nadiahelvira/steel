@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.plain')
 @section('styles')
 <!-- <link rel="stylesheet" href="{{url('http://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css') }}"> -->
 <link rel="stylesheet" href="{{asset('foxie_js_css/jquery.dataTables.min.css')}}" />
@@ -24,9 +24,6 @@
         border-left: solid 2px #000;
     }
 	
-    .table tbody:nth-child(2) {
-        background-color: #d3ffce;
-    }
 
     .btn-secondary {
         background-color: #42047e !important;
@@ -36,24 +33,46 @@
     td { font-size: 13px; }
 </style>
 
+<style>
+    .x{
+        Color : red
+    }
+
+    /* menghilangkan padding */
+    .content-header {
+        padding: 0 !important;
+    }
+
+</style>
+
 
 @section('content')
+
+
+<!-- Sweetalert delete -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!--  -->
+
 <div class="content-wrapper">
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0">Transaksi {{$judul}} </h1>
-          </div>
-        </div>
-      </div>
-    </div>
+
 
     <!-- Status -->
     @if (session('status'))
         <div class="alert alert-success">
             {{session('status')}}
         </div>
+
+        <!-- tambahan notifikasinya untuk delete di index -->
+        <script>
+            Swal.fire({
+					title: 'Deleted!',
+					text: 'Data has been deleted. {{session('status')}}',
+					icon: 'success',
+					confirmButtonText: 'OK'
+				})
+        </script>
+        <!-- tutupannya -->
+
     @endif
 
     <div class="content">
@@ -68,8 +87,9 @@
                 <table class="table table-fixed table-striped table-border table-hover nowrap datatable" id="datatable">
                     <thead class="table-dark">
                         <tr>
+                            <th scope="col" style="text-align: center"></th>
                             <th scope="col" style="text-align: center">#</th>
-				     		            <th scope="col" style="text-align: center">-</th>							
+				     		<th scope="col" style="text-align: center">-</th>							
                             <th scope="col" style="text-align: left">Bukti#</th>
                             <th scope="col" style="text-align: left">Tgl</th>
                             <th scope="col" style="text-align: right">Total_Qty</th>
@@ -100,8 +120,8 @@
             processing: true,
             serverSide: true,
             autoWidth: false,
-            'scrollX': true,
-            'scrollY': '400px',
+            // 'scrollX': true,
+            // 'scrollY': '400px',
             "order": [[ 0, "asc" ]],
             ajax: 
             {
@@ -115,17 +135,28 @@
 
             columns: 
             [
+                //add tombol + 
+                { 
+                    data: null, // Column for the button
+                    orderable: false,
+                    searchable: false,
+                    render: function(data, type, row, meta) {
+
+                      // tanpa ada POST (posting) di atas
+                        return `<button class="btn btn-success btn-sm toggle-button" data-no_bukti="${row.NO_BUKTI}" onclick="toggleButton(this)">+</button>`;
+                    }
+                },
+                  // tutupannya
+
                 { data: 'DT_RowIndex', orderable: false, searchable: false },
 			          { data: 'action', name: 'action'},
-                {data: 'NO_BUKTI', name: 'NO_BUKTI'},
-                {data: 'TGL', name: 'TGL',
-                
-                render : function ( data, type, row, meta )
-                {
-                  return ' <span class="badge badge-pill badge-danger">' + data + '</span>';
-                }
-
-              },
+                {data: 'NO_BUKTI', name: 'NO_BUKTI',
+                  render : function ( data, type, row, meta )
+                  {
+                    return ' <h5><span class="x">' + data + '</span></h5>';
+                  }
+                },
+                {data: 'TGL', name: 'TGL'},
                 {
                   data: 'TOTAL_QTY',
                   name: 'TOTAL_QTY',
@@ -144,7 +175,7 @@
                     "targets": 4
                 },			
                 {
-                  targets: 3,
+                  targets: 4,
                   render: $.fn.dataTable.render.moment( 'DD-MM-YYYY' )
                 }
             ],
@@ -160,7 +191,111 @@
         });
 		
         $("div.test_btn").html('<a class="btn btn-lg btn-md btn-success" href="{{url('stockb/edit?flagz='.$flagz.'&idx=0&tipx=new')}}"> <i class="fas fa-plus fa-sm md-3" ></i></a');
+
+        // function buat ganti tombol + onclick
+        window.toggleButton = function(button) {
+            const no_bukti = $(button).data('no_bukti'); // Get the no_bukti from data attribute
+
+            if (button.innerText === '+') {
+                button.innerText = '-';
+                button.classList.remove('btn-success');
+                button.classList.add('btn-danger');
+
+                // Fetch and show detail data using no_bukti
+                $.ajax({
+                    url: '{{ route('get-detail-stockb') }}', // Define the route to fetch detail data
+                    method: 'GET',
+                    data: {
+                        no_bukti: no_bukti
+                    }, // Pass no_bukti in the request
+                    success: function(response) {
+                        console.log(response);
+
+                        let totalQty = 0;
+                        let detailHtml = `
+                            <div class="p-3">
+                                <table class="table table-bordered table-sm">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>Kode</th>
+                                            <th>Nama</th>
+                                            <th>Satuan</th>
+                                            <th>Qty-Comp</th>
+                                            <th>Qty-Real</th>
+                                            <th>Qty</th>
+                                            <th>Ket</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                        `;
+
+                        response.forEach((item, index) => {
+                            totalQty += parseFloat(item.QTY);
+
+                            detailHtml += `
+                                <tr>
+                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem;">${index + 1}</div></td>
+                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem;">${item.KD_BRG}</div></td>
+                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem;">${item.NA_BRG}</div></td>
+                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem;">${item.SATUAN}</div></td>
+                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem; text-align: right">${parseFloat(item.QTYC).toFixed(2)}</div></td>
+                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem; text-align: right">${parseFloat(item.QTYR).toFixed(2)}</div></td>
+                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem; text-align: right">${parseFloat(item.QTY).toFixed(2)}</div></td>
+                                    <td><div style="background-color: #f7d8b4; padding: 0.5rem;">${item.KET}</div></td>
+                                </tr>
+                            `;
+                        });
+
+                        detailHtml += `
+                                    <tr>
+                                        <td colspan="6" style="text-align: right;"><strong>Total:</strong></td>
+                                        <td><div style="background-color: #f7d8b4; padding: 0.5rem; text-align: right">${totalQty.toFixed(2)}</div></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        `;
+
+                        // Insert the detail row below the clicked row
+                        var detailRow = `<tr class="detail-row">
+                                <td colspan="11">${detailHtml}</td>
+                              </tr>`;
+
+                        $(button).closest('tr').after(detailRow);
+                    }
+                });
+                } else {
+                    button.innerText = '+';
+                    button.classList.remove('btn-danger');
+                    button.classList.add('btn-success');
+
+                    // Remove the detail row if it exists
+                    $(button).closest('tr').next('.detail-row').remove();
+                }
+            };
+
+          // tutupannya
     });
 	
+
+    function deleteRow(link) {
+        console.log('Masuk');
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Are you sure?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location = link;
+            }
+        });
+    }
+
 </script>
 @endsection

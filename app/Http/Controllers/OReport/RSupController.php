@@ -25,7 +25,6 @@ class RSupController extends Controller
     {
 		$kodes = Sup::query()->get();
 		$per = Perid::query()->get();
-		session()->put('filter_gol', '');
 		session()->put('filter_per', '');
 		
         return view('oreport_sup.report')->with(['kodes' => $kodes])->with(['per' => $per])->with(['hasil' => []]);
@@ -39,23 +38,13 @@ class RSupController extends Controller
 		$PHPJasperXML = new PHPJasperXML();
 		$PHPJasperXML->load_xml_file(base_path().('/app/reportc01/phpjasperxml/'.$file.'.jrxml'));
 		
-		
+
         if ($request->session()->has('periode')) 
 		{
 			$periode = $request->session()->get('periode')['bulan']. '/' . $request->session()->get('periode')['tahun'];
 		} else
 		{
 			$periode = '';
-		}
-		
-		if ($request->gol)
-		{
-			$filtergol = " and sup.GOL='".$request->gol."' ";
-		}
-		
-		if($request['perio'])
-		{
-			$periode = $request['perio'];
 		}
 		
 		$bulan = substr($periode,0,2);
@@ -87,17 +76,15 @@ class RSupController extends Controller
 		    GROUP BY KODES
 		) as xxx on supd.KODES=xxx.KODES
 		where sup.KODES = supd.KODES 
-		#and sup.kodes >=@kodes1 and sup.kodes<=@kodes2 
-		and supd.YER='$tahun' and ( supd.AW$bulan<>0 or supd.MA$bulan<>0 or supd.KE$bulan<>0 or supd.LN$bulan<>0 or supd.AK$bulan<>0 )
-		$filtergol
 		order by sup.KODES;
 		");
 
 		$per = Perid::query()->get();
-		session()->put('filter_gol', $request->gol);
 		session()->put('filter_per', $periode);
+
 		if($request->has('filter'))
 		{
+
 			return view('oreport_sup.report')->with(['per' => $per])->with(['hasil' => $query]);
 		}
 

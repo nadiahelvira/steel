@@ -1,0 +1,68 @@
+[05-Oct-2024 08:37:44 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/Master/Cust.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/Master/Cust.php on line 9
+[05-Oct-2024 09:54:38 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/Master/Perid.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/Master/Perid.php on line 10
+[05-Oct-2024 10:23:31 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/Master/Brg.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/Master/Brg.php on line 10
+[05-Oct-2024 12:08:14 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/Master/Gdg.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/Master/Gdg.php on line 10
+[05-Oct-2024 12:23:57 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/Master/FoDetail2.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/Master/FoDetail2.php on line 8
+[05-Oct-2024 13:50:50 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/Master/Refa.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/Master/Refa.php on line 10
+[05-Oct-2024 15:24:23 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/Master/Mkl.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/Master/Mkl.php on line 10
+[05-Oct-2024 15:27:41 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/Master/Pegawai.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/Master/Pegawai.php on line 9
+[05-Oct-2024 16:53:53 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/Master/Sup.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/Master/Sup.php on line 10
+[05-Oct-2024 17:14:15 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/Master/Aktiva.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/Master/Aktiva.php on line 10
+[05-Oct-2024 17:32:23 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/Master/FoDetail.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/Master/FoDetail.php on line 8
+[05-Oct-2024 18:39:46 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/Master/Prs.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/Master/Prs.php on line 10
+[05-Oct-2024 18:41:27 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/Master/Fo.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/Master/Fo.php on line 10
+[05-Oct-2024 18:55:48 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/Master/Truck.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/Master/Truck.php on line 8
+[05-Oct-2024 19:56:21 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/Master/Fod2.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/Master/Fod2.php on line 8
+[05-Oct-2024 21:07:41 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/Master/Tujuan.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/Master/Tujuan.php on line 10
+[05-Oct-2024 23:35:59 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/januar13/public_html/steel/app/Models/Master/Bhn.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Models/Master/Bhn.php on line 10

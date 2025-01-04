@@ -15,7 +15,6 @@ class TerimaDetail extends Model
 
     protected $fillable =
     [
-        "REC", "NO_BUKTI", "ID", "GOL", "PER", "FLAG", "QTYA", "BENDELA", "IKATA", "QTYB", "BENDELB",
-        "IKATB"
+        "NO_BUKTI", "KD_PRS", "NA_PRS", "KD_BHN", "NA_BHN", "SATUAN", "QTYA", "QTY", "KET", "REC", "ID", "PER", "FLAG"
     ];
 }

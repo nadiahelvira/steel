@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.plain')
 <style>
     .bigdrop {
         width: 410px !important;
@@ -64,7 +64,7 @@
 						</form>
 						<div style="margin-bottom: 15px;"></div>
 					
-					<div class="report-content" col-md-12>
+					<div class="report-content" col-md-12 style="max-width: 100%; overflow-x: scroll;">
 					<?php
 				//	use \koolreport\datagrid\DataTables;
 

@@ -1,4 +1,4 @@
-	@extends('layouts.main')
+	@extends('layouts.plain')
 
 	@section('content')
 	<div class="content-wrapper">
@@ -59,7 +59,7 @@
 							<tbody>
 							</tbody> 
 						</table> --}}
-						<div class="report-content" col-md-12>
+						<div class="report-content" col-md-12 style="max-width: 100%; overflow-x: scroll;">
                         <?php
                         use \koolreport\datagrid\DataTables;
 

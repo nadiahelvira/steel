@@ -239,6 +239,7 @@ class RKarstkController extends Controller
 				'NO_BUKTI' => $query[$key]->NO_BUKTI,
 				'TGL' => $query[$key]->TGL,
 				'KD_BRG' => $query[$key]->KD_BRG,
+                // 'KD_BRG'    => "`".strval($query[$key]->KD_BRG),
 				'NA_BRG' => $query[$key]->NA_BRG,
 				'URAIAN' => $query[$key]->URAIAN,
 				'AWAL' => $query[$key]->AWAL,

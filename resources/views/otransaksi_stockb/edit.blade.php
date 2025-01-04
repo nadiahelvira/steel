@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.plain')
 
 <style>
     .card {
@@ -8,6 +8,47 @@
     .form-control:focus {
         background-color: #b5e5f9 !important;
     }
+
+	/* query LOADX */
+
+	.loader {
+      position: fixed;
+        top: 50%;
+        left: 50%;
+      width: 100px;
+      aspect-ratio: 1;
+      background:
+        radial-gradient(farthest-side,#ffa516 90%,#0000) center/16px 16px,
+        radial-gradient(farthest-side,green   90%,#0000) bottom/12px 12px;
+      background-repeat: no-repeat;
+      animation: l17 1s infinite linear;
+      position: relative;
+    }
+    .loader::before {    
+      content:"";
+      position: absolute;
+      width: 8px;
+      aspect-ratio: 1;
+      inset: auto 0 16px;
+      margin: auto;
+      background: #ccc;
+      border-radius: 50%;
+      transform-origin: 50% calc(100% + 10px);
+      animation: inherit;
+      animation-duration: 0.5s;
+    }
+    @keyframes l17 { 
+      100%{transform: rotate(1turn)}
+    }
+
+	/* penutup LOADX */
+
+	/* menghilangkan padding */
+	.content-header {
+		padding: 0 !important;
+	}
+
+
 </style>
 
 @section('content')
@@ -38,6 +79,53 @@
   
                         @csrf
                         <div class="tab-content mt-3">
+
+							<!-- style text box model baru -->
+
+							<style>
+								/* Ensure specificity with class targeting */
+								.form-group.special-input-label {
+									position: relative;
+									margin-left: 5px ;
+								}
+						
+								/* Ensure only bottom border for input */
+								.form-group.special-input-label input {
+									width: 100%;
+									padding: 10px 0;
+									border: none !important;
+									border-bottom: 2px solid #ccc !important;
+									outline: none !important;
+									font-size: 16px !important;
+									background: transparent !important; /* Remove any background color */
+								}
+						
+								/* Bottom border color change on focus */
+								.form-group.special-input-label input:focus {
+									border-bottom: 2px solid #007BFF !important; /* Change color on focus */
+								}
+						
+								/* Style the label with a higher specificity */
+								.form-group.special-input-label label {
+									position: absolute;
+									top: 12px;
+									color: #888 !important;
+									font-size: 16px !important;
+									transition: 0.3s ease all;
+									pointer-events: none;
+								}
+						
+								/* Move label above input when focused or has content */
+								.form-group.special-input-label input:focus + label,
+								.form-group.special-input-label input:not(:placeholder-shown) + label {
+									top: -10px !important;
+									font-size: 12px !important;
+									color: #007BFF !important;
+								}
+							</style>
+
+							<!-- tutupannya -->
+
                             <div class="form-group row">
                                 <div class="col-md-1" align="right">
                                     <label for="NO_BUKTI" class="form-label">Bukti#</label>
@@ -67,16 +155,19 @@
                             </div>
 
 							<div class="form-group row">
-                                <div class="col-md-1" align="right">
-									<!-- <label style="color:red">*</label>									 -->
-                                    <label for="NOTES" class="form-label">Notes</label>
-                                </div>
-                                <div class="col-md-4">
-                                    <input type="text" class="form-control NOTES" id="NOTES" name="NOTES" value="{{$header->NOTES}}" placeholder="Masukkan Notes" >
-                                </div>
+                                <!-- code text box baru -->
+								<div class="col-md-5 form-group row special-input-label">
+
+									<input type="text" class="NOTES" id="NOTES" name="NOTES" 
+										value="{{$header->NOTES}}" placeholder=" " >
+									<label for="NOTES">Notes</label>
+								</div>
+								<!-- tutupannya -->
         
                             </div>
 							
+							<!-- loader tampil di modal  -->
+							<div class="loader" style="z-index: 1055;" id='LOADX' ></div>
 
 
                         <div class="tab-content mt-3">
@@ -184,7 +275,11 @@
 							</div>
 							<div class="col-md-3">
 								<button type="button" id='HAPUSX'  onclick="hapusTrans()" class="btn btn-outline-danger">Hapus</button>
-								<button type="button" id='CLOSEX'  onclick="location.href='{{url('/stockb?flagz='.$flagz.'' )}}'" class="btn btn-outline-secondary">Close</button>
+								
+								<!-- <button type="button" id='CLOSEX'  onclick="location.href='{{url('/stockb?flagz='.$flagz.'' )}}'" class="btn btn-outline-secondary">Close</button> -->
+							
+								<!-- tombol close sweet alert -->
+								<button type="button" id='CLOSEX' onclick="closeTrans()" class="btn btn-outline-secondary">Close</button></div>
 							</div>
 						</div>
 						
@@ -241,6 +336,10 @@
 <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script> -->
 
+<!-- tambahan untuk sweetalert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- tutupannya -->
+
 <script>
 	var idrow = 1;
 	var baris = 1;
@@ -250,6 +349,13 @@
 	}
 	
     $(document).ready(function () {
+
+		setTimeout(function(){
+
+		$("#LOADX").hide();
+
+		},500);
+
     idrow=<?=$no?>;
     baris=<?=$no?>;
 
@@ -323,16 +429,24 @@
 			$.ajax(
 			{
 				type: 'GET',    
-				url: "{{url('brg/browse')}}",
+				url: "{{url('vbrg/browse_beli')}}",
+
+				beforeSend: function(){
+					$("#LOADX").show();
+				},
+
 				async : false,
 				data: {
 						'KD_BRG': $("#KD_BRG"+rowidBarang).val(),
-						GOL : 'J'
 					
 				},
+
 				success: function( response )
 
 				{
+
+					$("#LOADX").hide();
+
 					resp = response;
 					
 					
@@ -428,28 +542,29 @@
 		var tahunPer = {{session()->get('periode')['tahun']}};
 		
         var check = '0';
-		
-		
-		
-			// if (cekDetail())
-			// {	
-			//     check = '1';
-			// 	alert("#Barang ada yang kosong. ")
-			// }
-			
-			
-			
 
-			if ( $('#KD_BRG').val()=='' ) 
-            {				
-			    check = '1';
-				alert("Bahan# Harus Diisi.");
-			}
-			
-			
-			if ( tgl.substring(3,5) != bulanPer ) 
+			if (baris==0)
 			{
 				check = '1';
+				Swal.fire({
+					icon: 'warning',
+					title: 'Warning',
+					text: 'Data detail kosong (Tambahkan 1 baris kosong jika ingin mengosongi detail)'
+				});
+				return; // Stop function execution
+			}
+		
+		
+			if ( tgl.substring(3,5) != bulanPer ) 
+			{
+				
+				check = '1';
+				Swal.fire({
+					icon: 'warning',
+					title: 'Warning',
+					text: 'Bulan tidak sama dengan Periode'
+				});
+				return; // Stop function execution
 				alert("Bulan tidak sama dengan Periode");
 			}	
 			
@@ -457,21 +572,79 @@
 			if ( tgl.substring(tgl.length-4) != tahunPer )
 			{
 				check = '1';
-				alert("Tahun tidak sama dengan Periode");
+				Swal.fire({
+					icon: 'warning',
+					title: 'Warning',
+					text: 'Tahun tidak sama dengan Periode'
+				});
+				return; // Stop function execution
+				
 		    }	 
-			
-			if (baris==0)
-			{
-				check = '1';
-				alert("Data detail kosong (Tambahkan 1 baris kosong jika ingin mengosongi detail)");
+
+			if ( $('#KD_BRG').val()=='' ) 
+            {				
+			    check = '1';
+				Swal.fire({
+					icon: 'warning',
+					title: 'Warning',
+					text: 'Barang# Harus Diisi.'
+				});
+				return; // Stop function execution
 			}
 
-			if ( check == '0' )
-			{
-				hitung();	
-		      	document.getElementById("entri").submit();  
+			// if ( $('#KD_BHN').val()=='' ) 
+            // {				
+			//     check = '1';
+			// 	Swal.fire({
+			// 		icon: 'warning',
+			// 		title: 'Warning',
+			// 		text: 'Bahan# Harus Diisi.'
+			// 	});
+			// 	return; // Stop function execution
+			// }
+
+        
+			// if ( $('#NO_BUKTI').val()=='' ) 
+            // {				
+			//     check = '1';
+			// 	Swal.fire({
+			// 		icon: 'warning',
+			// 		title: 'Warning',
+			// 		text: 'Bukti# Harus Diisi.'
+			// 	});
+			// 	return; // Stop function execution
+			// }
+		
+			if (check == '0') {
+				Swal.fire({
+					title: 'Are you sure?',
+					text: 'Are you sure you want to save?',
+					icon: 'question',
+					showCancelButton: true,
+					confirmButtonText: 'Yes, save it!',
+					cancelButtonText: 'No, cancel',
+				}).then((result) => {
+					if (result.isConfirmed) {
+						document.getElementById("entri").submit();
+					} else {
+						Swal.fire({
+							icon: 'info',
+							title: 'Cancelled',
+							text: 'Your data was not saved'
+						});
+					}
+				});
+			} else {
+				Swal.fire({
+					icon: 'error',
+					title: 'Error',
+					text: 'Masih ada kesalahan'
+				});
 			}
-			
+
+		// tutupannya	
+	
+			$("#LOADX").hide();
 	}
 		
     function nomor() {
@@ -651,15 +824,80 @@
 		
 	}
 	
+	// function hapusTrans() {
+	// 	let text = "Hapus Transaksi "+$('#NO_BUKTI').val()+"?";
+	// 	if (confirm(text) == true) 
+	// 	{
+	// 		window.location ="{{url('/stockb/delete/'.$header->NO_ID .'/?flagz='.$flagz.'' )}}";
+	// 		//return true;
+	// 	} 
+	// 	return false;
+	// }
+
+	// sweetalert untuk tombol hapus dan close
+	
 	function hapusTrans() {
 		let text = "Hapus Transaksi "+$('#NO_BUKTI').val()+"?";
-		if (confirm(text) == true) 
-		{
-			window.location ="{{url('/stockb/delete/'.$header->NO_ID .'/?flagz='.$flagz.'' )}}";
-			//return true;
-		} 
-		return false;
+
+		var loc ='';
+		var flagz = "{{ $flagz }}";
+		
+		Swal.fire({
+			title: 'Are you sure?',
+			text: text,
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes, delete it!',
+			cancelButtonText: 'Cancel'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				// Show a success message before redirecting to delete the data
+				Swal.fire({
+					title: 'Deleted!',
+					text: 'Data has been deleted.',
+					icon: 'success',
+					confirmButtonText: 'OK'
+				}).then(() => {
+					// Redirect to delete the data after user confirms the success message
+	            	loc = "{{ url('/stockb/delete/'.$header->NO_ID) }}" + '?flagz=' + encodeURIComponent(flagz) ;
+
+		            // alert(loc);
+	            	window.location = loc;
+		
+				});
+			}
+		});
 	}
+	
+	function closeTrans() {
+		console.log("masuk");
+		var loc ='';
+		var flagz = "{{ $flagz }}";
+		
+		Swal.fire({
+			title: 'Are you sure?',
+			text: 'Do you really want to close this page? Unsaved changes will be lost.',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Yes, close it',
+			cancelButtonText: 'No, stay here'
+		}).then((result) => {
+			if (result.isConfirmed) {
+	        	loc = "{{ url('/stockb/') }}" + '?flagz=' + encodeURIComponent(flagz) ;
+				window.location = loc ;
+			} else {
+				Swal.fire({
+					icon: 'info',
+					title: 'Cancelled',
+					text: 'You stayed on the page'
+				});
+			}
+		});
+	}
+
+	// tutupannya
 	
 
 	function CariBukti() {

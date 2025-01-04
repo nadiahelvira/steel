@@ -79,11 +79,16 @@ class BankController extends Controller
             ->addColumn('action', function ($row) {
                 if (Auth::user()->divisi=="programmer" || Auth::user()->divisi=="owner" || Auth::user()->divisi=="assistant" || Auth::user()->divisi=="accounting") 
                 {
+
+                    // url untuk delete di index
+                    $url = "'".url("bank/delete/" . $row->NO_ID . "/?flagz=" . $row->FLAG)."'";
+                    // batas
+
                     $btnPrivilege =
 
 
                     $btnEdit =   ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' href="bank/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->TYPE . '&judul=' . $this->judul . '"';					
-                    $btnDelete = ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' onclick="return confirm(&quot; Apakah anda yakin ingin hapus? &quot;)" href="bank/delete/' . $row->NO_ID . '/?flagz=' . $row->TYPE . '" ';
+                    $btnDelete = ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' onclick="deleteRow('.$url.')" ';
 
 
                     $btnPrivilege =
@@ -92,7 +97,7 @@ class BankController extends Controller
                                 <i class="fas fa-edit"></i>
                                     Edit
                                 </a>
-                                <a class="dropdown-item btn btn-danger" href="bank/jasper-bank-trans/' . $row->NO_ID . '">
+                                <a class="dropdown-item btn btn-danger" href="bank/cetak/' . $row->NO_ID . '">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                     Print
                                 </a> 	
@@ -242,6 +247,10 @@ class BankController extends Controller
 		
 		$bank = Bank::where('NO_BUKTI', $no_buktix )->first();
 
+        DB::SELECT("UPDATE BANK, ACCOUNT
+                            SET BANK.BNAMA = ACCOUNT.NAMA  WHERE BANK.BACNO = ACCOUNT.ACNO 
+							AND BANK.NO_BUKTI='$no_buktix';");
+							
         DB::SELECT("UPDATE BANK, BANKD
                             SET BANKD.ID = BANK.NO_ID  WHERE BANK.NO_BUKTI = BANKD.NO_BUKTI 
 							AND BANK.NO_BUKTI='$no_buktix';");
@@ -401,7 +410,7 @@ class BankController extends Controller
  
          
          return view('ftransaksi_bank.edit', $data)
-		 ->with(['tipx' => $tipx, 'idx' => $idx, 'flagz' =>$this->FLAGZ, 'judul' => $this->judul ]);
+		 ->with(['tipx' => $tipx, 'idx' => $idx, 'flagz' =>$this->FLAGZ, 'judul'=> $this->judul ]);
 	
     
 	} 
@@ -521,6 +530,10 @@ class BankController extends Controller
 		
 		$bank = Bank::where('NO_BUKTI', $no_buktix )->first();
 
+        DB::SELECT("UPDATE BANK, ACCOUNT
+                            SET BANK.BNAMA = ACCOUNT.NAMA  WHERE BANK.BACNO = ACCOUNT.ACNO 
+							AND BANK.NO_BUKTI='$no_buktix';");
+							
         DB::SELECT("UPDATE BANK, BANKD
                             SET BANKD.ID = BANK.NO_ID  WHERE BANK.NO_BUKTI = BANKD.NO_BUKTI 
 							AND BANK.NO_BUKTI='$no_buktix';");
@@ -570,7 +583,7 @@ class BankController extends Controller
 
     }
 
-    public function jasperBankTrans(Bank $bank)
+    public function cetak (Bank $bank)
     {
         $no_bukti = $bank->NO_BUKTI;
 
@@ -594,6 +607,10 @@ class BankController extends Controller
 			WHERE bank.NO_BUKTI=bankd.NO_BUKTI and bank.NO_BUKTI='$no_bukti' 
 			ORDER BY bank.NO_BUKTI;
 		");
+		
+		$query2 = DB::SELECT("
+			SELECT NAMA from compan ;
+		");
 
         $data = [];
         foreach ($query as $key => $value) {
@@ -608,10 +625,19 @@ class BankController extends Controller
                 'URAIAN' => $query[$key]->URAIAN,
                 'JUMLAH' => $query[$key]->JUMLAH,
                 'JUDUL' => $judul,
+				'NAMA' => $query2[0]->NAMA
             ));
         }
         $PHPJasperXML->setData($data);
         ob_end_clean();
         $PHPJasperXML->outpage("I");
+    }
+
+    public function getDetailBank(){
+
+        $no_bukti = $_GET['no_bukti'];
+        $result = DB::table('bankd')->where('NO_BUKTI', $no_bukti)->get();
+        
+        return response()->json($result);;
     }
 }

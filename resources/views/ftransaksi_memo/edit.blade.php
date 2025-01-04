@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.plain')
 
 <style>
     .card {
@@ -8,6 +8,41 @@
     .form-control:focus {
         background-color: #E0FFFF !important;
     }
+
+	/* query LOADX */
+
+	.loader {
+      position: fixed;
+        top: 50%;
+        left: 50%;
+      width: 100px;
+      aspect-ratio: 1;
+      background:
+        radial-gradient(farthest-side,#ffa516 90%,#0000) center/16px 16px,
+        radial-gradient(farthest-side,green   90%,#0000) bottom/12px 12px;
+      background-repeat: no-repeat;
+      animation: l17 1s infinite linear;
+      position: relative;
+    }
+    .loader::before {    
+      content:"";
+      position: absolute;
+      width: 8px;
+      aspect-ratio: 1;
+      inset: auto 0 16px;
+      margin: auto;
+      background: #ccc;
+      border-radius: 50%;
+      transform-origin: 50% calc(100% + 10px);
+      animation: inherit;
+      animation-duration: 0.5s;
+    }
+    @keyframes l17 { 
+      100%{transform: rotate(1turn)}
+    }
+
+	/* penutup LOADX */
+
 </style>
 
 
@@ -34,6 +69,51 @@
                     
          
                         <div class="tab-content mt-3">
+
+							<!-- style text box model baru -->
+
+							<style>
+								/* Ensure specificity with class targeting */
+								.form-group.special-input-label {
+									position: relative;
+									margin-left: 5px ;
+								}
+						
+								/* Ensure only bottom border for input */
+								.form-group.special-input-label input {
+									width: 100%;
+									padding: 10px 0;
+									border: none !important;
+									border-bottom: 2px solid #ccc !important;
+									outline: none !important;
+									font-size: 16px !important;
+									background: transparent !important; /* Remove any background color */
+								}
+						
+								/* Bottom border color change on focus */
+								.form-group.special-input-label input:focus {
+									border-bottom: 2px solid #007BFF !important; /* Change color on focus */
+								}
+						
+								/* Style the label with a higher specificity */
+								.form-group.special-input-label label {
+									position: absolute;
+									top: 12px;
+									color: #888 !important;
+									font-size: 16px !important;
+									transition: 0.3s ease all;
+									pointer-events: none;
+								}
+						
+								/* Move label above input when focused or has content */
+								.form-group.special-input-label input:focus + label,
+								.form-group.special-input-label input:not(:placeholder-shown) + label {
+									top: -10px !important;
+									font-size: 12px !important;
+									color: #007BFF !important;
+								}
+							</style>
+							<!-- tutupannya -->
         
                             <div class="form-group row">
                                 <div class="col-md-1">
@@ -80,15 +160,18 @@
                             </div>
         
 							<div class="form-group row">							
-								<div class="col-md-1">
-                                    <label for="KET" class="form-label">Notes</label>
-                                </div>
-                                <div class="col-md-4">
-                                    <input type="text" class="form-control KET" id="KET"name="KET"
-                                    placeholder="Masukkan Notes" value="{{$header->KET}}" >
-                                </div>
+								<!-- code text box baru -->
+								<div class="col-md-5 form-group row special-input-label">
+
+									<input type="text" class="KET" id="KET" name="KET" 
+										value="{{$header->KET}}" placeholder=" " >
+									<label for="KET">Notes</label>
+								</div>
+								<!-- tutupannya -->
 							</div>
-        
+
+							<!-- loader tampil di modal  -->
+							<div class="loader" style="z-index: 1055;" id='LOADX' ></div>
                             
                             <table id="datatable" class="table table-striped table-border">
                                 <thead>
@@ -186,13 +269,17 @@
 								<button type="button" id='NEWX' onclick="location.href='{{url('/memo/edit/?idx=0&tipx=new&flagz='.$flagz.'' )}}'" class="btn btn-warning">New</button>
 								<button type="button" id='EDITX' onclick='hidup()' class="btn btn-secondary">Edit</button>                    
 								<button type="button" id='UNDOX' onclick="location.href='{{url('/memo/edit/?idx=' .$idx. '&tipx=undo&flagz='.$flagz.'' )}}'" class="btn btn-info">Undo</button>  
-								<button type="button" id='SAVEX' onclick='simpan()'   class="btn btn-success"<i class="fa fa-save"></i>Save</button>
+								<button type="button" id='SAVEX' onclick='simpan()'   class="btn btn-success" class="fa fa-save"></i>Save</button>
 
 							</div>
 							<div class="col-md-3">
 								<button type="button" id='HAPUSX'  onclick="hapusTrans()" class="btn btn-outline-danger">Hapus</button>
-								<button type="button" id='CLOSEX'  onclick="location.href='{{url('/memo?flagz='.$flagz.'' )}}'" class="btn btn-outline-secondary">Close</button>
-
+								
+								<!-- <button type="button" id='CLOSEX'  onclick="location.href='{{url('/memo?flagz='.$flagz.'' )}}'" class="btn btn-outline-secondary">Close</button> -->
+								
+								<!-- tombol close sweet alert -->
+								<button type="button" id='CLOSEX' onclick="closeTrans()" class="btn btn-outline-secondary">Close</button></div>
+														
 							</div>
 						</div>
 						
@@ -277,6 +364,10 @@
 <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script> -->
 <script src="{{asset('foxie_js_css/bootstrap.bundle.min.js')}}"></script>
 
+<!-- tambahan untuk sweetalert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- tutupannya -->
+
 <script>
 
 	var idrow = 1;
@@ -288,8 +379,34 @@
 // TAMBAH HITUNG
 	$(document).ready(function() {
 
+		setTimeout(function(){
+
+		$("#LOADX").hide();
+		
+		},500);
+
 		idrow=<?php echo $no; ?>;
 		baris=<?php echo $no; ?>;
+
+		$('body').on('keydown', 'input, select', function(e) {
+			if (e.key === "Enter") {
+				var self = $(this), form = self.parents('form:eq(0)'), focusable, next;
+				focusable = form.find('input,select,textarea').filter(':visible');
+				next = focusable.eq(focusable.index(this)+1);
+				console.log(next);
+				if (next.length) {
+					next.focus().select();
+				} else {
+					tambah();
+					// var nomer = idrow-1;
+					// console.log("REC"+nomor);
+					// document.getElementById("REC"+nomor).focus();
+					// form.submit();
+				}
+				return false;
+			}
+		});
+
 		$("#TJUMLAH").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
 
 		jumlahdata = 100;
@@ -521,34 +638,75 @@ function cekDetail(){
 
                 var check = '0';
 
-				if (cekDetail())
-				{	
-					check = '1';
-					alert("Ada Akun# Kosong Didetail.");
-				}
-			
+				if (cekDetail()) {
+                    check = '1';
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Warning',
+                        text: 'Ada Akun# Kosong Didetail.'
+                    });
+                    return; // Stop function execution
+                }
+
                 if ($('#BACNO').val() == '') {
                     check = '1';
-                    alert("Bank Harus diisi.");
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Warning',
+                        text: 'Bank# Harus diisi.'
+                    });
+                    return; // Stop function execution
                 }
 
                 if (tgl.substring(3, 5) != bulanPer) {
-
                     check = '1';
-                    alert("Bulan tidak sama dengan Periode");
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Warning',
+                        text: 'Bulan tidak sama dengan Periode'
+                    });
+                    return; // Stop function execution
                 }
 
                 if (tgl.substring(tgl.length - 4) != tahunPer) {
                     check = '1';
-                    alert("Tahun tidak sama dengan Periode");
-
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Warning',
+                        text: 'Tahun tidak sama dengan Periode'
+                    });
+                    return; // Stop function execution
                 }
 
                 if (check == '0') {
-                    $(".simpan").addClass("running");
-                    document.getElementById("entri").submit();
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: 'Are you sure you want to save?',
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonText: 'Yes, save it!',
+                        cancelButtonText: 'No, cancel',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            document.getElementById("entri").submit();
+                        } else {
+                            Swal.fire({
+                                icon: 'info',
+                                title: 'Cancelled',
+                                text: 'Your data was not saved'
+                            });
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Masih ada kesalahan'
+                    });
                 }
 				
+				
+				$("#LOADX").hide();
             }
 
 
@@ -714,12 +872,53 @@ function cekDetail(){
 	
 	function hapusTrans() {
 		let text = "Hapus Transaksi "+$('#NO_BUKTI').val()+"?";
-		if (confirm(text) == true) 
-		{
-			window.location ="{{url('/memo/delete/'.$header->NO_ID .'/?flagz='.$flagz.'' )}}";
-			//return true;
-		} 
-		return false;
+		Swal.fire({
+			title: 'Are you sure?',
+			text: text,
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes, delete it!',
+			cancelButtonText: 'Cancel'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				// Show a success message before redirecting to delete the data
+				Swal.fire({
+					title: 'Deleted!',
+					text: 'Data has been deleted.',
+					icon: 'success',
+					confirmButtonText: 'OK'
+				}).then(() => {
+					// Redirect to delete the data after user confirms the success message
+					window.location =
+						"{{ url('/memo/delete/' . $header->NO_ID . '/?flagz=' . $flagz . '') }}";
+				});
+			}
+		});
+	}
+	
+	function closeTrans() {
+		console.log("masuk");
+
+		Swal.fire({
+			title: 'Are you sure?',
+			text: 'Do you really want to close this page? Unsaved changes will be lost.',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Yes, close it',
+			cancelButtonText: 'No, stay here'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				window.location = "{{ url('/memo?flagz=' . $flagz) }}";
+			} else {
+				Swal.fire({
+					icon: 'info',
+					title: 'Cancelled',
+					text: 'You stayed on the page'
+				});
+			}
+		});
 	}
 
 	function CariBukti() {
@@ -762,7 +961,7 @@ function cekDetail(){
                 </td>
 				
 				<td>
-		            <input name='JUMLAH[]'  onblur='hitung()' value='0' id='JUMLAH${idrow}' type='text' style='text-align: right' class='form-control JUMLAH text-primary' required >
+		            <input name='JUMLAH[]' onclick='select()' onblur='hitung()' value='0' id='JUMLAH${idrow}' type='text' style='text-align: right' class='form-control JUMLAH text-primary' required >
                 </td>
 
                 <td>

@@ -1,5 +1,39 @@
-@extends('layouts.main')
+@extends('layouts.plain')
+<style>
+    /* query LOADX */
 
+	.loader {
+      position: fixed;
+        top: 50%;
+        left: 50%;
+      width: 100px;
+      aspect-ratio: 1;
+      background:
+        radial-gradient(farthest-side,#ffa516 90%,#0000) center/16px 16px,
+        radial-gradient(farthest-side,green   90%,#0000) bottom/12px 12px;
+      background-repeat: no-repeat;
+      animation: l17 1s infinite linear;
+      position: relative;
+    }
+    .loader::before {    
+      content:"";
+      position: absolute;
+      width: 8px;
+      aspect-ratio: 1;
+      inset: auto 0 16px;
+      margin: auto;
+      background: #ccc;
+      border-radius: 50%;
+      transform-origin: 50% calc(100% + 10px);
+      animation: inherit;
+      animation-duration: 0.5s;
+    }
+    @keyframes l17 { 
+      100%{transform: rotate(1turn)}
+    }
+
+	/* penutup LOADX */
+</style>
 @section('content')
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -54,6 +88,9 @@
 
                             <x-input id="email" type="email" name="email" :value="old('email')" required />
                         </div>
+
+                        <!-- loader tampil di modal  -->
+                        <div class="loader" style="z-index: 1055;" id='LOADX' ></div>
 
                         <!-- Password -->
                         <div class="form-group">
@@ -123,6 +160,13 @@
 @section('footer-scripts')
 <script>   
     $(document).ready(function(){
+
+        setTimeout(function(){
+
+        $("#LOADX").hide();
+
+        },500);
+
         $('.date').datepicker({  
             dateFormat: 'dd-mm-yy'
         }); 

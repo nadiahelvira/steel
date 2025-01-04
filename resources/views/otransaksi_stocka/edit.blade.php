@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.plain')
 
 <style>
     .card {
@@ -8,6 +8,12 @@
     .form-control:focus {
         background-color: #b5e5f9 !important;
     }
+
+	/* menghilangkan padding */
+	.content-header {
+		padding: 0 !important;
+	}
+
 </style>
 
 @section('content')
@@ -87,8 +93,8 @@
 										<th style="text-align: center;">No.</th>
                                         <th style="text-align: center;">
 									       <label style="color:red;font-size:20px">* </label>									
-                                           <label for="KD_BHN" class="form-label">Kode Bahan</label></th>
-                                        <th style="text-align: center;">Nama Bahan</th>
+                                           <label for="KD_BRG" class="form-label">Kode Barang</label></th>
+                                        <th style="text-align: center;">Nama Barang</th>
                                         <th style="text-align: center;">Stn</th>
                                         <th style="text-align: center;">Qty-Comp</th>
 										<th style="text-align: center;">Qty-Real</th>
@@ -113,10 +119,10 @@
 									
 
 										<td>
-                                            <input name="KD_BHN[]" id="KD_BHN{{$no}}" type="text" value="{{$detail->KD_BHN}}" class="form-control KD_BHN" readonly required>
+                                            <input name="KD_BRG[]" id="KD_BRG{{$no}}" type="text" value="{{$detail->KD_BRG}}" class="form-control KD_BRG" readonly required>
                                         </td>
                                         <td>
-                                            <input name="NA_BHN[]" id="NA_BHN{{$no}}" type="text" value="{{$detail->NA_BHN}}" class="form-control NA_BHN" readonly required>
+                                            <input name="NA_BRG[]" id="NA_BRG{{$no}}" type="text" value="{{$detail->NA_BRG}}" class="form-control NA_BRG" readonly required>
                                         </td>
                                         <td>
                                             <input name="SATUAN[]" id="SATUAN{{$no}}" type="text" value="{{$detail->SATUAN}}" class="form-control SATUAN" readonly required>
@@ -197,17 +203,17 @@
 
 
 
-	<div class="modal fade" id="browseBahanModal" tabindex="-1" role="dialog" aria-labelledby="browseBahanModalLabel" aria-hidden="true">
+	<div class="modal fade" id="browseBarangModal" tabindex="-1" role="dialog" aria-labelledby="browseBarangModalLabel" aria-hidden="true">
 	  <div class="modal-dialog" role="document">
 		<div class="modal-content">
 		  <div class="modal-header">
-			<h5 class="modal-title" id="browseBahanModalLabel">Cari Item</h5>
+			<h5 class="modal-title" id="browseBarangModalLabel">Cari Item</h5>
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			  <span aria-hidden="true">&times;</span>
 			</button>
 		  </div>
 		  <div class="modal-body">
-			<table class="table table-stripped table-bordered" id="table-bbahan">
+			<table class="table table-stripped table-bordered" id="table-bbarang">
 				<thead>
 					<tr>
 						<th>Item#</th>
@@ -263,8 +269,8 @@
 				} else {
 					tambah();
 					var nomer = idrow-1;
-					console.log("KD_BHN"+nomor);
-					document.getElementById("KD_BHN"+nomor).focus();
+					console.log("KD_BRG"+nomor);
+					document.getElementById("KD_BRG"+nomor).focus();
 					// form.submit();
 				}
 				return false;
@@ -315,17 +321,17 @@
 
 		//////////////////////////////////////////////////////
 
-		var dTableBBahan;
-		var rowidBahan;
-		loadDataBBahan = function(){
+		var dTableBBarang;
+		var rowidBarang;
+		loadDataBBarang = function(){
 		
 			$.ajax(
 			{
 				type: 'GET',    
-				url: "{{url('bhn/browse')}}",
+				url: "{{url('brg/browse_beli')}}",
 				async : false,
 				data: {
-						'KD_BHN': $("#KD_BHN"+rowidBahan).val(),
+						'KD_BRG': $("#KD_BRG"+rowidBarang).val(),
 					
 				},
 				success: function( response )
@@ -336,50 +342,50 @@
 					
 					if ( resp.length > 1 )
 					{	
-							if(dTableBBahan){
-								dTableBBahan.clear();
+							if(dTableBBarang){
+								dTableBBarang.clear();
 							}
 							for(i=0; i<resp.length; i++){
 								
-								dTableBBahan.row.add([
-									'<a href="javascript:void(0);" onclick="chooseBahan(\''+resp[i].KD_BHN+'\', \''+resp[i].NA_BHN+'\' , \''+resp[i].SATUAN+'\' )">'+resp[i].KD_BHN+'</a>',
-									resp[i].NA_BHN,
+								dTableBBarang.row.add([
+									'<a href="javascript:void(0);" onclick="chooseBarang(\''+resp[i].KD_BRG+'\', \''+resp[i].NA_BRG+'\' , \''+resp[i].SATUAN+'\' )">'+resp[i].KD_BRG+'</a>',
+									resp[i].NA_BRG,
 									resp[i].SATUAN,
 								]);
 							}
-							dTableBBahan.draw();
+							dTableBBarang.draw();
 					
 					}
 					else
 					{
-						$("#KD_BHN"+rowidBahan).val(resp[0].KD_BHN);
-						$("#NA_BHN"+rowidBahan).val(resp[0].NA_BHN);
-						$("#SATUAN"+rowidBahan).val(resp[0].SATUAN);
+						$("#KD_BRG"+rowidBarang).val(resp[0].KD_BRG);
+						$("#NA_BRG"+rowidBarang).val(resp[0].NA_BRG);
+						$("#SATUAN"+rowidBarang).val(resp[0].SATUAN);
 					}
 				}
 			});
 		}
 		
-		dTableBBahan = $("#table-bbahan").DataTable({
+		dTableBBarang = $("#table-bbarang").DataTable({
 			
 		});
 
-		browseBahan = function(rid){
-			rowidBahan = rid;
-			$("#NA_BHN"+rowidBahan).val("");			
-			loadDataBBahan();
+		browseBarang = function(rid){
+			rowidBarang = rid;
+			$("#NA_BRG"+rowidBarang).val("");			
+			loadDataBBarang();
 	
 			
-			if ( $("#NA_BHN"+rowidBahan).val() == '' ) {				
-					$("#browseBahanModal").modal("show");
+			if ( $("#NA_BRG"+rowidBarang).val() == '' ) {				
+					$("#browseBarangModal").modal("show");
 			}	
 		}
 		
-		chooseBahan = function(KD_BHN,NA_BHN,SATUAN){
-			$("#KD_BHN"+rowidBahan).val(KD_BHN);
-			$("#NA_BHN"+rowidBahan).val(NA_BHN);	
-			$("#SATUAN"+rowidBahan).val(SATUAN);
-			$("#browseBahanModal").modal("hide");
+		chooseBarang = function(KD_BRG,NA_BRG,SATUAN){
+			$("#KD_BRG"+rowidBarang).val(KD_BRG);
+			$("#NA_BRG"+rowidBarang).val(NA_BRG);	
+			$("#SATUAN"+rowidBarang).val(SATUAN);
+			$("#browseBarangModal").modal("hide");
 		}
 		
 		
@@ -438,10 +444,10 @@
 			
 			
 
-			if ( $('#KD_BHN').val()=='' ) 
+			if ( $('#KD_BRG').val()=='' ) 
             {				
 			    check = '1';
-				alert("Bahan# Harus Diisi.");
+				alert("Barang# Harus Diisi.");
 			}
 			
 			
@@ -568,8 +574,8 @@
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
 			$("#REC" + i.toString()).attr("readonly", true);
-			$("#KD_BHN" + i.toString()).attr("readonly", false);
-			$("#NA_BHN" + i.toString()).attr("readonly", true);
+			$("#KD_BRG" + i.toString()).attr("readonly", false);
+			$("#NA_BRG" + i.toString()).attr("readonly", true);
 			$("#SATUAN" + i.toString()).attr("readonly", true);
 			$("#QTYC" + i.toString()).attr("readonly", false);
 			$("#QTYR" + i.toString()).attr("readonly", false);
@@ -582,8 +588,8 @@
 			
 			if ( $tipx != 'new' )
 			{
-				$("#KD_BHN" + i.toString()).attr("readonly", true);	
-				$("#KD_BHN" + i.toString()).removeAttr('onblur');
+				$("#KD_BRG" + i.toString()).attr("readonly", true);	
+				$("#KD_BRG" + i.toString()).removeAttr('onblur');
 			} 
 		}
 
@@ -622,8 +628,8 @@
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
 			$("#REC" + i.toString()).attr("readonly", true);
-			$("#KD_BHN" + i.toString()).attr("readonly", true);
-			$("#NA_BHN" + i.toString()).attr("readonly", true);
+			$("#KD_BRG" + i.toString()).attr("readonly", true);
+			$("#NA_BRG" + i.toString()).attr("readonly", true);
 			$("#SATUAN" + i.toString()).attr("readonly", true);
 			$("#QTYC" + i.toString()).attr("readonly", true);
 			$("#QTYR" + i.toString()).attr("readonly", true);
@@ -682,10 +688,10 @@
 	            </td>
 				
                 <td>
-				    <input name='KD_BHN[]' data-rowid=${idrow} onblur='browseBahan(${idrow})' id='KD_BHN${idrow}' type='text' class='form-control  KD_BHN' >
+				    <input name='KD_BRG[]' data-rowid=${idrow} onblur='browseBarang(${idrow})' id='KD_BRG${idrow}' type='text' class='form-control  KD_BRG' >
                 </td>
                 <td>
-				    <input name='NA_BHN[]'   id='NA_BHN${idrow}' type='text' class='form-control  NA_BHN' required readonly>
+				    <input name='NA_BRG[]'   id='NA_BRG${idrow}' type='text' class='form-control  NA_BRG' required readonly>
                 </td>
 
                 <td>

@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.plain')
 
 @section('content')
 <div class="content-wrapper">
@@ -6,11 +6,11 @@
 	<div class="container-fluid">
 		<div class="row mb-2">
 		<div class="col-sm-6">
-			<h1 class="m-0">Laporan Koreksi Stock Bahan</h1>
+			<h1 class="m-0">Laporan Koreksi Stock A</h1>
 		</div>
 		<div class="col-sm-6">
 			<ol class="breadcrumb float-sm-right">
-			<li class="breadcrumb-item active">Laporan Koreksi Stock Bahan</li>
+			<li class="breadcrumb-item active">Laporan Koreksi Stock A</li>
 			</ol>
 		</div>
 		</div>
@@ -39,6 +39,21 @@
 						<div class="col-md-3">
 							<input class="form-control date tglSmp" id="tglSmp" name="tglSmp"
 							type="text" autocomplete="off" value="{{ session()->get('filter_tglSampai') }}">
+						</div>
+
+					</div>
+
+					
+
+					<div class="form-group row">
+						<div class="col-md-1">
+							<label><strong>Cabang :</strong></label>
+							<select name="cbg" id="cbg" class="form-control cbg" style="width: 200px">
+								<option value="">--Pilih Cabang--</option>
+								@foreach($cbg as $cbgD)
+									<option value="{{$cbgD->CBG}}"  {{ (session()->get('filter_cbg') == $cbgD->CBG) ? 'selected' : '' }}>{{$cbgD->CBG}}</option>
+								@endforeach
+							</select>
 						</div>
 					</div>
 					
@@ -78,7 +93,7 @@
 					
                     <!-- PASTE DIBAWAH INI -->
                     <!-- DISINI BATAS AWAL KOOLREPORT-->
-                    <div class="report-content" col-md-12>
+                    <div class="report-content" col-md-12 style="max-width: 100%; overflow-x: scroll;">
                         <?php
                         use \koolreport\datagrid\DataTables;
 

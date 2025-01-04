@@ -14,6 +14,7 @@ class ProfileController extends Controller
 {
     public function index()
     {
+        // dd( view('profile'));
         return view('profile');
     }
 

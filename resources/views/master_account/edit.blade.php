@@ -1,5 +1,39 @@
-@extends('layouts.main')
+@extends('layouts.plain')
+<style>
 
+.loader {
+      position: fixed;
+        top: 50%;
+        left: 50%;
+      width: 100px;
+      aspect-ratio: 1;
+      background:
+        radial-gradient(farthest-side,#ffa516 90%,#0000) center/16px 16px,
+        radial-gradient(farthest-side,green   90%,#0000) bottom/12px 12px;
+      background-repeat: no-repeat;
+      animation: l17 1s infinite linear;
+      position: relative;
+    }
+    .loader::before {    
+      content:"";
+      position: absolute;
+      width: 8px;
+      aspect-ratio: 1;
+      inset: auto 0 16px;
+      margin: auto;
+      background: #ccc;
+      border-radius: 50%;
+      transform-origin: 50% calc(100% + 10px);
+      animation: inherit;
+      animation-duration: 0.5s;
+    }
+    @keyframes l17 { 
+      100%{transform: rotate(1turn)}
+    }
+
+	/* penutup LOADX */
+	
+</style>
 @section('content')
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -35,25 +69,82 @@
     
    
                         <div class="tab-content mt-3">
+
+							<!-- style text box model baru -->
+
+							<style>
+								/* Ensure specificity with class targeting */
+								.form-group.special-input-label {
+									position: relative;
+									margin-left: 5px ;
+								}
+						
+								/* Ensure only bottom border for input */
+								.form-group.special-input-label input {
+									width: 100%;
+									padding: 10px 0;
+									border: none !important;
+									border-bottom: 2px solid #ccc !important;
+									outline: none !important;
+									font-size: 16px !important;
+									background: transparent !important; /* Remove any background color */
+								}
+						
+								/* Bottom border color change on focus */
+								.form-group.special-input-label input:focus {
+									border-bottom: 2px solid #007BFF !important; /* Change color on focus */
+								}
+						
+								/* Style the label with a higher specificity */
+								.form-group.special-input-label label {
+									position: absolute;
+									top: 12px;
+									color: #888 !important;
+									font-size: 16px !important;
+									transition: 0.3s ease all;
+									pointer-events: none;
+								}
+						
+								/* Move label above input when focused or has content */
+								.form-group.special-input-label input:focus + label,
+								.form-group.special-input-label input:not(:placeholder-shown) + label {
+									top: -10px !important;
+									font-size: 12px !important;
+									color: #007BFF !important;
+								}
+							</style>
+
+							<!-- tutupannya -->
         
                             <div class="form-group row">
-                                <div class="col-md-1">
-                                    <label for="ACNO" class="form-label">Account</label>
-                                </div>
-                                <div class="col-md-2">
 								
                                     <input type="text" class="form-control NO_ID" id="NO_ID" name="NO_ID"
                                     placeholder="Masukkan NO_ID" value="{{$header->NO_ID ?? ''}}" hidden readonly>
 
 									<input name="tipx" class="form-control flagz" id="tipx" value="{{$tipx}}" hidden>
-		
-		
-                                    <input type="text" class="form-control ACNO" id="ACNO" name="ACNO"
-                                    placeholder="Masukkan Account" value="{{$header->ACNO ?? ''}}" required readonly>
-								
-								</div>      
         
-                                <div class="col-md-1">
+								<!-- code text box baru -->
+								<div class="col-md-3 form-group row special-input-label">
+
+									<input type="text" class="ACNO" id="ACNO" name="ACNO" 
+										value="{{$header->ACNO}}" placeholder=" " >
+									<label for="ACNO">Account</label>
+								</div>
+								<!-- tutupannya -->
+								
+								<div class="col-md-1">
+								</div>
+									
+								<!-- code text box baru -->
+								<div class="col-md-3 form-group row special-input-label">
+
+									<input type="text" class="NAMA" id="NAMA" name="NAMA" 
+										value="{{$header->NAMA}}" placeholder=" " >
+									<label for="NAMA">Nama</label>
+								</div>
+								<!-- tutupannya -->
+
+                                <div class="col-md-1" align="right">
                                     <label for="BNK" class="form-label">Type</label>
                                 </div>
                                 <div class="col-md-2">
@@ -81,15 +172,11 @@
                             </div>
 							
 							<div class="form-group row">
-									<div class="col-md-1">
-										<label for="NAMA" class="form-label">Nama</label>
-									</div>
-									<div class="col-md-4">
-										<input type="text" class="form-control NAMA" id="NAMA" name="NAMA" 
-										placeholder="Masukkan Nama" value="{{$header->NAMA ?? ''}}" required >
-									</div>                             
 							</div>
 								
+							<!-- loader tampil di modal  -->
+							<div class="loader" style="z-index: 1055;" id='LOADX' ></div>
+
 							<div class="form-group row">
 									<div class="col-md-1">
 										<label for="POS2" class="form-label">Type</label>
@@ -104,16 +191,28 @@
 								</div>	
 								
 							<div class="form-group row">
-									<div class="col-md-1">
+									<div class="col-md-2 form-group row special-input-label">
+										<input type="text" class="KEL" id="KEL" name="KEL" 
+											value="{{$header->KEL}}" placeholder=" " >
+										<label for="KEL">*Kelompok (pilih kelompok)</label>
+									</div>
+
+									<div class="col-md-3 form-group row special-input-label">
+										<input type="text" class="NAMA_KEL" id="NAMA_KEL" name="NAMA_KEL" 
+											value="{{$header->NAMA_KEL}}" placeholder=" " >
+										<label for="NAMA_KEL"></label>
+									</div>
+
+									<!-- <div class="col-md-1">
 										<label for="KEL" class="form-label">Kelompok</label>
 									</div>
 									<div class="col-md-2">
 										<input type="text" class="form-control KEL" id="KEL" name="KEL" 
 										placeholder="Pilih Kel" value="{{$header->KEL ?? ''}}" required readonly>
-									</div>    
-									<div class="col-md-3">
+									</div>     -->
+									<!-- <div class="col-md-3">
 										<input type="text" class="form-control NAMA_KEL" id="NAMA_KEL" name="NAMA_KEL" placeholder="Nama Kel" value="{{$header->NAMA_KEL ?? ''}}" required readonly>
-									</div>                              
+									</div> -->
 							</div>
 
         
@@ -133,9 +232,11 @@
 							</div>
 							<div class="col-md-3">
 								<button type="button" hidden id='HAPUSX'  onclick="hapusTrans()" class="btn btn-outline-danger">Hapus</button>
-								<button type="button" id='CLOSEX'  onclick="location.href='{{url('/account' )}}'" class="btn btn-outline-secondary">Close</button>
+								
+								<!-- <button type="button" id='CLOSEX'  onclick="location.href='{{url('/account' )}}'" class="btn btn-outline-secondary">Close</button> -->
 
-
+								<!-- tombol close sweet alert -->
+								<button type="button" id='CLOSEX' onclick="closeTrans()" class="btn btn-outline-secondary">Close</button></div>
 							</div>
 						</div>
                             
@@ -185,11 +286,22 @@
 
 @section('footer-scripts')
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- tambahan untuk sweetalert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- tutupannya -->
+
 <script>
     var target;
 	var idrow = 1;
 
     $(document).ready(function () {
+
+		setTimeout(function(){
+
+		$("#LOADX").hide();
+
+		},500);
 
  		$tipx = $('#tipx').val();
 				
@@ -370,15 +482,78 @@
 		 
 	}
 	
+	// function hapusTrans() {
+	// 	let text = "Hapus Master "+$('#ACNO').val()+"?";
+	// 	if (confirm(text) == true) 
+	// 	{
+	// 		window.location ="{{url('/account/delete/'.$header->NO_ID )}}'";
+	// 		//return true;
+	// 	} 
+	// 	return false;
+	// }
+
+	// sweetalert untuk tombol hapus dan close
+	
 	function hapusTrans() {
-		let text = "Hapus Master "+$('#ACNO').val()+"?";
-		if (confirm(text) == true) 
-		{
-			window.location ="{{url('/account/delete/'.$header->NO_ID )}}'";
-			//return true;
-		} 
-		return false;
+		let text = "Hapus Transaksi "+$('#NO_BUKTI').val()+"?";
+
+		var loc ='';
+		
+		Swal.fire({
+			title: 'Are you sure?',
+			text: text,
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes, delete it!',
+			cancelButtonText: 'Cancel'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				// Show a success message before redirecting to delete the data
+				Swal.fire({
+					title: 'Deleted!',
+					text: 'Data has been deleted.',
+					icon: 'success',
+					confirmButtonText: 'OK'
+				}).then(() => {
+					// Redirect to delete the data after user confirms the success message
+	            	loc = "{{ url('/account/delete/'.$header->NO_ID) }}"  ;
+
+		            // alert(loc);
+	            	window.location = loc;
+		
+				});
+			}
+		});
 	}
+	
+	function closeTrans() {
+		console.log("masuk");
+		var loc ='';
+		
+		Swal.fire({
+			title: 'Are you sure?',
+			text: 'Do you really want to close this page? Unsaved changes will be lost.',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Yes, close it',
+			cancelButtonText: 'No, stay here'
+		}).then((result) => {
+			if (result.isConfirmed) {
+	        	loc = "{{ url('/account/') }}" ;
+				window.location = loc ;
+			} else {
+				Swal.fire({
+					icon: 'info',
+					title: 'Cancelled',
+					text: 'You stayed on the page'
+				});
+			}
+		});
+	}
+
+	// tutupannya
 
 	function CariBukti() {
 		
@@ -436,10 +611,9 @@
 	
 			
 		(hasilCek==0) ? document.getElementById("entri").submit() : alert('Masih ada kesalahan');
+			      
+		$("#LOADX").hide();         
 
-
-    				      
-               
 	}
 </script>
 </script>

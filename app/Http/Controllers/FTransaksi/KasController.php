@@ -37,9 +37,11 @@ class KasController extends Controller
     function setFlag(Request $request)
     {
         if ( $request->flagz == 'BKK' ) {
-            $this->judul = "Sumber Dana Keluar";
+            // $this->judul = "Sumber Dana Keluar";
+            $this->judul = "Kas Keluar";
         } else if ( $request->flagz == 'BKM' ) {
-            $this->judul = "Sumber Dana Masuk";
+            // $this->judul = "Sumber Dana Masuk";
+            $this->judul = "Kas Masuk";
         }
 		
         $this->FLAGZ = $request->flagz;
@@ -101,10 +103,13 @@ class KasController extends Controller
                     // CEK  SUDAH POSTED di INDEX dan EDIT
                     // <a class="dropdown-item btn btn-danger" onclick="return confirm(&quot; Apakah anda yakin ingin hapus? &quot;)" href="kas/delete/'. $row->NO_ID .'">
 				
+                    // url untuk delete di index
+                    $url = "'".url("kas/delete/" . $row->NO_ID . "/?flagz=" . $row->FLAG)."'";
+                    // batas
 
                     $btnEdit =   ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' href="kas/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->TYPE . '&judul=' . $this->judul . '"';
 				
-                    $btnDelete = ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' onclick="return confirm(&quot; Apakah anda yakin ingin hapus? &quot;)" href="kas/delete/' . $row->NO_ID . '/?flagz=' . $row->TYPE . '" ';
+                    $btnDelete = ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' onclick="deleteRow('.$url.')" ';
 
 
 
@@ -116,7 +121,7 @@ class KasController extends Controller
                                 <i class="fas fa-edit"></i>
                                     Edit
                                 </a>
-                                <a class="dropdown-item btn btn-danger" href="kas/jasper-kas-trans/' . $row->NO_ID . '">
+                                <a class="dropdown-item btn btn-danger" href="kas/cetak/' . $row->NO_ID . '">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                     Print
                                 </a> 										
@@ -267,7 +272,11 @@ class KasController extends Controller
 	    $no_buktix = $no_bukti;
 		
 		$kas = Kas::where('NO_BUKTI', $no_buktix )->first();
-	
+
+        DB::SELECT("UPDATE KAS, ACCOUNT
+                            SET KAS.BNAMA = ACCOUNT.NAMA  WHERE KAS.BACNO = ACCOUNT.ACNO 
+							AND KAS.NO_BUKTI='$no_buktix';");
+							
         DB::SELECT("UPDATE KAS, KASD
                             SET KASD.ID = KAS.NO_ID  WHERE KAS.NO_BUKTI = KASD.NO_BUKTI 
 							AND KAS.NO_BUKTI='$no_buktix';");
@@ -453,7 +462,7 @@ class KasController extends Controller
  
          
          return view('ftransaksi_kas.edit', $data)
-		 ->with(['tipx' => $tipx, 'idx' => $idx, 'flagz' =>$this->FLAGZ, 'judul' => $this->judul ]);
+		 ->with(['tipx' => $tipx, 'idx' => $idx, 'flagz' =>$this->FLAGZ, 'judul'=> $this->judul ]);
 			 
     
       
@@ -583,6 +592,10 @@ class KasController extends Controller
 		
 		$kas = Kas::where('NO_BUKTI', $no_buktix )->first();
 
+        DB::SELECT("UPDATE KAS, ACCOUNT
+                            SET KAS.BNAMA = ACCOUNT.NAMA  WHERE KAS.BACNO = ACCOUNT.ACNO 
+							AND KAS.NO_BUKTI='$no_buktix';");
+							
         DB::SELECT("UPDATE KAS, KASD
                             SET KASD.ID = KAS.NO_ID  WHERE KAS.NO_BUKTI = KASD.NO_BUKTI 
 							AND KAS.NO_BUKTI='$no_buktix';");
@@ -638,7 +651,7 @@ class KasController extends Controller
     }
 
 
-    public function jasperKasTrans(Kas $kas)
+    public function cetak (Kas $kas)
     {
         $no_bukti = $kas->NO_BUKTI;
 
@@ -660,6 +673,11 @@ class KasController extends Controller
 			WHERE kas.NO_BUKTI=kasd.NO_BUKTI and kas.NO_BUKTI='$no_bukti' 
 			ORDER BY kas.NO_BUKTI;
 		");
+		
+		$query2 = DB::SELECT("
+			SELECT NAMA from compan ;
+		");
+		
 
         $data = [];
         foreach ($query as $key => $value) {
@@ -674,10 +692,21 @@ class KasController extends Controller
                 'URAIAN' => $query[$key]->URAIAN,
                 'JUMLAH' => $query[$key]->JUMLAH,
                 'JUDUL' => $judul,
+				'NAMA' => $query2[0]->NAMA
             ));
         }
         $PHPJasperXML->setData($data);
         ob_end_clean();
         $PHPJasperXML->outpage("I");
     }
+
+    public function getDetailKas(){
+
+        $no_bukti = $_GET['no_bukti'];
+        $result = DB::table('kasd')->where('NO_BUKTI', $no_bukti)->get();
+        
+        return response()->json($result);;
+    }
+
+    
 }

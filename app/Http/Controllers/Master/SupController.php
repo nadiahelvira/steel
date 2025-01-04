@@ -3,14 +3,16 @@
 namespace App\Http\Controllers\Master;
 
 use App\Http\Controllers\Controller;
+// ganti 1
+
 use App\Models\Master\Sup;
-use App\Models\Master\Acnox;
 use Illuminate\Http\Request;
 use DataTables;
 use Auth;
 use DB;
 use Carbon\Carbon;
 
+// ganti 2
 class SupController extends Controller
 {
     /**
@@ -20,18 +22,47 @@ class SupController extends Controller
      */
     public function index()
     {
+
+// ganti 3
         return view('master_sup.index');
     }
 
+// ganti 4
+    
+
+
+
+    public function browse_hari(Request $request)
+    {
+        $kodes = $request->KODES;
+
+        $sup = DB::SELECT("SELECT NO_ID, KODES, NAMAS, ALAMAT, KOTA, NOTBAY, KONTAK, AKTIF, CASE WHEN PKP = '1' THEN '(PKP)' ELSE '(NON PKP)' END AS PKP2,
+                            PKP, HARI
+                            FROM sup WHERE KODES = '$kodes' "); 
+
+
+        return response()->json($sup);
+    }
 
     public function browse(Request $request)
     {
 
-		
-        // $sup = DB::table('sup')->select('KODES', 'NAMAS', 'ALAMAT', 'KOTA', 'PKP')->orderBy('KODES', 'ASC')->get();
-        $sup = DB::SELECT("SELECT NO_ID, KODES, NAMAS, ALAMAT, KOTA, NOTBAY, KONTAK, AKTIF, CASE WHEN PKP = '1' THEN '(PKP)' ELSE '(NON PKP)' END AS PKP2, PKP
+        
+        if (!empty(request('q'))) {
+
+
+                $sup = DB::SELECT("SELECT NO_ID, KODES, NAMAS, ALAMAT, KOTA, NOTBAY, KONTAK, AKTIF, CASE WHEN PKP = '1' THEN '(PKP)' ELSE '(NON PKP)' END AS PKP2,
+                            PKP, HARI
+                            FROM sup WHERE NAMAS <> '' AND NAMAS LIKE ('%$request->q%') ORDER BY NAMAS "); 
+
+            
+        } else {
+            $sup = DB::SELECT("SELECT NO_ID, KODES, NAMAS, ALAMAT, KOTA, NOTBAY, KONTAK, AKTIF, CASE WHEN PKP = '1' THEN '(PKP)' ELSE '(NON PKP)' END AS PKP2,
+                                PKP, HARI
                             FROM sup
-                            ORDER BY KODES");
+                            WHERE NAMAS <> ''
+                            ORDER BY NAMAS ");			
+        }
         
         return response()->json($sup);
     }
@@ -42,49 +73,59 @@ class SupController extends Controller
         return response()->json($data);
     }
 	
-    public function getSup( Request $request )
+
+
+    public function getSup()
     {
-		
-        $sup = DB::SELECT("SELECT * from sup ORDER BY KODES ");
-	
-        return Datatables::of($sup)
-            ->addIndexColumn()
-            ->addColumn('action', function ($row) {
-                if (Auth::user()->divisi=="programmer" || Auth::user()->divisi=="owner" || Auth::user()->divisi=="assistant" || Auth::user()->divisi=="accounting" || Auth::user()->divisi=="pembelian" || Auth::user()->divisi=="penjualan") 
-                {
-                    $btnPrivilege =
+		$Sup = DB::SELECT("SELECT NO_ID, KODES, NAMAS, ALMT_K, KOTA, TLP_K, GOLONGAN from sup  ORDER BY KODES");
+
+        return Datatables::of($Sup)
+                ->addIndexColumn()
+                ->addColumn('action', function($row) {
+					if (Auth::user()->divisi=="programmer" || Auth::user()->divisi=="owner" || Auth::user()->divisi=="assistant" || Auth::user()->divisi=="accounting" || Auth::user()->divisi=="pembelian" || Auth::user()->divisi=="penjualan")
+					{   
+                        // url untuk delete di index
+                        $url = "'".url("sup/delete/" . $row->NO_ID )."'";
+                        // batas
+                        
+                        $btnDelete = ' onclick="deleteRow('.$url.')"';
+    
+                        $btnPrivilege =
+                            '
+                                    <a class="dropdown-item" href="sup/edit/?idx=' . $row->NO_ID . '&tipx=edit";                                <i class="fas fa-edit"></i>
+                                        Edit
+                                    </a>
+                                    <hr>
+                                    </hr>
+    
+                                    <a hidden class="dropdown-item btn btn-danger" ' . $btnDelete . '>
+       
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                        Delete
+                                    </a> 
+                            ';
+                    } else {
+                        $btnPrivilege = '';
+                    }
+    
+                    $actionBtn =
                         '
-                                <a class="dropdown-item" href="sup/edit/?idx=' . $row->NO_ID . '&tipx=edit";                                <i class="fas fa-edit"></i>
-                                    Edit
-                                </a>
-                                <hr></hr>
-                                <a class="dropdown-item btn btn-danger" onclick="return confirm(&quot; Apakah anda yakin ingin hapus? &quot;)" href="sup/delete/' . $row->NO_ID . '">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                    Delete
-                                </a> 
-                        ';
-                } else {
-                    $btnPrivilege = '';
-                }
-
-                $actionBtn =
-                    '
-                    <div class="dropdown show" style="text-align: center">
-                        <a class="btn btn-secondary dropdown-toggle btn-sm" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-bars"></i>
-                        </a>
-
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-
-                            ' . $btnPrivilege . '
+                        <div class="dropdown show" style="text-align: center">
+                            <a class="btn btn-secondary dropdown-toggle btn-sm" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-bars"></i>
+                            </a>
+    
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+    
+                                ' . $btnPrivilege . '
+                            </div>
                         </div>
-                    </div>
-                    ';
-
-                return $actionBtn;
-            })
-            ->rawColumns(['action'])
-            ->make(true);
+                        ';
+    
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
     }
 
     /**
@@ -103,338 +144,378 @@ class SupController extends Controller
     public function store(Request $request)
     {
 
-        $this->validate(
-            $request,
-            // GANTI 8 SESUAI NAMA KOLOM DI NAVICAT //
-            [
-                'KODES'       => 'required',
-                'NAMAS'       => 'required',
-                'GOL'         => 'required'
+
+        $this->validate($request,
+// GANTI 9
+
+        [
+                'KODES'       => 'required'
             ]
         );
 
         // Insert Header
 
-        $query = DB::table('sup')->select('KODES')->orderByDesc('KODES')->limit(1)->get();
+// ganti 10
 
-   //     if ($query != '[]') {
-   //         $query = substr($query[0]->KODES, -4);
-   //         $query = str_pad($query + 1, 6, 0, STR_PAD_LEFT);
-   //         $kodes = 'S'. $query;
-   //     } else {
-   //         $kodes = 'S' . '000001';
-   //     }
-		
-        $sup = Sup::create(
+        $Sup = Sup::create(
             [
-//                'KODES'         => $kodes,
-
-                'KODES'         => ($request['KODES'] == null) ? "" : $request['KODES'],				
-                'NAMAS'         => ($request['NAMAS'] == null) ? "" : $request['NAMAS'],
-                // 'KODESGD'         => ($request['KODESGD'] == null) ? "" : $request['KODESGD'],				
-                // 'NAMASGD'         => ($request['NAMASGD'] == null) ? "" : $request['NAMASGD'],
-                'ALAMAT'           => ($request['ALAMAT'] == null) ? "" : $request['ALAMAT'],
-                'KOTA'            => ($request['KOTA'] == null) ? "" : $request['KOTA'],
-                'GOL'            => ($request['GOL'] == null) ? "" : $request['GOL'],
-                'TELPON1'       => ($request['TELPON1'] == null) ? "" : $request['TELPON1'],
-                'FAX'            => ($request['FAX'] == null) ? "" : $request['FAX'],
-                'HP'            => ($request['HP'] == null) ? "" : $request['HP'],
-                'AKT'           => (float) str_replace(',', '', $request['AKT']),
-                'PKP'           => (float) str_replace(',', '', $request['PKP']),
-                'KONTAK'        => ($request['KONTAK'] == null) ? "" : $request['KONTAK'],
-                'EMAIL'           => ($request['EMAIL'] == null) ? "" : $request['EMAIL'],
-                'NPWP'            => ($request['NPWP'] == null) ? "" : $request['NPWP'],
-                'KET'            => ($request['KET'] == null) ? "" : $request['KET'],
-                'BANK'            => ($request['BANK'] == null) ? "" : $request['BANK'],
-                'BANK_CAB'      => ($request['BANK_CAB'] == null) ? "" : $request['BANK_CAB'],
-                'BANK_KOTA'     => ($request['BANK_KOTA'] == null) ? "" : $request['BANK_KOTA'],
-                'BANK_NAMA'     => ($request['BANK_NAMA'] == null) ? "" : $request['BANK_NAMA'],
-                'BANK_REK'      => ($request['BANK_REK'] == null) ? "" : $request['BANK_REK'],
-                'HARI'            => (float) str_replace(',', '', $request['HARI']),
-
-                'NOREK'         => ($request['NOREK'] == null) ? "" : $request['NOREK'],
-                'NOTBAY'        => ($request['NOTBAY'] == null) ? "" : $request['NOTBAY'],
-                'LDT_NEW'       => ($request['LDT_NEW'] == null) ? "" : $request['LDT_NEW'],
-                'LDT_REP'       => ($request['LDT_REP'] == null) ? "" : $request['LDT_REP'],
-                'PLH'           => ($request['PLH'] == null) ? "" : $request['PLH'],
-                'PLM'           => ($request['PLM'] == null) ? "" : $request['PLM'],
-                'PLL'           => ($request['PLL'] == null) ? "" : $request['PLL'],
-                'SKH'           => ($request['SKH'] == null) ? "" : $request['SKH'],
-                'SKH_KET'       => ($request['SKH_KET'] == null) ? "" : $request['SKH_KET'],
-                'SKM'           => ($request['SKM'] == null) ? "" : $request['SKM'],
-                'SKM_KET'       => ($request['SKM_KET'] == null) ? "" : $request['SKM_KET'],
-                'SKL'           => ($request['SKL'] == null) ? "" : $request['SKL'],
-                'SKL_KET'       => ($request['SKL_KET'] == null) ? "" : $request['SKL_KET'],
-                'KET'           => ($request['KET'] == null) ? "" : $request['KET'],
-                'NKUALITAS'     => ($request['NKUALITAS'] == null) ? "" : $request['NKUALITAS'],
-                'KUALITAS'      => (float) str_replace(',', '', $request['KUALITAS']),
-                'NHARGA'        => ($request['NHARGA'] == null) ? "" : $request['NHARGA'],
-                'NOTE_HARGA'    => (float) str_replace(',', '', $request['NOTE_HARGA']),
-                'NPENGIRIMAN'   => ($request['NPENGIRIMAN'] == null) ? "" : $request['NPENGIRIMAN'],
-                'PENGIRIMAN'    => (float) str_replace(',', '', $request['PENGIRIMAN']),
-                'NKEAMANAN'     => ($request['NKEAMANAN'] == null) ? "" : $request['NKEAMANAN'],
-                'KEAMANAN'      => (float) str_replace(',', '', $request['KEAMANAN']),
-                'NKREDIT'       => ($request['NKREDIT'] == null) ? "" : $request['NKREDIT'],
-                'KREDIT'        => (float) str_replace(',', '', $request['KREDIT']),
-                'NPRODUKSI'     => ($request['NPRODUKSI'] == null) ? "" : $request['NPRODUKSI'],
-                'PRODUKSI'      => (float) str_replace(',', '', $request['PRODUKSI']),
-                'NPELAYANAN'    => ($request['NPELAYANAN'] == null) ? "" : $request['NPELAYANAN'],
-                'PELAYANAN'     => (float) str_replace(',', '', $request['PELAYANAN']),
-                'NISO'          => ($request['NISO'] == null) ? "" : $request['NISO'],
-                'ISO'           => (float) str_replace(',', '', $request['ISO']),
-                'NILAI'         => (float) str_replace(',', '', $request['NILAI']),
-
-                'USRNM'          => Auth::user()->username,
-                'TG_SMP'        => Carbon::now()
+                'KODES'         => ($request['KODES']==null) ? "" : $request['KODES'],
+                'NAMAS'         => ($request['NAMAS']==null) ? "" : $request['NAMAS'],
+                'NAMA'          => ($request['NAMAS']==null) ? "" : $request['NAMAS'],
+                'TYPE'          => ($request['TYPE']==null) ? "" : $request['TYPE'],
+                'SUP_BARU'      => ($request['SUP_BARU']==null) ? "" : $request['SUP_BARU'],
+                'GOLONGAN'      => ($request['GOLONGAN']==null) ? "" : $request['GOLONGAN'],
+                'PEMILIK'       => ($request['PEMILIK']==null) ? "" : $request['PEMILIK'],                
+                'TLP_R'         => ($request['TLP_R']==null) ? "" : $request['TLP_R'],
+                'ALMT_R'        => ($request['ALMT_R']==null) ? "" : $request['ALMT_R'],
+                'ALMT_K'        => ($request['ALMT_K']==null) ? "" : $request['ALMT_K'],
+                'KOTA'          => ($request['KOTA']==null) ? "" : $request['KOTA'],
+                'ALMT_GD'       => ($request['ALMT_GD']==null) ? "" : $request['ALMT_GD'],
+                'TLP_K'         => ($request['TLP_K']==null) ? "" : $request['TLP_K'],
+                'NO_FAX'        => ($request['NO_FAX']==null) ? "" : $request['NO_FAX'],
+                'NO_HP'         => ($request['NO_HP']==null) ? "" : $request['NO_FAX'],
+                'NO_TELEX'      => ($request['NO_TELEX']==null) ? "" : $request['NO_TELEX'],
+                'EMAIL'         => ($request['EMAIL']==null) ? "" : $request['EMAIL'],
+                'EMAIL2'        => ($request['EMAIL2']==null) ? "" : $request['EMAIL2'],
+                'EMAIL3'        => ($request['EMAIL3']==null) ? "" : $request['EMAIL3'],
+                'GOL_BRG'       => ($request['GOL_BRG']==null) ? "" : $request['GOL_BRG'],
+                'KD_PEMBY'      => ($request['KD_PEMBY']==null) ? "" : $request['KD_PEMBY'],
+                'STM_PEMBL'     => ($request['STM_PEMBL']==null) ? "" : $request['STM_PEMBL'],
+                'DISC_PS'       => (float) str_replace(',', '', $request['DISC_PS']),
+                'JEN_BRG1'      => ($request['JEN_BRG1']==null) ? "" : $request['JEN_BRG1'],
+                'CARA'          => ($request['CARA']==null) ? "" : $request['CARA'],
+                'BG_PERS'       => ($request['BG_PERS']==null) ? "" : $request['BG_PERS'],
+                'STTS'          => ($request['STTS']==null) ? "" : $request['STTS'],
+                'SUB'           => ($request['SUB']==null) ? "" : $request['SUB'],
+                'KD_BANK'       => ($request['KD_BANK']==null) ? "" : $request['KD_BANK'],
+                'NPWP'          => ($request['NPWP']==null) ? "" : $request['NPWP'],
+                'NPPKP'         => ($request['NPPKP']==null) ? "" : $request['NPPKP'],
+                'NAMA_B'        => ($request['NAMA_B']==null) ? "" : $request['NAMA_B'],
+                'NM_NPWP'       => ($request['NM_NPWP']==null) ? "" : $request['NM_NPWP'],
+                'CABANG_B'      => ($request['CABANG_B']==null) ? "" : $request['CABANG_B'],
+                'NO_NPWP'       => ($request['NO_NPWP']==null) ? "" : $request['NO_NPWP'],
+                'KOTA_B'        => ($request['KOTA_B']==null) ? "" : $request['KOTA_B'],
+                'AL_NPWP'       => ($request['AL_NPWP']==null) ? "" : $request['AL_NPWP'],
+                'AN_B'          => ($request['AN_B']==null) ? "" : $request['AN_B'],
+                'NOREK'         => ($request['NOREK']==null) ? "" : $request['NOREK'],
+                'TG_NPWP'       => date('Y-m-d', strtotime($request['TG_NPWP'])),
+                'SERI'          => ($request['SERI']==null) ? "" : $request['SERI'],
+                'FO_KLB'        => (float) str_replace(',', '', $request['FO_KLB']),
+                'NF_KLB'        => (float) str_replace(',', '', $request['NF_KLB']),
+                'PB_KLB'        => (float) str_replace(',', '', $request['PB_KLB']),
+                'ST_KLB'        => (float) str_replace(',', '', $request['ST_KLB']),
+                'FF_KLB'        => (float) str_replace(',', '', $request['FF_KLB']),
+                'BS_KLB'        => (float) str_replace(',', '', $request['BS_KLB']),
+                'MATERAI'       => ($request['MATERAI']==null) ? "" : $request['MATERAI'],
+                'ZONE'          => ($request['ZONE']==null) ? "" : $request['ZONE'],
+                'CETAK_SBY'     => ($request['CETAK_SBY']==null) ? "" : $request['CETAK_SBY'],
+                'ACC_PPN'       => ($request['ACC_PPN']==null) ? "" : $request['ACC_PPN'],
+                'CAT_LO'        => ($request['CAT_LO']==null) ? "" : $request['CAT_LO'],
+                'DIS_P4'        => (float) str_replace(',', '', $request['DIS_P4']),
+                'RETUR'         => ($request['RETUR']==null) ? "" : $request['RETUR'],
+                'KET_HAPUS'     => ($request['KET_HAPUS']==null) ? "" : $request['KET_HAPUS'],
+                'JMN_RETUR'     => (float) str_replace(',', '', $request['JMN_RETUR']),
+                'HARI'          => ($request['HARI']==null) ? "" : $request['HARI'],
+                'TND_SPL'       => ($request['TND_SPL']==null) ? "" : $request['TND_SPL'],
+                'B_CODE'        => ($request['B_CODE']==null) ? "" : $request['B_CODE'],
+                'JAMIN_RET'     => ($request['JAMIN_RET']==null) ? "" : $request['JAMIN_RET'],
+                'TGL'           => date('Y-m-d', strtotime($request['TGL'])),
+                'VA_GZ'         => ($request['VA_GZ']==null) ? "" : $request['VA_GZ'],
+                'S_BAR'         => ($request['S_BAR']==null) ? "" : $request['S_BAR'],
+                'NOREK_GZ'      => ($request['NOREK_GZ']==null) ? "" : $request['NOREK_GZ'],
+                'AN_B_GZ'       => ($request['AN_B_GZ']==null) ? "" : $request['AN_B_GZ'],
+                'ANB_VA_GZ'     => ($request['ANB_VA_GZ']==null) ? "" : $request['ANB_VA_GZ'],
+                'EMAIL_GZ'      => ($request['EMAIL_GZ']==null) ? "" : $request['EMAIL_GZ'],
+                'D_BUTOR'       => ($request['D_BUTOR']==null) ? "" : $request['D_BUTOR'],
+                'CAT_RET'       => ($request['CAT_RET']==null) ? "" : $request['CAT_RET'],
+                'CAT_PRM'       => ($request['CAT_PRM']==null) ? "" : $request['CAT_PRM'],
+                'SR_TERBIT'     => (float) str_replace(',', '', $request['SR_TERBIT']),
+                'BONAFIT'       => ($request['BONAFIT']==null) ? "" : $request['BONAFIT'],
+                'KEL_PAJAK'     => ($request['KEL_PAJAK']==null) ? "" : $request['KEL_PAJAK'],
+                'N_AKTIF'       => ($request['N_AKTIF']==null) ? "" : $request['N_AKTIF'],
+                'KETNAKTIF'     => ($request['KETNAKTIF']==null) ? "" : $request['KETNAKTIF'],
+                'LAIN1'         => ($request['LAIN1']==null) ? "" : $request['LAIN1'],
+                'LAIN2'         => ($request['LAIN2']==null) ? "" : $request['LAIN2'],
+                'KOD_MIN'       => ($request['KOD_MIN']==null) ? "" : $request['KOD_MIN'],
+                'KLB2'          => (float) str_replace(',', '', $request['KLB2']),
+                'ORDR'          => (float) str_replace(',', '', $request['ORDR']),
+                'BY_KR'         => ($request['BY_KR']==null) ? "" : $request['BY_KR'],
+                'URAIAN1'       => ($request['URAIAN1']==null) ? "" : $request['URAIAN1'],
+                'URAIAN2'       => ($request['URAIAN2']==null) ? "" : $request['URAIAN2'],
+                'KLK'           => ($request['KLK']==null) ? "" : $request['KLK'],
+                'CAT_SP'        => ($request['CAT_SP']==null) ? "" : $request['CAT_SP'],
+                'SP'            => (float) str_replace(',', '', $request['SP']),
+                'JAM'           => ($request['JAM']==null) ? "" : $request['JAM'],
+				'TG_SMP'        => Carbon::now()
             ]
         );
 
+//  ganti 11
 
-	    $kodesx = $request['KODES'];
-		
-		$sup = Sup::where('KODES', $kodesx )->first();
-					       
-        //return redirect('/sup/edit/?idx=' . $sup->NO_ID . '&tipx=edit')->with('statusInsert', 'Data baru berhasil ditambahkan');
-		return redirect('/sup')->with('statusInsert', 'Data baru berhasil ditambahkan');		
-
-
+        return redirect('/sup')->with('statusInsert', 'Data baru berhasil ditambahkan');
     }
 
- 
- 
-    public function edit(Request $request ,  Sup $sup)
+
+  public function edit(Request $request ,  Sup $Sup)
     {
 
-        $pilihbank = DB::table('bang')->select('KODE', 'NAMA')->orderBy('KODE', 'ASC')->get();
-        // ganti 16
-
-
+        // ganti 1
 		$tipx = $request->tipx;
 
 		$idx = $request->idx;
-					
 
-		
+
+
 		if ( $idx =='0' && $tipx=='undo'  )
 	    {
 			$tipx ='top';
-			
+
 		   }
-		   
 
-		if ($tipx=='search') {
-			
-		   	
+		 if ($tipx=='search') {
+
+
     	   $kodex = $request->kodex;
-		   
-		   $bingco = DB::SELECT("SELECT NO_ID, KODES from sup 
-		                 where KODES = '$kodex'						 
+
+		   $bingco = DB::SELECT("SELECT NO_ID, KODES from Sup
+		                 where KODES = '$kodex'
 		                 ORDER BY KODES ASC  LIMIT 1" );
-						 
-			
-			if(!empty($bingco)) 
+
+
+			if(!empty($bingco))
 			{
 				$idx = $bingco[0]->NO_ID;
 			  }
 			else
 			{
-				$idx = 0; 
+				$idx = 0;
 			  }
-		
-					
+
+
 		}
-		   
+
 		if ($tipx=='top') {
-			
-		   $bingco = DB::SELECT("SELECT NO_ID, KODES from sup      
-		                 ORDER BY KODES ASC  LIMIT 1" );
-					 
-			if(!empty($bingco)) 
-			{
-				$idx = $bingco[0]->NO_ID;
-			  }
-			else
-			{
-				$idx = 0; 
-			  }
-			  
-		}
-		
-		
-		if ($tipx=='prev' ) {
-			
-    	   $kodex = $request->kodex;
-			
-		   $bingco = DB::SELECT("SELECT NO_ID, KODES from SUP     
-		             where KODES < 
-					 '$kodex' ORDER BY KODES DESC LIMIT 1" );
-			
 
-			if(!empty($bingco)) 
+		   $bingco = DB::SELECT("SELECT NO_ID, KODES from Sup
+		                 ORDER BY KODES ASC  LIMIT 1" );
+
+			if(!empty($bingco))
 			{
 				$idx = $bingco[0]->NO_ID;
 			  }
 			else
 			{
-				$idx = $idx; 
+				$idx = 0;
 			  }
-			  
-			  
-			  
-			  
+
+		}
+
+
+		if ($tipx=='prev' ) {
+
+    	   $kodex = $request->kodex;
+
+		   $bingco = DB::SELECT("SELECT NO_ID, KODES from Sup
+		             where KODES <
+					 '$kodex' ORDER BY KODES DESC LIMIT 1" );
+
+
+			if(!empty($bingco))
+			{
+				$idx = $bingco[0]->NO_ID;
+			  }
+			else
+			{
+				$idx = $idx;
+			  }
+
+
+
+
 
 		}
 		if ($tipx=='next' ) {
-			
-				
+
+
       	   $kodex = $request->kodex;
-	   
-		   $bingco = DB::SELECT("SELECT NO_ID, KODES from SUP    
-		             where KODES > 
+
+		   $bingco = DB::SELECT("SELECT NO_ID, KODES from Sup
+		             where KODES >
 					 '$kodex' ORDER BY KODES ASC LIMIT 1" );
-					 
-			if(!empty($bingco)) 
+
+			if(!empty($bingco))
 			{
 				$idx = $bingco[0]->NO_ID;
 			  }
 			else
 			{
-				$idx = $idx; 
+				$idx = $idx;
 			  }
-			  
-			
+
+
 		}
 
 		if ($tipx=='bottom') {
-		  
-    		$bingco = DB::SELECT("SELECT NO_ID, KODES from SUP    
+
+    		$bingco = DB::SELECT("SELECT NO_ID, KODES from Sup
 		              ORDER BY KODES DESC  LIMIT 1" );
-					 
-			if(!empty($bingco)) 
+
+			if(!empty($bingco))
 			{
 				$idx = $bingco[0]->NO_ID;
 			  }
 			else
 			{
-				$idx = 0; 
+				$idx = 0;
 			  }
-			  
-			
+
+
 		}
 
 
 		if ( $tipx=='undo' || $tipx=='search' )
 	    {
-        
+
 			$tipx ='edit';
-			
+
 		   }
-		
-	
-	  	if ( $idx != 0 ) 
+
+
+	  	if ( $idx != 0 )
 		{
-			$sup = Sup::where('NO_ID', $idx )->first();	
+			$Sup = Sup::where('NO_ID', $idx )->first();
 	     }
 		 else
 		 {
-             $sup = new Sup;			 
+             $Sup = new Sup;
+             $Sup->TGL = Carbon::now();
+             $Sup->TG_NPWP = Carbon::now();
+
 		 }
 
 		 $data = [
-						'header' => $sup,
-			        ];				
-			return view('master_sup.edit', $data)->with(['tipx' => $tipx, 'idx' => $idx ])->with(['pilihbank' => $pilihbank]);
-		 
-	 
+						'header' => $Sup,
+			        ];
+			return view('master_sup.edit', $data)->with(['tipx' => $tipx, 'idx' => $idx ]);
+
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Master\Rute  $rute
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Sup $sup)
+
+
+
+
+// ganti 18
+
+    public function update(Request $request, Sup $Sup )
     {
 
-        $this->validate(
-            $request,
-            [
+        $this->validate($request,
+        [
+// ganti 19
                 'KODES'       => 'required',
-                'NAMAS'      => 'required'
+
             ]
         );
 
-		$tipx = 'edit';
-		$idx = $request->idx;
-		
-        $sup->update(
+// ganti 20
+
+        $Sup->update(
             [
-
-                'NAMAS'       => $request['NAMAS'],
-                // 'KODESGD'           => ($request['KODESGD'] == null) ? "" : $request['KODESGD'],
-                // 'NAMASGD'            => ($request['NAMASGD'] == null) ? "" : $request['NAMASGD'],
-                'ALAMAT'           => ($request['ALAMAT'] == null) ? "" : $request['ALAMAT'],
-                'KOTA'            => ($request['KOTA'] == null) ? "" : $request['KOTA'],
-                'TELPON1'       => ($request['TELPON1'] == null) ? "" : $request['TELPON1'],
-                'FAX'            => ($request['FAX'] == null) ? "" : $request['FAX'],
-                'HP'            => ($request['HP'] == null) ? "" : $request['HP'],
-                'AKT'           => (float) str_replace(',', '', $request['AKT']),
-                'PKP'           => (float) str_replace(',', '', $request['PKP']),
-                'KONTAK'        => ($request['KONTAK'] == null) ? "" : $request['KONTAK'],
-                'EMAIL'           => ($request['EMAIL'] == null) ? "" : $request['EMAIL'],
-                'NPWP'            => ($request['NPWP'] == null) ? "" : $request['NPWP'],
-                'KET'            => ($request['KET'] == null) ? "" : $request['KET'],
-                'BANK'            => ($request['BANK'] == null) ? "" : $request['BANK'],
-                'BANK_CAB'      => ($request['BANK_CAB'] == null) ? "" : $request['BANK_CAB'],
-                'BANK_KOTA'     => ($request['BANK_KOTA'] == null) ? "" : $request['BANK_KOTA'],
-                'BANK_NAMA'     => ($request['BANK_NAMA'] == null) ? "" : $request['BANK_NAMA'],
-                'BANK_REK'      => ($request['BANK_REK'] == null) ? "" : $request['BANK_REK'],
-                'GOL'           => ($request['GOL'] == null) ? "" : $request['GOL'],
-                'HARI'            => (float) str_replace(',', '', $request['HARI']),
-                
-                'NOREK'         => ($request['NOREK'] == null) ? "" : $request['NOREK'],
-                'NOTBAY'        => ($request['NOTBAY'] == null) ? "" : $request['NOTBAY'],
-                'LDT_NEW'       => ($request['LDT_NEW'] == null) ? "" : $request['LDT_NEW'],
-                'LDT_REP'       => ($request['LDT_REP'] == null) ? "" : $request['LDT_REP'],
-                'PLH'           => ($request['PLH'] == null) ? "" : $request['PLH'],
-                'PLM'           => ($request['PLM'] == null) ? "" : $request['PLM'],
-                'PLL'           => ($request['PLL'] == null) ? "" : $request['PLL'],
-                'SKH'           => ($request['SKH'] == null) ? "" : $request['SKH'],
-                'SKH_KET'       => ($request['SKH_KET'] == null) ? "" : $request['SKH_KET'],
-                'SKM'           => ($request['SKM'] == null) ? "" : $request['SKM'],
-                'SKM_KET'       => ($request['SKM_KET'] == null) ? "" : $request['SKM_KET'],
-                'SKL'           => ($request['SKL'] == null) ? "" : $request['SKL'],
-                'SKL_KET'       => ($request['SKL_KET'] == null) ? "" : $request['SKL_KET'],
-                'KET'           => ($request['KET'] == null) ? "" : $request['KET'],
-                'NKUALITAS'     => ($request['NKUALITAS'] == null) ? "" : $request['NKUALITAS'],
-                'KUALITAS'      => (float) str_replace(',', '', $request['KUALITAS']),
-                'NHARGA'        => ($request['NHARGA'] == null) ? "" : $request['NHARGA'],
-                'NOTE_HARGA'    => (float) str_replace(',', '', $request['NOTE_HARGA']),
-                'NPENGIRIMAN'   => ($request['NPENGIRIMAN'] == null) ? "" : $request['NPENGIRIMAN'],
-                'PENGIRIMAN'    => (float) str_replace(',', '', $request['PENGIRIMAN']),
-                'NKEAMANAN'     => ($request['NKEAMANAN'] == null) ? "" : $request['NKEAMANAN'],
-                'KEAMANAN'      => (float) str_replace(',', '', $request['KEAMANAN']),
-                'NKREDIT'       => ($request['NKREDIT'] == null) ? "" : $request['NKREDIT'],
-                'KREDIT'        => (float) str_replace(',', '', $request['KREDIT']),
-                'NPRODUKSI'     => ($request['NPRODUKSI'] == null) ? "" : $request['NPRODUKSI'],
-                'PRODUKSI'      => (float) str_replace(',', '', $request['PRODUKSI']),
-                'NPELAYANAN'    => ($request['NPELAYANAN'] == null) ? "" : $request['NPELAYANAN'],
-                'PELAYANAN'     => (float) str_replace(',', '', $request['PELAYANAN']),
-                'NISO'          => ($request['NISO'] == null) ? "" : $request['NISO'],
-                'ISO'           => (float) str_replace(',', '', $request['ISO']),
-                'NILAI'         => (float) str_replace(',', '', $request['NILAI']),
-
-                'USRNM'          => Auth::user()->username,
-                'TG_SMP'         => Carbon::now()
+                'NAMAS'         => ($request['NAMAS']==null) ? "" : $request['NAMAS'],
+                'NAMA'          => ($request['NAMAS']==null) ? "" : $request['NAMAS'],
+                'TYPE'          => ($request['TYPE']==null) ? "" : $request['TYPE'],
+                'SUP_BARU'      => ($request['SUP_BARU']==null) ? "" : $request['SUP_BARU'],
+                'GOLONGAN'      => ($request['GOLONGAN']==null) ? "" : $request['GOLONGAN'],
+                'PEMILIK'       => ($request['PEMILIK']==null) ? "" : $request['PEMILIK'],                
+                'TLP_R'         => ($request['TLP_R']==null) ? "" : $request['TLP_R'],
+                'ALMT_R'        => ($request['ALMT_R']==null) ? "" : $request['ALMT_R'],
+                'ALMT_K'        => ($request['ALMT_K']==null) ? "" : $request['ALMT_K'],
+                'KOTA'          => ($request['KOTA']==null) ? "" : $request['KOTA'],
+                'ALMT_GD'       => ($request['ALMT_GD']==null) ? "" : $request['ALMT_GD'],
+                'TLP_K'         => ($request['TLP_K']==null) ? "" : $request['TLP_K'],
+                'NO_FAX'        => ($request['NO_FAX']==null) ? "" : $request['NO_FAX'],
+                'NO_HP'         => ($request['NO_HP']==null) ? "" : $request['NO_FAX'],
+                'NO_TELEX'      => ($request['NO_TELEX']==null) ? "" : $request['NO_TELEX'],
+                'EMAIL'         => ($request['EMAIL']==null) ? "" : $request['EMAIL'],
+                'EMAIL2'        => ($request['EMAIL2']==null) ? "" : $request['EMAIL2'],
+                'EMAIL3'        => ($request['EMAIL3']==null) ? "" : $request['EMAIL3'],
+                'GOL_BRG'       => ($request['GOL_BRG']==null) ? "" : $request['GOL_BRG'],
+                'KD_PEMBY'      => ($request['KD_PEMBY']==null) ? "" : $request['KD_PEMBY'],
+                'STM_PEMBL'     => ($request['STM_PEMBL']==null) ? "" : $request['STM_PEMBL'],
+                'DISC_PS'       => (float) str_replace(',', '', $request['DISC_PS']),
+                'JEN_BRG1'      => ($request['JEN_BRG1']==null) ? "" : $request['JEN_BRG1'],
+                'CARA'          => ($request['CARA']==null) ? "" : $request['CARA'],
+                'BG_PERS'       => ($request['BG_PERS']==null) ? "" : $request['BG_PERS'],
+                'STTS'          => ($request['STTS']==null) ? "" : $request['STTS'],
+                'SUB'           => ($request['SUB']==null) ? "" : $request['SUB'],
+                'KD_BANK'       => ($request['KD_BANK']==null) ? "" : $request['KD_BANK'],
+                'NPWP'          => ($request['NPWP']==null) ? "" : $request['NPWP'],
+                'NPPKP'         => ($request['NPPKP']==null) ? "" : $request['NPPKP'],
+                'NAMA_B'        => ($request['NAMA_B']==null) ? "" : $request['NAMA_B'],
+                'NM_NPWP'       => ($request['NM_NPWP']==null) ? "" : $request['NM_NPWP'],
+                'CABANG_B'      => ($request['CABANG_B']==null) ? "" : $request['CABANG_B'],
+                'NO_NPWP'       => ($request['NO_NPWP']==null) ? "" : $request['NO_NPWP'],
+                'KOTA_B'        => ($request['KOTA_B']==null) ? "" : $request['KOTA_B'],
+                'AL_NPWP'       => ($request['AL_NPWP']==null) ? "" : $request['AL_NPWP'],
+                'AN_B'          => ($request['AN_B']==null) ? "" : $request['AN_B'],
+                'NOREK'         => ($request['NOREK']==null) ? "" : $request['NOREK'],
+                'TG_NPWP'       => date('Y-m-d', strtotime($request['TG_NPWP'])),
+                'SERI'          => ($request['SERI']==null) ? "" : $request['SERI'],
+                'FO_KLB'        => (float) str_replace(',', '', $request['FO_KLB']),
+                'NF_KLB'        => (float) str_replace(',', '', $request['NF_KLB']),
+                'PB_KLB'        => (float) str_replace(',', '', $request['PB_KLB']),
+                'ST_KLB'        => (float) str_replace(',', '', $request['ST_KLB']),
+                'FF_KLB'        => (float) str_replace(',', '', $request['FF_KLB']),
+                'BS_KLB'        => (float) str_replace(',', '', $request['BS_KLB']),
+                'MATERAI'       => ($request['MATERAI']==null) ? "" : $request['MATERAI'],
+                'ZONE'          => ($request['ZONE']==null) ? "" : $request['ZONE'],
+                'CETAK_SBY'     => ($request['CETAK_SBY']==null) ? "" : $request['CETAK_SBY'],
+                'ACC_PPN'       => ($request['ACC_PPN']==null) ? "" : $request['ACC_PPN'],
+                'CAT_LO'        => ($request['CAT_LO']==null) ? "" : $request['CAT_LO'],
+                'DIS_P4'        => (float) str_replace(',', '', $request['DIS_P4']),
+                'RETUR'         => ($request['RETUR']==null) ? "" : $request['RETUR'],
+                'KET_HAPUS'     => ($request['KET_HAPUS']==null) ? "" : $request['KET_HAPUS'],
+                'JMN_RETUR'     => (float) str_replace(',', '', $request['JMN_RETUR']),
+                'HARI'          => ($request['HARI']==null) ? "" : $request['HARI'],
+                'TND_SPL'       => ($request['TND_SPL']==null) ? "" : $request['TND_SPL'],
+                'B_CODE'        => ($request['B_CODE']==null) ? "" : $request['B_CODE'],
+                'JAMIN_RET'     => ($request['JAMIN_RET']==null) ? "" : $request['JAMIN_RET'],
+                'TGL'           => date('Y-m-d', strtotime($request['TGL'])),
+                'VA_GZ'         => ($request['VA_GZ']==null) ? "" : $request['VA_GZ'],
+                'S_BAR'         => ($request['S_BAR']==null) ? "" : $request['S_BAR'],
+                'NOREK_GZ'      => ($request['NOREK_GZ']==null) ? "" : $request['NOREK_GZ'],
+                'AN_B_GZ'       => ($request['AN_B_GZ']==null) ? "" : $request['AN_B_GZ'],
+                'ANB_VA_GZ'     => ($request['ANB_VA_GZ']==null) ? "" : $request['ANB_VA_GZ'],
+                'EMAIL_GZ'      => ($request['EMAIL_GZ']==null) ? "" : $request['EMAIL_GZ'],
+                'D_BUTOR'       => ($request['D_BUTOR']==null) ? "" : $request['D_BUTOR'],
+                'CAT_RET'       => ($request['CAT_RET']==null) ? "" : $request['CAT_RET'],
+                'CAT_PRM'       => ($request['CAT_PRM']==null) ? "" : $request['CAT_PRM'],
+                'SR_TERBIT'     => (float) str_replace(',', '', $request['SR_TERBIT']),
+                'BONAFIT'       => ($request['BONAFIT']==null) ? "" : $request['BONAFIT'],
+                'KEL_PAJAK'     => ($request['KEL_PAJAK']==null) ? "" : $request['KEL_PAJAK'],
+                'N_AKTIF'       => ($request['N_AKTIF']==null) ? "" : $request['N_AKTIF'],
+                'KETNAKTIF'     => ($request['KETNAKTIF']==null) ? "" : $request['KETNAKTIF'],
+                'LAIN1'         => ($request['LAIN1']==null) ? "" : $request['LAIN1'],
+                'LAIN2'         => ($request['LAIN2']==null) ? "" : $request['LAIN2'],
+                'KOD_MIN'       => ($request['KOD_MIN']==null) ? "" : $request['KOD_MIN'],
+                'KLB2'          => (float) str_replace(',', '', $request['KLB2']),
+                'ORDR'          => (float) str_replace(',', '', $request['ORDR']),
+                'BY_KR'         => ($request['BY_KR']==null) ? "" : $request['BY_KR'],
+                'URAIAN1'       => ($request['URAIAN1']==null) ? "" : $request['URAIAN1'],
+                'URAIAN2'       => ($request['URAIAN2']==null) ? "" : $request['URAIAN2'],
+                'KLK'           => ($request['KLK']==null) ? "" : $request['KLK'],
+                'CAT_SP'        => ($request['CAT_SP']==null) ? "" : $request['CAT_SP'],
+                'SP'            => (float) str_replace(',', '', $request['SP']),
+                'JAM'           => ($request['JAM']==null) ? "" : $request['JAM'],
+				'TG_SMP'        => Carbon::now()
             ]
         );
+//  ganti 21
 
-
+        return redirect('/sup')->with('status', 'Data baru berhasil diedit');
         //return redirect('/sup/edit/?idx=' . $sup->NO_ID . '&tipx=edit');
-		return redirect('/sup')->with('statusInsert', 'Data baru berhasil diupdate');
-				
+
     }
 
     /**
@@ -443,43 +524,29 @@ class SupController extends Controller
      * @param  \App\Models\Master\Rute  $rute
      * @return \Illuminate\Http\Response
      */
-    public function destroy( Request $request, Sup $sup)
+
+// ganti 22
+
+    public function destroy( Request $request, Sup $Sup)
     {
-        $deleteSup = Sup::find($sup->NO_ID);
+
+// ganti 23
+        $deleteSup = Sup::find($Sup->NO_ID);
+
+// ganti 24
+
         $deleteSup->delete();
 
+// ganti
         return redirect('/sup')->with('status', 'Data berhasil dihapus');
+
+
     }
 
     public function ceksup(Request $request)
     {
-        $getItem = DB::SELECT('select count(*) as ADA from sup where KODES ="' . $request->KODES . '"');
+        $getItem = DB::SELECT('select count(*) as ADA from Sup where KODES ="' . $request->KODES . '"');
 
         return $getItem;
-    }
-	
-    public function getSelectKodes(Request $request)
-    {
-        $search = $request->search;
-        $page = $request->page;
-        if ($page == 0) {
-            $xa = 0;
-        } else {
-            $xa = ($page - 1) * 10;
-        }
-        $perPage = 10;
-        
-        $hasil = DB::SELECT("SELECT KODES, NAMAS from sup WHERE (KODES LIKE '%$search%' or NAMAS LIKE '%$search%') ORDER BY KODES LIMIT $xa,$perPage ");
-        $selectajax = array();
-        foreach ($hasil as $row => $value) {
-            $selectajax[] = array(
-                'id' => $hasil[$row]->KODES,
-                'text' => $hasil[$row]->KODES,
-                'namas' => $hasil[$row]->NAMAS,
-            );
-        }
-        $select['total_count'] =  count($selectajax);
-        $select['items'] = $selectajax;
-        return response()->json($select);
     }
 }

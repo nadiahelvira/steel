@@ -32,8 +32,8 @@ class StockbController extends Controller
     {
         if ( $request->flagz == 'KZ' ) {
             $this->judul = "Koreksi Stock Barang";
-        } else if ( $request->flagz == '' ) {
-            $this->judul = "";
+        } else if ( $request->flagz == 'MT' ) {
+            $this->judul = "Koreksi Stock Mutasi";
         }
 
         $this->FLAGZ = $request->flagz;
@@ -61,7 +61,7 @@ class StockbController extends Controller
 		                  PO.ALAMAT, PO.KOTA from stockb, stockbd 
                           WHERE PO.NO_BUKTI = POD.NO_BUKTI AND PO.GOL ='$golz' AND CBG = '$CBG'
                           AND POD.SISA > 0	");
-        return resstockbnse()->json($stockb);
+        return response()->json($stockb);
     }
 
     public function browseuang(Request $request)
@@ -151,8 +151,12 @@ class StockbController extends Controller
 				{
                     //CEK POSTED di index dan edit
 
+                    // url untuk delete di index
+                    $url = "'".url("stockb/delete/" . $row->NO_ID . "/?flagz=" . $row->FLAG)."'";
+                    // batas
+
                     $btnEdit =   ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' href="stockb/edit/?idx=' . $row->NO_ID . '&tipx=edit&flagz=' . $row->FLAG . '&judul=' . $this->judul . '"';					
-                    $btnDelete = ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' onclick="return confirm(&quot; Apakah anda yakin ingin hapus? &quot;)" href="stockb/delete/' . $row->NO_ID . '/?flagz=' . $row->FLAG . '" ';
+                    $btnDelete = ($row->POSTED == 1) ? ' onclick= "alert(\'Transaksi ' . $row->NO_BUKTI . ' sudah diposting!\')" href="#" ' : ' onclick="deleteRow('.$url.')" ';
 
 
                     $btnPrivilege =
@@ -726,6 +730,13 @@ class StockbController extends Controller
     }
 	
 	
+	public function getDetailStockb(){
+
+        $no_bukti = $_GET['no_bukti'];
+        $result = DB::table('stockbd')->where('NO_BUKTI', $no_bukti)->get();
+        
+        return response()->json($result);;
+    }
 	
 	
 	

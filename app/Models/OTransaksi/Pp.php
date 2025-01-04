@@ -19,7 +19,7 @@ class Pp extends Model
 //ganti 3
     protected $fillable = 
     [
-        "NO_BUKTI", "TGL", "JTEMPO", "PER","KODES", "NAMAS", "ALAMAT", "KOTA", "FLAG", "GOL", 
-        "TOTAL", "TOTAL_QTY", "NOTES", "FLAG", "GOL", "USRNM", "TG_SMP", "TERM", "VIA", "PKP"
+        "NO_BUKTI","TGL", "NO_ORDER", "FLAG", "GOL", "PER","KODES", "NAMAS", "TOTAL_QTY", "NOTES",
+		"USRNM", "TG_SMP", "ALAMAT", "KOTA", "GOL", "PKP", "CBG"
     ];
 }

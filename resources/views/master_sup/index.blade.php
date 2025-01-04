@@ -4,33 +4,38 @@
 <link rel="stylesheet" href="{{url('http://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css') }}">
 @endsection
 
-<style>  
+<style>
+
     th { font-size: 13px; }
     td { font-size: 13px; }
+
+    /* menghilangkan padding */
+    .content-header {
+      padding: 0 !important;
+    }
+
 </style>
 
 @section('content')
 <div class="content-wrapper">
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-		        <h1 class="m-0">Master Suplier</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item active">Master Suplier</li>
-            </ol>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!-- Status -->
     @if (session('status'))
         <div class="alert alert-success">
             {{session('status')}}
         </div>
+
+      <!-- tambahan notifikasinya untuk delete di index -->
+      <script>
+          Swal.fire({
+        title: 'Deleted!',
+        text: 'Data has been deleted. {{session('status')}}',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      })
+      </script>
+      <!-- tutupannya -->
+
     @endif
 
     <div class="content">
@@ -42,22 +47,20 @@
                 <table class="table table-fixed table-striped table-border table-hover nowrap datatable" id="datatable">
                     <thead class="table-dark">
                         <tr>
-											
-                            <th scope="col" style="text-align: center">No</th>
-				     		            <th scope="col" style="text-align: center">-</th>							
-                            <th scope="col" style="text-align: center">Kode</th>
-                            <th scope="col" style="text-align: center">Nama</th>
-                            <th scope="col" style="text-align: center">Alamat</th>
-                            <th scope="col" style="text-align: center">Kota</th>
-							              <th scope="col" style="text-align: center">HP</th>
-							              <th scope="col" style="text-align: center">Telpon</th>
-							              <th scope="col" style="text-align: center">Kontak</th>
+                            <th width="75px" style="text-align:center">No</th>
+                            <th width="75px" style="text-align:center">-</th>
+                            <th width="75px" style="text-align:center">Kode</th>
+                            <th width="75px" style="text-align:center">Nama</th>
+                            <th width="75px" style="text-align:center">Alamat</th>
+                            <th width="75px" style="text-align:center">Kota</th>
+							              <th width="75px" style="text-align:center">Telpon</th>
+							              <th width="75px" style="text-align:center">Gol</th>
                         </tr>
                     </thead>
-    
+
                      <tbody>
-                         
-                    </tbody> 
+
+                    </tbody>
                 </table>
               </div>
             </div>
@@ -73,60 +76,89 @@
 @endsection
 
 @section('javascripts')
+<script src="{{url('AdminLTE/plugins/datatables/jquery.dataTables.js') }}"></script>
+<script src="{{url('AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
+<script src="{{url('http://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js') }}"></script>
 
 <script>
   $(document).ready(function() {
         var dataTable = $('.datatable').DataTable({
             processing: true,
             serverSide: true,
-            autoWidth: true,
             'scrollY': '400px',
             "order": [[ 0, "asc" ]],
-            ajax: 
+            ajax:
             {
+
+ <!--// ganti 7a -->
+
                 url: '{{ route('get-sup') }}'
             },
-            columns: 
+            columns:
             [
                 {  data: 'DT_RowIndex', orderable: false, searchable: false },
-				
+
+ <!--// ganti 8 -->
 			    {
 				data: 'action',
 				name: 'action'
 			    },
-				
-                {data: 'KODES', name: 'KODES'},
+
+				        {data: 'KODES', name: 'KODES'},
                 {data: 'NAMAS', name: 'NAMAS',
-                
+                  
                   render : function ( data, type, row, meta )
                   {
-                    return ' <span class="badge badge-pill badge-info">' + data + '</span>';
+                    return ' <h5><span class="badge badge-pill badge-warning">' + data + '</span></h5>';
                   }
 
                 },
-                {data: 'ALAMAT', name: 'ALAMAT'},				
+                {data: 'ALMT_K', name: 'ALMT_K' },
                 {data: 'KOTA', name: 'KOTA'},
-                {data: 'HP', name: 'HP'},
-                {data: 'TELPON1', name: 'TELPON1'},
-                {data: 'KONTAK', name: 'KONTAK'}
-
-				
+				        {data: 'TLP_K', name: 'TLP_K'},
+				        {data: 'GOLONGAN', name: 'GOLONGAN'},
             ],
+
 
             columnDefs: [
                 {
-                    "className": "dt-center", 
+                    "className": "dt-center",
                     "targets": 0
-                }
+                },
+
             ],
-            dom: "<'row'<'col-md-6'><'col-md-6'>>" +
+
+
+			      dom: "<'row'<'col-md-6'><'col-md-6'>>" +
                 "<'row'<'col-md-2'l><'col-md-6 test_btn m-auto'><'col-md-4'f>>" +
                 "<'row'<'col-md-12't>><'row'<'col-md-12'ip>>",
-				    stateSave:false,
+
+			      stateSave:false,
+
         });
-        
+
+
+
         $("div.test_btn").html('<a class="btn btn-lg btn-md btn-success" href="{{url('sup/edit?idx=0&tipx=new')}}"> <i class="fas fa-plus fa-sm md-3" ></i></a');
     });
-	
+
+    function deleteRow(link) {
+        console.log('Masuk');
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Are you sure?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location = link;
+            }
+        });
+    }
+
 </script>
 @endsection

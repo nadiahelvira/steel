@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.plain')
 @section('styles')
 <!-- <link rel="stylesheet" href="{{url('http://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css') }}"> -->
 <link rel="stylesheet" href="{{asset('foxie_js_css/jquery.dataTables.min.css')}}" />
@@ -34,6 +34,12 @@
     
     th { font-size: 13px; }
     td { font-size: 13px; }
+
+    /* menghilangkan padding */
+    .content-header {
+        padding: 0 !important;
+    }
+
 </style>
 
 
@@ -41,11 +47,6 @@
 <div class="content-wrapper">
     <div class="content-header">
       <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0">Transaksi {{$judul}} </h1>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -100,8 +101,8 @@
             processing: true,
             serverSide: true,
             autoWidth: false,
-            'scrollX': true,
-            'scrollY': '400px',
+            // 'scrollX': true,
+            // 'scrollY': '400px',
             "order": [[ 0, "asc" ]],
             ajax: 
             {

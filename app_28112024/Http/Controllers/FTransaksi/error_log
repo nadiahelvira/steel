@@ -1,0 +1,12 @@
+[08-Oct-2024 13:36:45 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FTransaksi\base_path() in /home/januar13/public_html/steel/app/Http/Controllers/FTransaksi/KasController.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/FTransaksi/KasController.php on line 17
+[08-Oct-2024 18:52:15 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FTransaksi\base_path() in /home/januar13/public_html/steel/app/Http/Controllers/FTransaksi/MemoController.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/FTransaksi/MemoController.php on line 18
+[08-Oct-2024 19:11:11 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function App\Http\Controllers\FTransaksi\base_path() in /home/januar13/public_html/steel/app/Http/Controllers/FTransaksi/BankController.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/januar13/public_html/steel/app/Http/Controllers/FTransaksi/BankController.php on line 16
